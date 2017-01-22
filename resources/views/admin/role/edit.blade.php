@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/roles"><i class="fa fa-sign-in"></i> Role Management</a></li>
-            <li><a href="/admin/roles/create"><i class="fa fa-pencil"></i> Edit Role</a></li>
+            <li><a href="/admin/roles/{{$roleId}}/edit"><i class="fa fa-pencil"></i> Edit Role</a></li>
             <li>Role ID : {{$roleId}}</li>
         </ol>
     </section>

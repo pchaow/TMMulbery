@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/users"><i class="fa fa-user"></i> User Management</a></li>
-            <li><a href="/admin/users/create"><i class="fa fa-plus"></i> Edit User</a></li>
+            <li><a href="/admin/users//{{$userId}}/edit"><i class="fa fa-plus"></i> Edit User</a></li>
             <li>User ID : {{$userId}}</li>
         </ol>
     </section>

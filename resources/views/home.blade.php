@@ -15,7 +15,9 @@
     <!-- Main content -->
     <section class="content">
 
-        <!-- Your Page Content Here -->
+        <passport-clients></passport-clients>
+        <passport-authorized-clients></passport-authorized-clients>
+        <passport-personal-access-tokens></passport-personal-access-tokens>
 
     </section>
     <!-- /.content -->

@@ -30,6 +30,15 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 
+Vue.component('user-index', require('./components/user/UserIndex.vue'));
+Vue.component('user-create', require('./components/user/UserCreate.vue'));
+Vue.component('user-edit', require('./components/user/UserEdit.vue'));
+
+Vue.component('role-index', require('./components/role/RoleIndex.vue'));
+Vue.component('role-create', require('./components/role/RoleCreate.vue'));
+Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
+
+
 const app = new Vue({
     el: '#app'
 });

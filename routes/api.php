@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
+Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+
+Route::group(["prefix" => 'admin'], function () {
+
+    Route::resource('user', "API\\Admin\\UserResourceController");
+    Route::resource('role', "Api\\Admin\\RoleResourceController");
+
+});

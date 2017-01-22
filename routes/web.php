@@ -18,3 +18,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/', "Admin\\UserController@index");
+        Route::get('create', "Admin\\UserController@create");
+        Route::get('{id}/edit', 'Admin\\UserController@edit');
+    });
+
+});
+

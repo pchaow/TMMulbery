@@ -28,5 +28,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('{id}/edit', 'Admin\\UserController@edit');
     });
 
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('/', "Admin\\RoleController@index");
+        Route::get('create', "Admin\\RoleController@create");
+        Route::get('{id}/edit', 'Admin\\RoleController@edit');
+    });
+
 });
 

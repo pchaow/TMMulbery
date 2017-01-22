@@ -21,7 +21,8 @@
 
                             <div class="form-group" v-bind:class="{ 'has-error': formErrors['display_name'] }">
                                 <label class="control-label">Display Name : </label>
-                                <input class="form-control" placeholder="Display Name" v-model="formInputs.display_name"/>
+                                <input class="form-control" placeholder="Display Name"
+                                       v-model="formInputs.display_name"/>
                                 <span v-if="formErrors['display_name']" class="help-block">{{ formErrors['display_name'] }}</span>
 
                             </div>
@@ -35,7 +36,7 @@
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="/superadministrator/role" class="btn btn-default">Cancel</a>
+                                <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
                             </div>
 
                         </form>
@@ -49,6 +50,10 @@
 
 <script>
     export default {
+        props: {
+            successUrl : String,
+            saveRoleUrl : String,
+        },
         data() {
             return {
                 formInputs: {},
@@ -58,10 +63,10 @@
         methods: {
             save: function () {
                 this.formErrors = [];
-                this.$http.post('/api/v1/admin/role', this.formInputs)
+                this.$http.post(this.saveRoleUrl, this.formInputs)
                         .then((response) => {
                             // success callback
-                            window.location.href = '/superadministrator/role'
+                            window.location.href = this.successUrl
 
                         }, (response) => {
                             // error callback
@@ -74,4 +79,5 @@
             console.log('Component mounted.')
         }
     }
+
 </script>

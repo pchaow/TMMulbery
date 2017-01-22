@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Mulbery</b>Project</a>
+            <a href="/"><b>Mulbery</b>Project</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -27,7 +27,8 @@
 
                 <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
 
-                    <input placeholder="Password" id="password" type="password" class="form-control" name="password" required>
+                    <input placeholder="Password" id="password" type="password" class="form-control" name="password"
+                           required>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                     @if ($errors->has('password'))

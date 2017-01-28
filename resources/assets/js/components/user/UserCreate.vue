@@ -72,8 +72,7 @@
 <script>
     export default {
         props: {
-            savePrefix : String,
-            savePostfix : String,
+            saveUrl : String,
             successUrl : String,
             loadRolesUrl : String,
         },
@@ -87,10 +86,11 @@
             }
         },
         methods: {
+            strFormat : window.strFormat,
             save: function () {
                 console.log(this.formInputs);
                 this.formErrors = []
-                this.$http.post(this.savePrefix, this.formInputs)
+                this.$http.post(this.saveUrl, this.formInputs)
                         .then((response) => {
                                     // success callback
                                     console.log(response);
@@ -117,5 +117,8 @@
             this.loadRoles();
         }
     }
+
+
+
 
 </script>

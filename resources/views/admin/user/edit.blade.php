@@ -16,10 +16,8 @@
     <section class="content">
 
         <user-edit
-                v-bind:save-prefix="'/api/admin/user/'"
-                v-bind:save-postfix="''"
-                v-bind:load-prefix="'/api/admin/user/'"
-                v-bind:load-postfix="''"
+                v-bind:save-url="'/api/admin/user/{{$userId or 0}}'"
+                v-bind:load-url="'/api/admin/user/{{$userId or 0}}'"
                 v-bind:success-url="'/admin/users'"
                 v-bind:load-roles-url="'/api/admin/role'"
                 v-bind:user-id="{{$userId or 0}}">

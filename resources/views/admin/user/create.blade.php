@@ -15,8 +15,7 @@
     <section class="content">
 
         <user-create
-                v-bind:save-prefix="'/api/admin/user'"
-                v-bind:save-postfix="''"
+                v-bind:save-url="'/api/admin/user'"
                 v-bind:success-url="'/admin/users'"
                 v-bind:load-roles-url="'/api/admin/role'">
         </user-create>

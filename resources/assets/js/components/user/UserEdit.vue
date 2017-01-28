@@ -77,10 +77,8 @@
     export default {
         props: {
             userId: Number,
-            savePrefix : String,
-            savePostfix : String,
-            loadPrefix : String,
-            loadPostfix : String,
+            saveUrl : String,
+            loadUrl : String,
             successUrl : String,
             loadRolesUrl : String,
         },
@@ -94,7 +92,7 @@
         methods: {
             save: function () {
                 this.formErrors = [];
-                this.$http.put(this.savePrefix + this.userId + this.savePostfix, this.formInputs)
+                this.$http.put(this.saveUrl, this.formInputs)
                         .then((response) => {
                             // success callback
                             // console.log(response);
@@ -108,7 +106,7 @@
             },
             load: function () {
 
-                this.$http.get(this.loadPrefix + this.userId + this.loadPostfix)
+                this.$http.get(this.loadUrl)
                         .then((response) => {
                             // success callback
                             // console.log(response);
@@ -157,6 +155,7 @@
             this.load()
         }
     }
+
 
 
 

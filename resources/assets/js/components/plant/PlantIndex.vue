@@ -33,7 +33,7 @@
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <div class="btn-group btn-group-sm pull-right">
-                        <a class="btn btn-success" style="padding-bottom: 2px"><i
+                        <a v-bind:href="createUrl" class="btn btn-success" style="padding-bottom: 2px"><i
                                 class="fa fa-plus"></i> เพิ่มแปลงหม่อน</a>
                     </div>
                     <i class="fa fa-tree"></i>
@@ -157,5 +157,62 @@
 </template>
 
 <script>
+
+    export default {
+        props: {
+            createUrl : String,
+        },
+        data() {
+            return {
+                roles: [],
+                rolesPage: {},
+                form: {
+                    keyword: "",
+                    page: 1,
+                }
+            }
+        },
+        methods: {
+            reset: function () {
+                this.form = {
+                    keyword: "",
+                    page: 1,
+                }
+            },
+            search: function () {
+                this.form.page = 1
+                this.load();
+            },
+            gotoPage: function (n) {
+                this.form.page = n;
+                this.load()
+            },
+            load: function () {
+                this.$http.get(this.loadRolesUrl, {
+                    params: this.form
+                }).then(function (r) {
+//                    console.log(r.data)
+                    this.rolesPage = r.data
+                    this.roles = this.rolesPage.data
+
+                })
+            },
+            deleteRole: function (role) {
+                if (confirm("Do you want to delete this role?")) {
+                    this.$http.delete(this.deleteRoleUrl + role.id, {
+                        params: this.form
+                    }).then(function (r) {
+                        this.load()
+                    })
+                }
+
+            }
+        },
+        mounted() {
+            console.log('Component mounted.')
+            this.load();
+        }
+    }
+
 
 </script>

@@ -14,9 +14,7 @@
     <!-- Main content -->
     <section class="content">
 
-        <plant-index
-
-        ></plant-index>
+        <plant-index></plant-index>
 
     </section>
     <!-- /.content -->

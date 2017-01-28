@@ -41,8 +41,6 @@ Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
 Vue.component('plant-index', require('./components/plant/PlantIndex.vue'));
 
 
-
-
 const app = new Vue({
     el: '#app'
 });

@@ -30,6 +30,7 @@ class CreatePlantsTable extends Migration
 
             $table->integer('user_id');
 
+            $table->softDeletes();
             $table->timestamps();
         });
 

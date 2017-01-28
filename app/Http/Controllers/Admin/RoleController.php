@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,6 +23,9 @@ class RoleController extends Controller
 
     public function edit($roleId)
     {
+        if (!Role::find($roleId)) {
+            return redirect('/admin/roles');
+        }
         return view('admin.role.edit')
             ->with('roleId', $roleId);
 

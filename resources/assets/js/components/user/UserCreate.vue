@@ -26,7 +26,7 @@
 
                             <div class="form-group" v-bind:class="{ 'has-error': formErrors['name'] }">
                                 <label class="control-label">Name : </label>
-                                <input class="form-control" placeholder="First Name" v-model="formInputs.name"/>
+                                <input class="form-control" placeholder="Name" v-model="formInputs.name"/>
                                 <span v-if="formErrors['name']"
                                       class="help-block">{{ formErrors['name'] }}</span>
                             </div>

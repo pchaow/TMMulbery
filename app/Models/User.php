@@ -19,8 +19,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password',
+        'name', 'username', 'email', 'password',//'identity','tel','address','postelcode','province_id','amphure_id','district_id'
     ];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -30,4 +31,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+//    public function setIdentityAttribute($value)
+//    {
+//        if (empty($value)) { // will check for empty string, null values, see php.net about it
+//            $this->attributes['identity'] = NULL;
+//        } else {
+//            $this->attributes['identity'] = $value;
+//        }
+//    }
 }

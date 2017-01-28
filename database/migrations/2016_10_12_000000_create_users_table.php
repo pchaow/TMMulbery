@@ -19,9 +19,25 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password')->nullable();
+
+            $table->string('identity')->unique()->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('address')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->integer('province_id')->nullable();
+            $table->integer('amphure_id')->nullable();
+            $table->integer('district_id')->nullable();
+
             $table->json('profiles')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+//            $table->foreign('province_id')->references('id')->on('provinces')
+//                ->onUpdate('cascade')->onDelete('set null');
+//            $table->foreign('amphure_id')->references('id')->on('amphures')
+//                ->onUpdate('cascade')->onDelete('set null');
+//            $table->foreign('district_id')->references('id')->on('districts')
+//                ->onUpdate('cascade')->onDelete('set null');
         });
     }
 

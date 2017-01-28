@@ -39,6 +39,8 @@ Vue.component('role-create', require('./components/role/RoleCreate.vue'));
 Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
 
 
+
+
 const app = new Vue({
     el: '#app'
 });

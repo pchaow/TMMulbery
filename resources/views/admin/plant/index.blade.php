@@ -14,13 +14,9 @@
     <!-- Main content -->
     <section class="content">
 
-        <role-index
-                v-bind:create-role-url="'/admin/plants/create'"
-                v-bind:edit-role-prefix="'/admin/plants/'"
-                v-bind:edit-role-postfix="'/edit'"
-                v-bind:load-roles-url="'/api/admin/role/'"
-                v-bind:delete-role-url="'/api/admin/role/'"
-        ></role-index>
+        <plant-index
+
+        ></plant-index>
 
     </section>
     <!-- /.content -->

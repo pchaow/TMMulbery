@@ -35,7 +35,7 @@
 
             <li class="{{ Request::is('admin/plants') ? 'active' : '' }}">
                 <a href="/admin/plants">
-                    <i class="fa fa-pencil"></i>Plant Management
+                    <i class="fa fa-tree"></i>Plant Management
                 </a>
             </li>
         </ul>

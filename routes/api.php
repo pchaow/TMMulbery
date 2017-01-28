@@ -18,9 +18,10 @@ Route::get('user', function (Request $request) {
 })->middleware('auth:api');
 
 
-Route::group(["prefix" => 'admin'], function () {
+Route::group(["prefix" => 'admin',"middleware"=>'auth:api'], function () {
 
     Route::resource('user', "API\\Admin\\UserResourceController");
     Route::resource('role', "Api\\Admin\\RoleResourceController");
+    Route::resource('plant', "API\\Admin\\PlantResourceController");
 
 });

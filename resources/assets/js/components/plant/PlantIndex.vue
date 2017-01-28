@@ -12,10 +12,10 @@
                 <div class="panel-body">
 
                     <div class="col-lg-12">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" v-on:submit.prevent="search">
                             <div class="form-group">
                                 <label>คำสำคัญ : </label>
-                                <input class="form-control"
+                                <input class="form-control" v-model="form.keyword" @keypress
                                        placeholder="กรอกคำสำคัญที่ต้องการค้นหา"/>
                             </div>
 
@@ -58,7 +58,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr v-for="p in plants">
                                     <td>กอไก่ ใจดี</td>
                                     <td>A1</td>
                                     <td>100000</td>
@@ -75,71 +75,18 @@
                                     </td>
 
                                 </tr>
-                                <tr>
-                                    <td>กอไก่ ใจดี</td>
-                                    <td>A2</td>
-                                    <td>5000</td>
-                                    <td><span class="badge bg-red">30%</span></td>
-                                    <td>11 Dec 2016</td>
-                                    <td>เมือง</td>
-                                    <td>พะเยา</td>
-
-                                    <td>
-                                        <a class="btn btn-primary">เปิดดู</a>
-                                        <a class="btn btn-warning">แก้ไข</a>
-                                        <button type="button" class="btn btn-danger">
-                                            ลบ
-                                        </button>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>กอไก่ ใจดี</td>
-                                    <td>A3</td>
-                                    <td>3000</td>
-                                    <td><span class="badge bg-green">100%</span></td>
-                                    <td>15 Oct 2016</td>
-                                    <td>เมือง</td>
-                                    <td>พะเยา</td>
-
-                                    <td>
-                                        <a class="btn btn-primary">เปิดดู</a>
-                                        <a class="btn btn-warning">แก้ไข</a>
-                                        <button type="button" class="btn btn-danger">
-                                            ลบ
-                                        </button>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>ปอปลา ตากลม</td>
-                                    <td>-</td>
-                                    <td>40000</td>
-                                    <td><span class="badge bg-red">20%</span></td>
-                                    <td>10 Jan 2017</td>
-                                    <td>ลี้</td>
-                                    <td>ลำพูน</td>
-
-                                    <td>
-                                        <a class="btn btn-primary">เปิดดู</a>
-                                        <a class="btn btn-warning">แก้ไข</a>
-                                        <button type="button" class="btn btn-danger">
-                                            ลบ
-                                        </button>
-                                    </td>
-
-                                </tr>
-
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="5">
+                                    <td colspan="4">
                                         <div>
-                                            จำนวนทั้งหมด 4 รายการ
+                                            จำนวนทั้งหมด {{page.total}} รายการ
                                         </div>
                                         <ul class="pagination">
-                                            <li>
+                                            <li v-bind:class="{ 'active' : (page.current_page == n) }"
 
+                                                v-for="n in page.last_page ">
+                                                <a style="cursor: default;" v-on:click="gotoPage(n)">{{ n }}</a>
                                             </li>
                                         </ul>
                                     </td>
@@ -161,11 +108,13 @@
     export default {
         props: {
             createUrl : String,
+            loadUrl : String,
+            deleteUrl : String,
         },
         data() {
             return {
                 roles: [],
-                rolesPage: {},
+                page: {},
                 form: {
                     keyword: "",
                     page: 1,
@@ -173,6 +122,7 @@
             }
         },
         methods: {
+            strFormat : window.strFormat,
             reset: function () {
                 this.form = {
                     keyword: "",
@@ -188,18 +138,17 @@
                 this.load()
             },
             load: function () {
-                this.$http.get(this.loadRolesUrl, {
+                this.$http.get(this.loadUrl, {
                     params: this.form
                 }).then(function (r) {
 //                    console.log(r.data)
-                    this.rolesPage = r.data
-                    this.roles = this.rolesPage.data
-
+                    this.page = r.data
+                    this.plants = this.page.data
                 })
             },
-            deleteRole: function (role) {
-                if (confirm("Do you want to delete this role?")) {
-                    this.$http.delete(this.deleteRoleUrl + role.id, {
+            deletePlant: function (plant) {
+                if (confirm("คุณต้องการลบแปลงนี้หรือไม่ ?")) {
+                    this.$http.delete(this.strFormat(this.deleteUrl,{id:plant.id}), {
                         params: this.form
                     }).then(function (r) {
                         this.load()
@@ -209,10 +158,13 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log(this.loadUrl);
             this.load();
         }
     }
+
+
+
 
 
 </script>

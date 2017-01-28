@@ -16,6 +16,7 @@
 
         <plant-index
                 create-url="/admin/plants/create"
+                load-url="/api/admin/plant"
         ></plant-index>
 
     </section>

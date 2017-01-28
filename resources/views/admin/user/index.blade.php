@@ -15,10 +15,9 @@
     <section class="content">
 
         <user-index
-                v-bind:edit-prefix="'/admin/users/'"
-                v-bind:edit-postfix="'/edit'"
+                v-bind:edit-url="'/admin/users/{id}/edit'"
                 v-bind:load-user-url="'/api/admin/user'"
-                v-bind:delete-user-prefix="'/api/admin/user/'"
+                v-bind:delete-url="'/api/admin/user/{id}'"
                 v-bind:create-user-url="'/admin/users/create'"
         >
         </user-index>

@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -42,8 +41,6 @@ Vue.component('plant-index', require('./components/plant/PlantIndex.vue'));
 Vue.component('plant-create', require('./components/plant/PlantCreate.vue'));
 
 
-
-
 const app = new Vue({
-    el: '#app'
+    el: '#app',
 });

@@ -32,6 +32,12 @@
                     <i class="fa fa-sign-in"></i>Role Management
                 </a>
             </li>
+
+            <li class="{{ Request::is('admin/plants') ? 'active' : '' }}">
+                <a href="/admin/plants">
+                    <i class="fa fa-pencil"></i>Plant Management
+                </a>
+            </li>
         </ul>
     </li>
 </ul>

@@ -13,7 +13,7 @@ Route::group(['prefix' => 'roles'], function () {
     Route::get('{id}/edit', 'Admin\\RoleController@edit');
 });
 
-Route::group(['prefix' => 'plant'], function () {
+Route::group(['prefix' => 'plants'], function () {
 
     Route::get('/', function () {
         //show index view

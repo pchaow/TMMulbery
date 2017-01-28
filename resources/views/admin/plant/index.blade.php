@@ -14,14 +14,11 @@
     <!-- Main content -->
     <section class="content">
 
-<<<<<<< HEAD
-        <plant-index></plant-index>
-=======
         <plant-index
                 create-url="/admin/plants/create"
                 load-url="/api/admin/plant"
         ></plant-index>
->>>>>>> origin/master
+
 
     </section>
     <!-- /.content -->

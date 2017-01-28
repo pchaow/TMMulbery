@@ -73,7 +73,6 @@
                                     </td>
 
                                 </tr>
-<<<<<<< HEAD
                                 <tr>
                                     <td>กอไก่ ใจดี</td>
                                     <td>A2</td>
@@ -125,8 +124,6 @@
                                     </td>
                                 </tr>
 
-=======
->>>>>>> origin/master
                                 </tbody>
                                 <tfoot>
                                 <tr>

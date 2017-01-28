@@ -45,7 +45,6 @@ class CreatePlantsTable extends Migration
         Schema::create('plant_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('plant_id');
-            $table->integer('type_id');
             $table->enum('type', ['+', '-']);
             $table->double('amount');
             $table->double('balance');

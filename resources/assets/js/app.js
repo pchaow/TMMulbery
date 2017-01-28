@@ -39,6 +39,7 @@ Vue.component('role-create', require('./components/role/RoleCreate.vue'));
 Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
 
 Vue.component('plant-index', require('./components/plant/PlantIndex.vue'));
+Vue.component('plant-create', require('./components/plant/PlantCreate.vue'));
 
 
 

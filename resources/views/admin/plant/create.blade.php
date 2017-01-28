@@ -13,11 +13,7 @@
 
     <!-- Main content -->
     <section class="content">
-
-        <role-create
-                v-bind:success-url="'/admin/plants'"
-                v-bind:save-role-url="'/api/admin/role'"
-        ></role-create>
+        <plant-create></plant-create>
     </section>
     <!-- /.content -->
 @endsection

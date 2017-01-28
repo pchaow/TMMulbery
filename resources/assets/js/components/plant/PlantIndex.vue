@@ -50,8 +50,7 @@
                                     <th>เกษตรกร</th>
                                     <th>ชื่อแปลงหม่อน</th>
                                     <th>พื้นที่โดยประมาณ(ตรม.)</th>
-                                    <th>คงเหลือเก็บเกี่ยวโดยประมาณ</th>
-                                    <th>วันรับซื้อล่าสุด</th>
+                                    <th>ตำบล</th>
                                     <th>อำเภอ</th>
                                     <th>จังหวัด</th>
                                     <th>จัดการ</th>
@@ -61,9 +60,8 @@
                                 <tr>
                                     <td>กอไก่ ใจดี</td>
                                     <td>A1</td>
-                                    <td>100000</td>
-                                    <td><span class="badge bg-yellow">60%</span></td>
-                                    <td>14 Jan 2017</td>
+                                    <td>100,000</td>
+                                    <td>แม่กา</td>
                                     <td>เมือง</td>
                                     <td>พะเยา</td>
                                     <td>
@@ -78,9 +76,8 @@
                                 <tr>
                                     <td>กอไก่ ใจดี</td>
                                     <td>A2</td>
-                                    <td>5000</td>
-                                    <td><span class="badge bg-red">30%</span></td>
-                                    <td>11 Dec 2016</td>
+                                    <td>5,000</td>
+                                    <td>แม่ต๋ำ</td>
                                     <td>เมือง</td>
                                     <td>พะเยา</td>
 
@@ -96,9 +93,8 @@
                                 <tr>
                                     <td>กอไก่ ใจดี</td>
                                     <td>A3</td>
-                                    <td>3000</td>
-                                    <td><span class="badge bg-green">100%</span></td>
-                                    <td>15 Oct 2016</td>
+                                    <td>3,000</td>
+                                    <td>แม่นาเรือ</td>
                                     <td>เมือง</td>
                                     <td>พะเยา</td>
 
@@ -112,11 +108,10 @@
 
                                 </tr>
                                 <tr>
-                                    <td>ปอปลา ตากลม</td>
-                                    <td>-</td>
-                                    <td>40000</td>
-                                    <td><span class="badge bg-red">20%</span></td>
-                                    <td>10 Jan 2017</td>
+                                    <td>ชอช้าง ขยันดี</td>
+                                    <td></td>
+                                    <td>40,000</td>
+                                    <td>ก่อ</td>
                                     <td>ลี้</td>
                                     <td>ลำพูน</td>
 
@@ -127,7 +122,6 @@
                                             ลบ
                                         </button>
                                     </td>
-
                                 </tr>
 
                                 </tbody>

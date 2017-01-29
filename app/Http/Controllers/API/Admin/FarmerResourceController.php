@@ -62,13 +62,8 @@ class FarmerResourceController extends Controller
         $user->password = Hash::make($form['password']);
         $user->save();
 
-        if (isset($form['roles'])) {
-            $roleIds = [];
-            foreach ($form['roles'] as $role) {
-                $roleIds[] = $role['id'];
-            }
-            $user->roles()->sync($roleIds);
-        }
+        $farmer = Role::where('name', 'farmer')->first();
+        $user->roles()->save($farmer);
         $user->roles;
         return $user;
     }
@@ -83,6 +78,7 @@ class FarmerResourceController extends Controller
     {
         $user = User::find($id);
         $user->roles;
+        $user->identity;
         return $user;
     }
 
@@ -117,14 +113,6 @@ class FarmerResourceController extends Controller
 
         $user->save();
 
-        if (isset($form['roles'])) {
-            $roleIds = [];
-            foreach ($form['roles'] as $role) {
-                $roleIds[] = $role['id'];
-            }
-            $user->roles()->sync($roleIds);
-        }
-        $user->roles;
         return $user;
     }
 

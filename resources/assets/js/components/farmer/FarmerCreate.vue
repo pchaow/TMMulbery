@@ -140,13 +140,11 @@
         props: {
             saveUrl : String,
             successUrl : String,
-            loadRolesUrl : String,
+
         },
         data() {
             return {
-                roles: [],
                 formInputs: {
-                    roles: [],
                 },
                 formErrors: [],
             }
@@ -167,31 +165,11 @@
                                 }
                         );
             },
-            loadRoles: function () {
-                this.$http.get(this.loadRolesUrl, {
-                    params: {all: true}
-                }).then(function (r) {
-                    console.log(r.data)
-                    this.rolesPage = r.data
-                    this.roles = this.rolesPage.data
-
-                })
-            }
         },
         mounted() {
             console.log('Component mounted.')
             this.loadRoles();
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 </script>

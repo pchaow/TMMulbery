@@ -16,8 +16,7 @@
 
         <farmer-create
                 v-bind:save-url="'/api/admin/farmer'"
-                v-bind:success-url="'/admin/farmers'"
-                v-bind:load-roles-url="'/api/admin/role'">
+                v-bind:success-url="'/admin/farmers'">
         </farmer-create>
 
     </section>

@@ -20,7 +20,6 @@ class ThailandProvincesSetupTables extends Migration
             $table->string('name');
             $table->string('name_eng');
 
-            $table->timestamps();
 
         });
 
@@ -31,7 +30,6 @@ class ThailandProvincesSetupTables extends Migration
             $table->string('name_eng');
             $table->integer('province_id');
 
-            $table->timestamps();
         });
 
         Schema::create('districts', function (Blueprint $table) {
@@ -41,8 +39,6 @@ class ThailandProvincesSetupTables extends Migration
             $table->string('name_eng');
             $table->integer('province_id');
             $table->integer('amphure_id');
-
-            $table->timestamps();
 
         });
 

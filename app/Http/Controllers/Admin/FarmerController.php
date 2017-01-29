@@ -32,4 +32,15 @@ class FarmerController extends Controller
 
     }
 
+    public function view($userId)
+    {
+        if (!User::find($userId)->hasRole('farmer')) {
+            return redirect("/admin/farmers");
+        }
+
+        return view('admin.farmer.view')
+            ->with('userId', $userId);
+
+    }
+
 }

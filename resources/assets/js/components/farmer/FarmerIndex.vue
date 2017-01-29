@@ -58,6 +58,10 @@
 
                                         <a v-bind:href="strFormat(editUrl,{id : farmer.id})"
                                            class="btn btn-primary">Edit</a>
+
+                                        <a v-bind:href="strFormat(viewUrl,{id : farmer.id})"
+                                           class="btn btn-success">View</a>
+
                                         <button type="button" class="btn btn-danger" v-on:click="deleteFarmer(farmer)">
                                             Delete
                                         </button>
@@ -94,6 +98,7 @@
     export default {
         props: {
             editUrl : String,
+            viewUrl : String,
             loadFarmerUrl : String,
             deleteUrl : String,
             createFarmerUrl : String
@@ -148,6 +153,7 @@
             this.load();
         }
     }
+
 
 
 

@@ -16,6 +16,7 @@
 
         <farmer-index
                 v-bind:edit-url="'/admin/farmers/{id}/edit'"
+                v-bind:view-url="'/admin/farmers/{id}/view'"
                 v-bind:load-farmer-url="'/api/admin/farmer'"
                 v-bind:delete-url="'/api/admin/farmer/{id}'"
                 v-bind:create-farmer-url="'/admin/farmers/create'">
@@ -24,4 +25,5 @@
     </section>
     <!-- /.content -->
 @endsection
+
 

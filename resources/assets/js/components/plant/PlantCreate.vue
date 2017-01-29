@@ -61,8 +61,8 @@
                         </div>
                         <div class="form-group">
                             <label for="quality">สภาวะแวดล้อมบริเวณใกล้เคียงแปลงหม่อน</label>
-                            <textarea class="form-control" rows="3" id="quality" placeholder="สิ่งปลูกสร้าง/สภาวะแวดล้อม บริเวณใกล้เคียงแปลงหม่อน เช่น แม่น้ำ โรงงาน ไร่ข้าวโพด"></textarea>
-
+                            <textarea class="form-control" rows="3" id="quality"
+                                      placeholder="สิ่งปลูกสร้าง/สภาวะแวดล้อม บริเวณใกล้เคียงแปลงหม่อน เช่น แม่น้ำ โรงงาน ไร่ข้าวโพด"></textarea>
 
 
                         </div>
@@ -105,7 +105,7 @@
                         <div class="form-group">
                             <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
                             <div id="map">
-                            draw map
+                                draw map
                             </div>
                         </div>
                         <div class="form-group">
@@ -116,22 +116,54 @@
                     </div>
 
 
-            <!-- /.box-body -->
+                    <!-- /.box-body -->
 
-            <div class="box-footer">
-                <button type="submit" class="btn btn-primary pull-right">บันทึก</button>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary pull-right">บันทึก</button>
+                        <a v-bind:href="successUrl" class="btn btn-default">ยกเลิก</a>
+                    </div>
+                </form>
             </div>
-            </form>
+            <!-- /.box -->
+
+
         </div>
-        <!-- /.box -->
-
-
-    </div>
     </div>
 
 
 </template>
 
 <script>
+export default {
+        props: {
+            successUrl : String,
+            saveUrl : String,
+        },
+        data() {
+            return {
+                formInputs: {},
+                formErrors: [],
+            }
+        },
+        methods: {
+            save: function () {
+                this.formErrors = [];
+                this.$http.post(this.saveUrl, this.formInputs)
+                        .then((response) => {
+                            // success callback
+                            window.location.href = this.successUrl
+
+                        }, (response) => {
+                            // error callback
+                            this.formErrors = response.data;
+                        });
+
+            }
+        },
+        mounted() {
+            console.log('Component mounted.')
+        }
+    }
+
 
 </script>

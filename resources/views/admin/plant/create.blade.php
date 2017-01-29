@@ -13,7 +13,9 @@
 
     <!-- Main content -->
     <section class="content">
-        <plant-create></plant-create>
+        <plant-create
+                success-url="/admin/plants"
+        ></plant-create>
     </section>
     <!-- /.content -->
 @endsection

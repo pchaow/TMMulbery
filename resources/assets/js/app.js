@@ -40,6 +40,9 @@ Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
 Vue.component('plant-index', require('./components/plant/PlantIndex.vue'));
 Vue.component('plant-create', require('./components/plant/PlantCreate.vue'));
 
+Vue.component('farmer-index', require('./components/farmer/FarmerIndex.vue'));
+Vue.component('farmer-create', require('./components/farmer/FarmerCreate.vue'));
+Vue.component('farmer-edit', require('./components/farmer/FarmerEdit.vue'));
 
 const app = new Vue({
     el: '#app',

@@ -1,70 +1,130 @@
 <template>
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-info">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                    Create User
+
+                    <i class="fa fa-user-plus"></i>
+                    แบบฟอร์มลงทะเบียนเกษตรกร
                 </div>
 
-                <div class="panel-body">
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
 
-                    <div class="col-lg-12">
-                        <form class="form-horizontal" v-on:submit.prevent="save">
-                            <div class="form-group" v-bind:class="{ 'has-error': formErrors['email'] }">
-                                <label class="control-label">E-mail : </label>
-                                <input class="form-control" placeholder="E-mail" v-model="formInputs.email"/>
-                                <span v-if="formErrors['email']" class="help-block">{{ formErrors['email'] }}</span>
-                            </div>
+                    <div class="panel-body">
+                        <h3 class="box-title"><i class="fa fa-laptop"></i> ข้อมูลในการเข้าสู่ระบบ</h3>
+                        <div class="form-group" v-bind:class="{ 'has-error': formErrors['username'] }">
+                            <label class="control-label">Username : </label>
+                            <input type="text" class="form-control" placeholder="Username"
+                                   v-model="formInputs.username"/>
+                            <span v-if="formErrors['username']"
+                                  class="help-block">{{ formErrors['username'] }}</span>
+                        </div>
 
-                            <div class="form-group" v-bind:class="{ 'has-error': formErrors['username'] }">
-                                <label class="control-label">Username : </label>
-                                <input type="text" class="form-control" placeholder="Username"
-                                       v-model="formInputs.username"/>
-                                <span v-if="formErrors['username']"
-                                      class="help-block">{{ formErrors['username'] }}</span>
-                            </div>
+                        <div class="form-group" v-bind:class="{ 'has-error': formErrors['password'] }">
+                            <label class="control-label">Password : </label>
+                            <input type="password" class="form-control" placeholder="Password"
+                                   v-model="formInputs.password"/>
+                            <span v-if="formErrors['password']"
+                                  class="help-block">{{ formErrors['password'] }}</span>
+                        </div>
 
-                            <div class="form-group" v-bind:class="{ 'has-error': formErrors['name'] }">
-                                <label class="control-label">Name : </label>
-                                <input class="form-control" placeholder="Name" v-model="formInputs.name"/>
-                                <span v-if="formErrors['name']"
-                                      class="help-block">{{ formErrors['name'] }}</span>
-                            </div>
+                        <div class="form-group"
+                             v-bind:class="{ 'has-error': formErrors['password_confirmation '] }">
+                            <label class="control-label">Password Confirmation : </label>
+                            <input type="password" class="form-control" placeholder="Password Confirmation"
+                                   v-model="formInputs.password_confirmation "/>
+                            <span v-if="formErrors['password_confirmation ']" class="help-block">{{ formErrors['password_confirmation '] }}</span>
+                        </div>
 
-                            <div class="form-group" v-bind:class="{ 'has-error': formErrors['password'] }">
-                                <label class="control-label">Password : </label>
-                                <input type="password" class="form-control" placeholder="Password"
-                                       v-model="formInputs.password"/>
-                                <span v-if="formErrors['password']"
-                                      class="help-block">{{ formErrors['password'] }}</span>
-                            </div>
+                        <h3 class="box-title"><i class="fa fa-user"></i> ข้อมูลส่วนตัว</h3>
 
-                            <div class="form-group"
-                                 v-bind:class="{ 'has-error': formErrors['password_confirmation '] }">
-                                <label class="control-label">Password Confirmation : </label>
-                                <input type="password" class="form-control" placeholder="Password Confirmation"
-                                       v-model="formInputs.password_confirmation "/>
-                                <span v-if="formErrors['password_confirmation ']" class="help-block">{{ formErrors['password_confirmation '] }}</span>
-                            </div>
+                        <div class="form-group">
+                            <label for="name">ชื่อ-ชื่อสกุล</label>
+                            <input type="text" class="form-control" id="name" placeholder="ชื่อ-ชื่อสกุล">
+                        </div>
+                        <div class="form-group">
+                            <label for="identity">เลขประจำตัวประชาชน</label>
+                            <input type="text" class="form-control" id="identity" placeholder="เลขประจำตัวประชาชน 13 หลัก">
+                        </div>
 
-                            <div class="form-group">
-                                <label class="control-label">Roles : </label>
-                                <div class="checkbox" v-for="role in roles">
-                                    <label>
-                                        <input type="checkbox" v-model="formInputs.roles" v-bind:value="role">
-                                        {{role.name}}
-                                    </label>
+
+                        <div class="form-group">
+                            <label>เบอร์โทรติดต่อ</label>
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
                                 </div>
+                                <input type="text" class="form-control" id="contact_number" placeholder="เบอร์โทรติดต่อ">
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
+                        <div class="form-group">
+                            <label>Email Address</label>
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <input type="email" class="form-control" id="email" placeholder="Email Address">
                             </div>
-                        </form>
+                            <!-- /.input group -->
+                        </div>
+
+
+                        <h3 class="box-title"> <i class="fa fa-home"></i> ข้อมูลที่อยู่</h3>
+
+                        <div class="form-group">
+                            <label for="address">ที่อยู่</label>
+                            <input type="text" class="form-control" id="address" placeholder="เลขที่ หมู่บ้าน ถนน">
+                        </div>
+                        <div class="form-group">
+                            <label>จังหวัด</label>
+                            <select class="form-control">
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                                <option>option 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>อำเภอ</label>
+                            <select class="form-control">
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                                <option>option 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>ตำบล</label>
+                            <select class="form-control">
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                                <option>option 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">รหัสไปรษณีย์</label>
+                            <input type="text" class="form-control" id="postal_code" placeholder="รหัสไปรษณีย์">
+                        </div>
+
                     </div>
-                </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px">บันทึก</button>
+                        <a v-bind:href="successUrl" class="btn btn-default pull-right">ยกเลิก</a>
+                    </div>
+                </form>
             </div>
+            <!-- /.box -->
         </div>
     </div>
 </template>

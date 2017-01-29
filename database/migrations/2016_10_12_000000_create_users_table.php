@@ -24,20 +24,20 @@ class CreateUsersTable extends Migration
             $table->string('contact_number')->nullable();
             $table->string('address')->nullable();
             $table->string('postal_code')->nullable();
-            $table->integer('province_id')->nullable();
-            $table->integer('amphure_id')->nullable();
-            $table->integer('district_id')->nullable();
+            $table->integer('province_id')->nullable()->unsigned();
+            $table->integer('amphure_id')->nullable()->unsigned();
+            $table->integer('district_id')->nullable()->unsigned();
 
             $table->json('profiles')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
-//            $table->foreign('province_id')->references('id')->on('provinces')
-//                ->onUpdate('cascade')->onDelete('set null');
-//            $table->foreign('amphure_id')->references('id')->on('amphures')
-//                ->onUpdate('cascade')->onDelete('set null');
-//            $table->foreign('district_id')->references('id')->on('districts')
-//                ->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('province_id')->references('id')->on('provinces')
+                ->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('amphure_id')->references('id')->on('amphures')
+                ->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('district_id')->references('id')->on('districts')
+                ->onUpdate('cascade')->onDelete('set null');
         });
     }
 

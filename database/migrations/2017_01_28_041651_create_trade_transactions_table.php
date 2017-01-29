@@ -19,10 +19,16 @@ class CreateTradeTransactionsTable extends Migration
             $table->double('amount')->nullable();;
             $table->double('pricerate')->nullable();;
 
-            $table->integer('user_id')->nullable();;
-            $table->integer('plant_id')->nullable();;
+            $table->integer('user_id')->nullable()->unsigned();
+            $table->integer('plant_id')->nullable()->unsigned();
 
             $table->timestamps();
+
+            $table->foreign('plant_id')->references('id')->on('plants')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

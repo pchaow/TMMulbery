@@ -28,7 +28,7 @@ class ThailandProvincesSetupTables extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->string('name_eng');
-            $table->integer('province_id');
+            $table->integer('province_id')->unsigned();
 
         });
 
@@ -37,24 +37,24 @@ class ThailandProvincesSetupTables extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->string('name_eng');
-            $table->integer('province_id');
-            $table->integer('amphure_id');
+            $table->integer('province_id')->unsigned();
+            $table->integer('amphure_id')->unsigned();
 
         });
 
-//        Schema::table('amphures',function (Blueprint $table){
-//            $table->foreign('province_id')->references('id')->on('provinces')
-//                ->onUpdate('cascade')->onDelete('cascade');
-//
-//        });
-//
-//        Schema::table('districts',function (Blueprint $table){
-//            $table->foreign('province_id')->references('id')->on('provinces')
-//                ->onUpdate('cascade')->onDelete('cascade');
-//            $table->foreign('amphure_id')->references('id')->on('amphures')
-//                ->onUpdate('cascade')->onDelete('cascade');
-//
-//        });
+        Schema::table('amphures',function (Blueprint $table){
+            $table->foreign('province_id')->references('id')->on('provinces')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+        });
+
+        Schema::table('districts',function (Blueprint $table){
+            $table->foreign('province_id')->references('id')->on('provinces')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('amphure_id')->references('id')->on('amphures')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+        });
 
     }
 

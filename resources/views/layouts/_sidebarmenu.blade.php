@@ -5,8 +5,6 @@
             <span>Dashboard</span></a></li>
 
 
-
-
     <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
     <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
@@ -35,8 +33,8 @@
                 </a>
             </li>
 
-            <li class="{{ Request::is('admin/farmers') ? 'active' : '' }}"><a href="/admin/farmers"><i class="fa fa-link"></i>
-                    <span>Farmer Management</span></a></li>
+            <li class="{{ Request::is('admin/farmers') ? 'active' : '' }}"><a href="/admin/farmers"><i
+                            class="fa fa-link"></i><span>Farmer Management</span></a></li>
 
             <li class="{{ Request::is('admin/plants') ? 'active' : '' }}">
                 <a href="/admin/plants">

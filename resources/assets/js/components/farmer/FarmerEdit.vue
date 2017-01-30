@@ -9,7 +9,7 @@
 
                 <div class="panel-body">
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" v-if="formInputs">
                         <form class="form-horizontal" v-on:submit.prevent="save">
 
                             <fieldset>
@@ -47,36 +47,14 @@
                                           class="help-block">{{ formErrors['address'] }}</span>
                                 </div>
 
-                                <div class="form-group" v-bind:class="{ 'has-error': formErrors['province_id'] }">
-                                    <label class="control-label">จังหวัด : </label>
-                                    <select class="form-control" v-model="formInputs.province_id">
-                                        <option>กรุณาเลือก</option>
-                                        <option>AAA</option>
-                                        <option>AAA</option>
-                                    </select>
-                                    <span v-if="formErrors['province_id']" class="help-block">{{ formErrors['province_id'] }}</span>
-                                </div>
-
-                                <div class="form-group" v-bind:class="{ 'has-error': formErrors['amphure_id'] }">
-                                    <label class="control-label">อำเภอ : </label>
-                                    <select class="form-control" v-model="formInputs.amphure_id">
-                                        <option>กรุณาเลือก</option>
-                                        <option>AAA</option>
-                                        <option>AAA</option>
-                                    </select>
-                                    <span v-if="formErrors['amphure_id']"
-                                          class="help-block">{{ formErrors['amphure_id'] }}</span>
-                                </div>
-
-                                <div class="form-group" v-bind:class="{ 'has-error': formErrors['district_id'] }">
-                                    <label class="control-label">ตำบล : </label>
-                                    <select class="form-control" v-model="formInputs.district_id">
-                                        <option>กรุณาเลือก</option>
-                                        <option>AAA</option>
-                                        <option>AAA</option>
-                                    </select>
-                                    <span v-if="formErrors['district_id']" class="help-block">{{ formErrors['district_id'] }}</span>
-                                </div>
+                                <province v-bind:province="formInputs.province_id"
+                                          v-on:province_update="formInputs.province_id = arguments[0]"
+                                          v-bind:amphure="formInputs.amphure_id"
+                                          v-on:amphure_update="formInputs.amphure_id = arguments[0]"
+                                          v-bind:district="formInputs.district_id"
+                                          v-on:district_update="formInputs.district_id = arguments[0]"
+                                          v-bind:formErrors="formErrors"
+                                ></province>
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['postal_code'] }">
                                     <label class="control-label">รหัสไปรษณีย์ : </label>
@@ -138,18 +116,22 @@
 </template>
 
 <script>
+    import Province from '../shared/Province.vue'
+
     export default {
         props: {
             userId: Number,
             saveUrl : String,
             loadUrl : String,
             successUrl : String,
-            loadRolesUrl : String,
+        },
+         components : {
+            Province
         },
         data() {
             return {
                 roles: [],
-                formInputs: {},
+                formInputs: null,
                 formErrors: [],
             }
         },
@@ -175,50 +157,20 @@
                             // success callback
                             // console.log(response);
                             this.formInputs = response.data;
-                            this.reInitialMultiOption(this.roles,this.formInputs.roles);
-
                         }, (response) => {
                             // error callback
                             this.formErrors = response.data;
                         })
             },
-            loadRoles: function () {
-                return this.$http.get(this.loadRolesUrl, {
-                    params: {all: true}
-                }).then(function (r) {
-                    console.log(r.data)
-                    this.rolesPage = r.data
-                    this.roles = this.rolesPage.data
-
-                })
-            },
-            reInitialMultiOption: function (master,selected) {
-
-                var choiceOpt = master
-                var userOpt = selected
-
-                for (var i = 0; i < choiceOpt.length; i++) {
-                    //console.log("choice", choiceOpt[i].id, choiceOpt[i].choice)
-
-                    for (var j = 0; j < userOpt.length; j++) {
-
-                        //console.log("user", userOpt[j])
-                        if (choiceOpt[i].id == userOpt[j].id) {
-                            choiceOpt.splice(i, 1, userOpt[j]);
-                            break;
-                        }
-                    }
-                }
-            }
         },
         created(){
-            this.loadRoles()
         },
         mounted() {
             console.log('ready to edit user.id =', this.userId)
             this.load()
         }
     }
+
 
 
 

@@ -19,7 +19,7 @@ Route::get('user', function (Request $request) {
 
 Route::resource('thailand/province', "API\\ProvinceController");
 Route::resource('thailand/province.amphure', "API\\ProvinceAmphureController");
-Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphurDistrictController");
+Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphureDistrictController");
 
 Route::group(["prefix" => 'admin',"middleware"=>'auth:api'], function () {
 

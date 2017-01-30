@@ -35,6 +35,10 @@ class FarmerRequest extends FormRequest
                     'username' => 'required|max:255|unique:users',
                     'name' => 'required|max:255',
                     'password' => 'required|min:6|confirmed',
+                    'province_id' => 'required',
+                    'amphure_id' => 'required',
+                    'district_id' => 'required',
+
                 ];
             }
             case 'PUT':
@@ -46,6 +50,9 @@ class FarmerRequest extends FormRequest
                     'username' => "required|email|max:255|unique:users,username,$user",
                     'password' => 'min:6|confirmed|nullable|same:password_confirmation',
                     'name' => 'required|max:255',
+                    'province_id' => 'required',
+                    'amphure_id' => 'required',
+                    'district_id' => 'required',
                 ];
             }
             default:

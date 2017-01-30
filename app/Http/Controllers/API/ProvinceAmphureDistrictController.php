@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class ProvinceAmphureDistrictController  extends Controller
+class ProvinceAmphureDistrictController   extends Controller
 {
 
     public function index($provinceId, $amphureId)

@@ -46,36 +46,26 @@
                                           class="help-block">{{ formErrors['address'] }}</span>
                                 </div>
 
-                                <div class="form-group" v-bind:class="{ 'has-error': formErrors['province_id'] }">
-                                    <label class="control-label">จังหวัด : </label>
-                                    <select class="form-control" v-model="formInputs.province_id">
-                                        <option>กรุณาเลือก</option>
-                                        <option>AAA</option>
-                                        <option>AAA</option>
-                                    </select>
-                                    <span v-if="formErrors['province_id']" class="help-block">{{ formErrors['province_id'] }}</span>
-                                </div>
+                                <!--<div class="form-group" v-bind:class="{ 'has-error': formErrors['province_id'] }">-->
+                                <!--<label class="control-label">จังหวัด : </label>-->
+                                <!--<select class="form-control" v-model="formInputs.province_id">-->
+                                <!--<option>กรุณาเลือก</option>-->
+                                <!--<option>AAA</option>-->
+                                <!--<option>AAA</option>-->
+                                <!--</select>-->
+                                <!--<span v-if="formErrors['province_id']" class="help-block">{{ formErrors['province_id'] }}</span>-->
+                                <!--</div>-->
 
-                                <div class="form-group" v-bind:class="{ 'has-error': formErrors['amphure_id'] }">
-                                    <label class="control-label">อำเภอ : </label>
-                                    <select class="form-control" v-model="formInputs.amphure_id">
-                                        <option>กรุณาเลือก</option>
-                                        <option>AAA</option>
-                                        <option>AAA</option>
-                                    </select>
-                                    <span v-if="formErrors['amphure_id']"
-                                          class="help-block">{{ formErrors['amphure_id'] }}</span>
-                                </div>
 
-                                <div class="form-group" v-bind:class="{ 'has-error': formErrors['district_id'] }">
-                                    <label class="control-label">ตำบล : </label>
-                                    <select class="form-control" v-model="formInputs.district_id">
-                                        <option>กรุณาเลือก</option>
-                                        <option>AAA</option>
-                                        <option>AAA</option>
-                                    </select>
-                                    <span v-if="formErrors['district_id']" class="help-block">{{ formErrors['district_id'] }}</span>
-                                </div>
+                                <province v-bind:province="formInputs.province_id"
+                                          v-on:province_update="formInputs.province_id = arguments[0]"
+                                          v-bind:amphure="formInputs.amphure_id"
+                                          v-on:amphure_update="formInputs.amphure_id = arguments[0]"
+                                          v-bind:district="formInputs.district_id"
+                                          v-on:district_update="formInputs.district_id = arguments[0]"
+                                          v-bind:formErrors="formErrors"
+                                ></province>
+
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['postal_code'] }">
                                     <label class="control-label">รหัสไปรษณีย์ : </label>
@@ -98,7 +88,7 @@
                                 </div>
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['username'] }">
-                                    <label class="control-label">รหัสผู้ใช้ : </label>
+                                    <label class="control-label">บัญชีผู้ใช้ : </label>
                                     <input type="text" class="form-control" placeholder="Username"
                                            v-model="formInputs.username"/>
                                     <span v-if="formErrors['username']"
@@ -122,7 +112,6 @@
                                 </div>
                             </fieldset>
 
-
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                                 <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
@@ -136,17 +125,23 @@
 </template>
 
 <script>
+
+    import Province from '../shared/Province.vue'
+
     export default {
         props: {
             saveUrl : String,
             successUrl : String,
 
         },
+        components : {
+            Province
+        },
         data() {
             return {
                 formInputs: {
                 },
-                formErrors: [],
+                formErrors: {},
             }
         },
         methods: {
@@ -168,8 +163,10 @@
         },
         mounted() {
             console.log('Component mounted.')
-            this.loadRoles();
-        }
+        },
     }
+
+
+
 
 </script>

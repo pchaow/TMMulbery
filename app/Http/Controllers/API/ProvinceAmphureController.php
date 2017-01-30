@@ -19,7 +19,7 @@ class ProvinceAmphureController extends Controller
     {
         /* @var Province $province */
         $province = Province::find($provinceId);
-        $amphurs = $province->amphurs()->get();
+        $amphurs = $province->amphures()->get();
         return $amphurs;
     }
 
@@ -33,10 +33,10 @@ class ProvinceAmphureController extends Controller
 
     }
 
-    public function show($provinceId,$id)
+    public function show($provinceId, $id)
     {
         $province = Province::find($provinceId);
-        $amphur = $province->amphurs()->where('AMPHUR_ID','=',$id)->first();
+        $amphur = $province->amphurs()->where('AMPHUR_ID', '=', $id)->first();
         return $amphur;
     }
 

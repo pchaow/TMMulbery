@@ -45,6 +45,9 @@
                                     <th>E-mail</th>
                                     <th>Username</th>
                                     <th>Name</th>
+                                    <th>Province</th>
+                                    <th>Amphure</th>
+                                    <th>District</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -53,6 +56,9 @@
                                     <td>{{farmer.email}}</td>
                                     <td>{{farmer.username}}</td>
                                     <td>{{farmer.name}}</td>
+                                    <td>{{farmer.province ? farmer.province.name : '-'}}</td>
+                                    <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
+                                    <td>{{farmer.district ? farmer.district.name : '-'}}</td>
                                     <td>
 
 
@@ -153,6 +159,8 @@
             this.load();
         }
     }
+
+
 
 
 

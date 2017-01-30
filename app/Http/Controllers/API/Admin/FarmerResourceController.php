@@ -20,6 +20,7 @@ class FarmerResourceController extends Controller
     {
 
         $query = User::query();
+        $query->with(["province",'district','amphure']);
 
         if ($request->has('keyword')) {
             $keyword = $request->get('keyword');

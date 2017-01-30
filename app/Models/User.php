@@ -31,12 +31,20 @@ class User extends Authenticatable
         'password', 'remember_token'
     ];
 
-//    public function setIdentityAttribute($value)
-//    {
-//        if (empty($value)) { // will check for empty string, null values, see php.net about it
-//            $this->attributes['identity'] = NULL;
-//        } else {
-//            $this->attributes['identity'] = $value;
-//        }
-//    }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function amphure()
+    {
+        return $this->belongsTo(Amphure::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+
 }

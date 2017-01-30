@@ -60,7 +60,7 @@
         },
         methods : {
             loadProvince : function(){
-                this.$http.get('/api/thailand/province')
+                return this.$http.get('/api/thailand/province')
                     .then((response) => {
                         //console.log(response);
                         this.provinces = response.data
@@ -70,7 +70,7 @@
             },
             loadAmphure : function(id){
 
-                this.$http.get('/api/thailand/province/'+id+'/amphure')
+                return this.$http.get('/api/thailand/province/'+id+'/amphure')
                     .then((response) => {
                         //console.log(response);
                         this.amphures = response.data
@@ -78,9 +78,8 @@
 
                     });
             },
-
             loadDistrict : function(pid,aid){
-                this.$http.get(window.strFormat("/api/thailand/province/{0}/amphure/{1}/district",pid,aid))
+                return this.$http.get(window.strFormat("/api/thailand/province/{0}/amphure/{1}/district",pid,aid))
                     .then((response) => {
                         //console.log(response);
                         this.districts = response.data
@@ -88,7 +87,6 @@
 
                     });
             },
-
             updateProvince : function(value){
                 this.provinceId = value
                 this.loadAmphure(this.provinceId)
@@ -115,17 +113,23 @@
                 }
 
             },
-
-
-
         },
         mounted : function(){
-            this.provinceId  = this.province
-            this.amphureId  = this.amphure
-            this.districtId  = this.district
-
-            this.loadProvince();
+            this.loadProvince().then(function(r){
+                if(this.province){
+                    this.provinceId  = this.province
+                    this.loadAmphure(this.provinceId).then(function(r){
+                        if(this.amphure){
+                            this.amphureId  = this.amphure
+                            this.loadDistrict(this.provinceId,this.amphureId).then(function(r){
+                                if(this.district){
+                                this.districtId  = this.district
+                                }
+                            })
+                        }
+                    })
+                }
+            });
         }
     }
-
 </script>

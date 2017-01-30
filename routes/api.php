@@ -24,6 +24,7 @@ Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphureDistr
 Route::group(["prefix" => 'admin',"middleware"=>'auth:api'], function () {
 
     Route::resource('farmer', "API\\Admin\\FarmerResourceController");
+    Route::resource('farmer.plant', "API\\Admin\\FarmerPlantResourceController");
     Route::resource('user', "API\\Admin\\UserResourceController");
     Route::resource('role', "Api\\Admin\\RoleResourceController");
     Route::resource('plant', "API\\Admin\\PlantResourceController");

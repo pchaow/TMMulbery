@@ -17,9 +17,10 @@ class FarmerPlantResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,$farmerId)
+    public function index(Request $request, $farmerId)
     {
-
+        $farmer = User::find($farmerId);
+        return $farmer->plants()->get();
     }
 
     /**
@@ -38,7 +39,7 @@ class FarmerPlantResourceController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PlantRequest $request,$farmerId)
+    public function store(PlantRequest $request, $farmerId)
     {
 
     }
@@ -49,7 +50,7 @@ class FarmerPlantResourceController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($farmerId,$plantId)
+    public function show($farmerId, $plantId)
     {
 
     }
@@ -60,7 +61,7 @@ class FarmerPlantResourceController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($farmerId,$plantId)
+    public function edit($farmerId, $plantId)
     {
 
     }
@@ -72,7 +73,7 @@ class FarmerPlantResourceController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PlantRequest $request, $farmerId,$plantId)
+    public function update(PlantRequest $request, $farmerId, $plantId)
     {
 
     }
@@ -83,7 +84,7 @@ class FarmerPlantResourceController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($farmerId,$plantId)
+    public function destroy($farmerId, $plantId)
     {
 
     }

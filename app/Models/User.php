@@ -46,5 +46,9 @@ class User extends Authenticatable
         return $this->belongsTo(District::class);
     }
 
+    public function plants()
+    {
+        return $this->hasMany(Plant::class);
+    }
 
 }

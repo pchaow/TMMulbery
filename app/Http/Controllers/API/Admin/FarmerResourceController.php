@@ -91,7 +91,10 @@ class FarmerResourceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $user->roles;
+        $user->identity;
+        return $user;
     }
 
     /**

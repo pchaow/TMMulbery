@@ -19,7 +19,7 @@
                                 </div>
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['identity'] }">
-                                    <label class="control-label">หมายเลขประจำตัวประชาชน : </label>
+                                    <label class="control-label">เลขประจำตัวประชาชน : </label>
                                     <input class="form-control" placeholder="หมายเลขประจำตัวประชาชน 13 หลัก"
                                            v-model="formInputs.identity"/>
                                     <span v-if="formErrors['identity']"

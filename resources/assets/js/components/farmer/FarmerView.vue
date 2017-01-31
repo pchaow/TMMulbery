@@ -9,13 +9,13 @@
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>แปลงทั้งหมด</b> <a class="pull-right">3</a>
+                            <b>แปลงทั้งหมด</b> <a v-if="plants" class="pull-right">{{plants.length}}</a>
                         </li>
 
 
                     </ul>
 
-                    <a href="#" class="btn btn-primary btn-block"><b>แก้ไขข้อมูลลงทะเบียน</b></a>
+                    <a v-bind:href="editUrl" class="btn btn-primary btn-block"><b>แก้ไขข้อมูลลงทะเบียน</b></a>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -30,18 +30,19 @@
                 <div class="box-body">
                     <strong><i class="fa fa-file-text-o margin-r-5"></i> เลขประจำตัวประชาชน</strong>
 
-                    <p>1560100000001</p>
+                    <p>{{farmer.identity}}</p>
                     <hr>
                     <strong><i class="fa fa-pencil margin-r-5"></i> ข้อมูลติดต่อ</strong>
-                    <p class="text-muted">081-11111233</p>
-                    <p class="text-muted">abc@ggmail.com</p>
+                    <p class="text-muted">{{farmer.contact_number}}</p>
+                    <p class="text-muted">{{farmer.email}}</p>
 
 
                     <hr>
 
                     <strong><i class="fa fa-map-marker margin-r-5"></i> ที่อยู่</strong>
 
-                    <p class="text-muted">19 หมู่ 2 ต.แม่กา อ.เมือง จ.พะเยา 56120</p>
+                    <p class="text-muted">{{farmer.address}} {{farmer.district.name}} {{farmer.amphure.name}}
+                        {{farmer.province.name}}</p>
 
                     <hr>
 
@@ -188,6 +189,9 @@
     export default {
         props: {
             loadUrl: String,
+            editUrl: String,
+            loadPlantUrl: String,
+            farmerId: Number,
         },
         components: {
             Province
@@ -195,13 +199,13 @@
         data() {
             return {
                 farmer: null,
+                plants: null,
             }
         },
         methods: {
 
             load: function () {
-
-                this.$http.get(this.loadUrl)
+                return this.$http.get(this.loadUrl)
                     .then((response) => {
                         // success callback
                         // console.log(response);
@@ -210,10 +214,20 @@
 
                     })
             },
+            loadPlant: function () {
+                return this.$http.get(this.loadPlantUrl)
+                    .then((response) => {
+                        this.plants = response.data
+                        console.log(this.plants.length);
+                    }, (response) => {
+
+                    })
+            }
         },
         mounted() {
-            console.log('ready to edit user.id =', this.userId)
+            console.log('ready to view farmer.id =', this.farmerId)
             this.load()
+            this.loadPlant();
         }
     }
 </script>

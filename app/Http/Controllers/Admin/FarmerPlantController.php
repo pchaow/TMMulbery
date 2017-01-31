@@ -11,9 +11,13 @@ use App\Http\Controllers\Controller;
 class FarmerPlantController extends Controller
 {
 
-    public function create()
+    public function create($userId)
     {
-        return view('admin.farmer.plant.create');
+        if (!User::find($userId)->hasRole('farmer')) {
+            return redirect("/admin/farmers");
+        }
+        return view('admin.farmer.plant.create')
+            ->with('userId', $userId);;
 
     }
 

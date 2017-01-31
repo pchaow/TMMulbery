@@ -19,6 +19,7 @@
                 v-bind:load-url="'/api/admin/farmer/{{$userId}}'"
                 v-bind:edit-url="'/admin/farmers/{{$userId}}/edit'"
                 v-bind:load-plant-url="'/api/admin/farmer/{{$userId}}/plant'"
+                v-bind:plant-create-url="'/admin/farmers/{{$userId}}/plant/create'"
                 v-bind:farmer-id="{{$userId or 0}}">
         </farmer-view>
 

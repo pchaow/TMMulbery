@@ -38,12 +38,12 @@ Vue.component('role-create', require('./components/role/RoleCreate.vue'));
 Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
 
 Vue.component('plant-index', require('./components/plant/PlantIndex.vue'));
-Vue.component('plant-create', require('./components/plant/PlantCreate.vue'));
 
 Vue.component('farmer-index', require('./components/farmer/FarmerIndex.vue'));
 Vue.component('farmer-create', require('./components/farmer/FarmerCreate.vue'));
 Vue.component('farmer-edit', require('./components/farmer/FarmerEdit.vue'));
 Vue.component('farmer-view', require('./components/farmer/FarmerView.vue'));
+Vue.component('farmer-plant-create', require('./components/farmer/plant/PlantCreate.vue'));
 
 // Vue.component('province', require('./components/shared/Province.vue'));
 

@@ -13,9 +13,14 @@
 
     <!-- Main content -->
     <section class="content">
-        <plant-create
-                success-url="/admin/plants"
-        ></plant-create>
+        <farmer-plant-create
+                v-bind:save-plant-url="'/api/admin/farmer/{{$userId}}/plant'"
+                v-bind:load-url="'/api/admin/farmer/{{$userId}}'"
+                v-bind:edit-url="'/admin/farmers/{{$userId}}/edit'"
+                v-bind:load-plant-url="'/api/admin/farmer/{{$userId}}/plant'"
+                v-bind:plant-create-url="'/admin/farmers/{{$userId}}/plant/create'"
+                v-bind:farmer-id="{{$userId or 0}}"
+        ></farmer-plant-create>
     </section>
     <!-- /.content -->
 @endsection

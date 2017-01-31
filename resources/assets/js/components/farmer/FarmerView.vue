@@ -68,9 +68,9 @@
 
                                 <div class="pull-right">
 
-                                    <button type="button" class="btn btn-success">
+                                    <a v-bind:href="plantCreateUrl" class="btn btn-success">
                                         เพิ่มแปลงหม่อน
-                                    </button>
+                                    </a>
 
 
                                 </div>
@@ -184,17 +184,13 @@
 </template>
 
 <script>
-    import Province from '../shared/Province.vue'
-
     export default {
         props: {
             loadUrl: String,
             editUrl: String,
             loadPlantUrl: String,
+            plantCreateUrl: String,
             farmerId: Number,
-        },
-        components: {
-            Province
         },
         data() {
             return {

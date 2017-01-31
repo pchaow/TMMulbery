@@ -1,11 +1,11 @@
 <template>
-    <div class="row">
+    <div class="row" v-if="farmer">
         <div class="col-md-3">
 
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <h3 class="profile-username text-center">กอไก่ ใจดี</h3>
+                    <h3 class="profile-username text-center">{{farmer.name}}</h3>
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
@@ -183,5 +183,37 @@
 </template>
 
 <script>
+    import Province from '../shared/Province.vue'
 
+    export default {
+        props: {
+            loadUrl: String,
+        },
+        components: {
+            Province
+        },
+        data() {
+            return {
+                farmer: null,
+            }
+        },
+        methods: {
+
+            load: function () {
+
+                this.$http.get(this.loadUrl)
+                    .then((response) => {
+                        // success callback
+                        // console.log(response);
+                        this.farmer = response.data;
+                    }, (response) => {
+
+                    })
+            },
+        },
+        mounted() {
+            console.log('ready to edit user.id =', this.userId)
+            this.load()
+        }
+    }
 </script>

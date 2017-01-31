@@ -121,11 +121,11 @@
     export default {
         props: {
             userId: Number,
-            saveUrl : String,
-            loadUrl : String,
-            successUrl : String,
+            saveUrl: String,
+            loadUrl: String,
+            successUrl: String,
         },
-         components : {
+        components: {
             Province
         },
         data() {
@@ -139,28 +139,28 @@
             save: function () {
                 this.formErrors = [];
                 this.$http.put(this.saveUrl, this.formInputs)
-                        .then((response) => {
-                            // success callback
-                            // console.log(response);
-                            window.location.href = this.successUrl
-                        }, (response) => {
-                            // error callback
-                            this.formErrors = response.data;
-                        });
+                    .then((response) => {
+                        // success callback
+                        // console.log(response);
+                        window.location.href = this.successUrl
+                    }, (response) => {
+                        // error callback
+                        this.formErrors = response.data;
+                    });
 
 
             },
             load: function () {
 
                 this.$http.get(this.loadUrl)
-                        .then((response) => {
-                            // success callback
-                            // console.log(response);
-                            this.formInputs = response.data;
-                        }, (response) => {
-                            // error callback
-                            this.formErrors = response.data;
-                        })
+                    .then((response) => {
+                        // success callback
+                        // console.log(response);
+                        this.formInputs = response.data;
+                    }, (response) => {
+                        // error callback
+                        this.formErrors = response.data;
+                    })
             },
         },
         created(){
@@ -170,20 +170,4 @@
             this.load()
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>

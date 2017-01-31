@@ -1,46 +1,77 @@
 <template>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <h3 class="profile-username text-center">farmer.name</h3>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>แปลงทั้งหมด</b> <a class="pull-right">3</a>
+                        </li>
+
+
+                    </ul>
+
+                    <a href="#" class="btn btn-primary btn-block"><b>แก้ไขข้อมูลลงทะเบียน</b></a>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+            <!-- About Me Box -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ข้อมูลส่วนตัว</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> เลขประจำตัวประชาชน</strong>
+
+                    <p>1560100000001</p>
+                    <hr>
+                    <strong><i class="fa fa-pencil margin-r-5"></i> ข้อมูลติดต่อ</strong>
+                    <p class="text-muted">081-11111233</p>
+                    <p class="text-muted">abc@ggmail.com</p>
+
+
+                    <hr>
+
+                    <strong><i class="fa fa-map-marker margin-r-5"></i> ที่อยู่</strong>
+
+                    <p class="text-muted">19 หมู่ 2 ต.แม่กา อ.เมือง จ.พะเยา 56120</p>
+
+                    <hr>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-9">
 
             <!-- general form elements -->
 
-            <div class="panel panel-success">
-                <div class="panel-heading">
-
-                    <i class="fa fa-tree"></i>
-                    ลงทะเบียนแปลงหม่อน
-                </div>
+            <div class="box box-success">
 
                 <!-- /.box-header -->
+                <div class="box-header with-border">
+                    <i class="fa fa-leaf"></i> ข้อมูลพื้นฐานแปลงหม่อน</div>
                 <!-- form start -->
+
                 <form role="form">
 
-                    <div class="panel-body">
-                        <h3 class="box-title"><i class="fa fa-leaf"></i> ข้อมูลพื้นฐานแปลงหม่อน</h3>
+                    <div class="box-body">
+
 
                         <div class="form-group">
-                            <label>เกษตรกรเจ้าของแปลง</label>
+                            <label for="row_spacing">ชื่อเรียกแปลงหม่อน</label>
+                            <input type="text" class="form-control" id="name"
+                                   placeholder="ชื่อเรียกแปลงหม่อน">
 
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-male"></i>
-                                </div>
-                                <input type="email" class="form-control" id="user_id"
-                                       placeholder="ค้นหาตามเลขประจำตัวประชาชน 13 หลัก หรือ ชื่อ-ชื่อสกุล ของเกษตรกรที่ลงทะเบียนแล้ว">
-                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>ชื่อเรียกแปลงหม่อน</label>
-
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-commenting"></i>
-                                </div>
-                                <input type="text" class="form-control" id="name"
-                                       placeholder="ชื่อเรียกแปลงหม่อน">
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <label for="row_spacing">ระยะปลูกระหว่างแถว(เมตร)</label>
                             <input type="text" class="form-control" id="row_spacing"
@@ -67,10 +98,10 @@
 
                         </div>
 
+
                         <!-- /.input group -->
-                        <h3 class="box-title"><i class="fa  fa-map-signs"></i> ข้อมูลพิกัดแปลงหม่อน</h3>
 
-
+                    <strong><i class="fa fa-map-signs margin-r-5"></i> ข้อมูลพิกัดแปลงหม่อน</strong>
                         <div class="form-group">
                             <label>จังหวัด</label>
                             <select class="form-control">

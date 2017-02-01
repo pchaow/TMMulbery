@@ -17,10 +17,16 @@ Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
+Route::resource('thailand/province', "API\\ProvinceController");
+Route::resource('thailand/province.amphure', "API\\ProvinceAmphureController");
+Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphureDistrictController");
 
 Route::group(["prefix" => 'admin'], function () {
 
+    Route::resource('farmer', "API\\Admin\\FarmerResourceController");
+    Route::resource('farmer.plant', "API\\Admin\\FarmerPlantResourceController");
     Route::resource('user', "API\\Admin\\UserResourceController");
     Route::resource('role', "Api\\Admin\\RoleResourceController");
+    Route::resource('plant', "API\\Admin\\PlantResourceController");
 
 });

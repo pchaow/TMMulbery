@@ -20,7 +20,7 @@ class LaratrustSeeder extends Seeder
 
         foreach ($config as $key => $modules) {
             // Create a new role
-            $role = \App\Role::create([
+            $role = \App\Models\Role::create([
                 'name' => $key,
                 'display_name' => ucfirst($key),
                 'description' => ucfirst($key)
@@ -35,7 +35,7 @@ class LaratrustSeeder extends Seeder
                 foreach ($permissions as $p => $perm) {
                     $permissionValue = $mapPermission->get($perm);
 
-                    $permission = \App\Permission::firstOrCreate([
+                    $permission = \App\Models\Permission::firstOrCreate([
                         'name' => $module . '-' . $permissionValue,
                         'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                         'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
@@ -53,7 +53,7 @@ class LaratrustSeeder extends Seeder
 
             $this->command->info("Creating '{$key}' user");
             // Create default user for each role
-            $user = \App\User::create([
+            $user = \App\Models\User::create([
                 'name' => ucfirst($key),
                 'email' => $key . '@app.com',
                 'username' => $key,
@@ -73,9 +73,9 @@ class LaratrustSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('permission_role')->truncate();
         DB::table('role_user')->truncate();
-        \App\User::truncate();
-        \App\Role::truncate();
-        \App\Permission::truncate();
+        \App\Models\User::truncate();
+        \App\Models\Role::truncate();
+        \App\Models\Permission::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
     }

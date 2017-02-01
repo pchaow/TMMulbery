@@ -1,8 +1,8 @@
 <ul class="sidebar-menu">
     <li class="header">HEADER</li>
     <!-- Optionally, you can add icons to the links -->
-    <li class="{{ Request::is('home') ? 'active' : '' }}"><a href="/home"><i class="fa fa-link"></i> <span>Dashboard</span></a>
-    </li>
+    <li class="{{ Request::is('home') ? 'active' : '' }}"><a href="/home"><i class="fa fa-link"></i>
+            <span>Dashboard</span></a></li>
 
 
     <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
@@ -30,6 +30,15 @@
             <li class="{{ Request::is('admin/roles') ? 'active' : '' }}">
                 <a href="/admin/roles">
                     <i class="fa fa-sign-in"></i>Role Management
+                </a>
+            </li>
+
+            <li class="{{ Request::is('admin/farmers') ? 'active' : '' }}"><a href="/admin/farmers"><i
+                            class="fa fa-link"></i><span>Farmer Management</span></a></li>
+
+            <li class="{{ Request::is('admin/plants') ? 'active' : '' }}">
+                <a href="/admin/plants">
+                    <i class="fa fa-tree"></i>Plant Management
                 </a>
             </li>
         </ul>

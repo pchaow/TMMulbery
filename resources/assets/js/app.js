@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -38,7 +37,17 @@ Vue.component('role-index', require('./components/role/RoleIndex.vue'));
 Vue.component('role-create', require('./components/role/RoleCreate.vue'));
 Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
 
+Vue.component('plant-index', require('./components/plant/PlantIndex.vue'));
+Vue.component('plant-create', require('./components/plant/PlantCreate.vue'));
+
+Vue.component('farmer-index', require('./components/farmer/FarmerIndex.vue'));
+Vue.component('farmer-create', require('./components/farmer/FarmerCreate.vue'));
+Vue.component('farmer-edit', require('./components/farmer/FarmerEdit.vue'));
+Vue.component('farmer-view', require('./components/farmer/FarmerView.vue'));
+
+// Vue.component('province', require('./components/shared/Province.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
 });
+

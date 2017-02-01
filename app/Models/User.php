@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password',
+        'name', 'username', 'email', 'password', 'identity', 'contact_number', 'address', 'postal_code', 'province_id', 'amphure_id', 'district_id'
     ];
 
     /**
@@ -28,6 +28,27 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function amphure()
+    {
+        return $this->belongsTo(Amphure::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function plants()
+    {
+        return $this->hasMany(Plant::class);
+    }
+
 }

@@ -15,11 +15,10 @@
     <section class="content">
 
         <role-index
-                v-bind:create-role-url="'/admin/roles/create'"
-                v-bind:edit-role-prefix="'/admin/roles/'"
-                v-bind:edit-role-postfix="'/edit'"
-                v-bind:load-roles-url="'/api/admin/role/'"
-                v-bind:delete-role-url="'/api/admin/role/'"
+                v-bind:create-url="'/admin/roles/create'"
+                v-bind:edit-url="'/admin/roles/{id}/edit'"
+                v-bind:load-url="'/api/admin/role/'"
+                v-bind:delete-url="'/api/admin/role/'"
         ></role-index>
 
     </section>

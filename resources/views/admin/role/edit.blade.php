@@ -16,10 +16,8 @@
     <section class="content">
 
         <role-edit
-                v-bind:save-prefix="'/api/admin/role/'"
-                v-bind:save-postfix="''"
-                v-bind:load-prefix="'/api/admin/role/'"
-                v-bind:load-postfix="''"
+                v-bind:save-url="'/api/admin/role/{{$roleId or 0}}'"
+                v-bind:load-url="'/api/admin/role/{{$roleId or 0}}'"
                 v-bind:success-url="'/admin/roles'"
                 v-bind:role-id="{{$roleId or 0}}"></role-edit>
     </section>

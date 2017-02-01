@@ -159,16 +159,12 @@
                                   v-bind:formErrors="formErrors"
                         ></province>
 
-                        <div class="form-group">
-                            <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
+                        <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
+                        <g-map
+                                v-bind:lat="19.1163145"
+                                v-bind:lng="99.9073988"
+                        ></g-map>
 
-                            <g-map
-                                    v-bind:lat="19.1163145"
-                                    v-bind:lng="99.9073988"
-                            ></g-map>
-
-
-                        </div>
 
                     </div>
 

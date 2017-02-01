@@ -31,10 +31,7 @@ class PlantRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'email' => 'required|email|max:255|unique:users',
-                    'username' => 'required|max:255|unique:users',
                     'name' => 'required|max:255',
-                    'password' => 'required|min:6|confirmed',
                 ];
             }
             case 'PUT':
@@ -42,9 +39,6 @@ class PlantRequest extends FormRequest
                 $user = $this->get('id');
 
                 return [
-                    'email' => "required|email|max:255|unique:users,email,$user",
-                    'username' => "required|email|max:255|unique:users,username,$user",
-                    'password' => 'min:6|confirmed|nullable|same:password_confirmation',
                     'name' => 'required|max:255',
                 ];
             }

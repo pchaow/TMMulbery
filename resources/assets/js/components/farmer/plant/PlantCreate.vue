@@ -108,7 +108,7 @@
 
                         <div class="form-group" v-bind:class="{ 'has-error': formErrors['row_spacing'] }">
                             <label for="row_spacing">ระยะปลูกระหว่างแถว(เมตร)</label>
-                            <input v-on:change="calculateDensity" type="text" class="form-control" id="row_spacing"
+                            <input type="text" class="form-control" id="row_spacing"
                                    v-model="formInputs.row_spacing"
                                    placeholder="ระยะปลูกระหว่างแถว(เมตร)">
                             <span v-if="formErrors['row_spacing']"
@@ -117,7 +117,7 @@
 
                         <div class="form-group" v-bind:class="{ 'has-error': formErrors['plant_spacing'] }">
                             <label for="row_spacing">ระยะปลูกระหว่างต้น(เมตร)</label>
-                            <input v-on:change="calculateDensity" type="text" class="form-control" id="plant_spacing"
+                            <input type="text" class="form-control" id="plant_spacing"
                                    v-model="formInputs.plant_spacing"
                                    placeholder="ระยะปลูกระหว่างแถว(เมตร)">
                             <span v-if="formErrors['plant_spacing']"
@@ -127,7 +127,7 @@
 
                         <div class="form-group" v-bind:class="{ 'has-error': formErrors['density'] }">
                             <label for="density">จำนวนต้นต่อไร่</label>
-                            <input readonly type="text" class="form-control" id="density" v-model="formInputs.density"
+                            <input readonly type="text" class="form-control" id="density" v-bind:value="calculateDensity"
                                    placeholder="จำนวนต้นต่อไร่">
                             <span v-if="formErrors['density']"
                                   class="help-block">{{ formErrors['density'] }}</span>
@@ -216,7 +216,16 @@
 
                 this.formInputs.area_sqm = Math.floor(sqm);
                 return sqm;
-            }
+            },
+            calculateDensity: function () {
+                console.log("test")
+                var row_spacing = this.formInputs.row_spacing
+                var plant_spacing = this.formInputs.plant_spacing
+                var density = 1600 / (row_spacing * plant_spacing)
+                this.formInputs.density = Math.floor(density);
+
+                return density
+            },
         },
         methods: {
             save: function () {
@@ -229,14 +238,7 @@
                     });
             },
 
-            calculateDensity: function () {
-                console.log("test")
-                var row_spacing = this.formInputs.row_spacing
-                var plant_spacing = this.formInputs.plant_spacing
-                var density = 1600 / (row_spacing * plant_spacing)
-                this.formInputs.density = Math.floor(density);
 
-            },
             load: function () {
                 return this.$http.get(this.loadUrl)
                     .then((response) => {
@@ -253,7 +255,6 @@
         {
             console.log('ready to view farmer.id =', this.farmerId)
             this.load()
-            this.calculateDensity();
         }
     }
 

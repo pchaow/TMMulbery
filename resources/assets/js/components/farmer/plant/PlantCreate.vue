@@ -44,7 +44,7 @@
                     <p class="text-muted">
                         {{farmer.address}}
                         {{farmer.district ? farmer.district.name : ''}}
-                        {{farmer.amphure  ? farmer.amphure.name : ''}}
+                        {{farmer.amphure ? farmer.amphure.name : ''}}
                         {{farmer.province ? farmer.province.name : ''}}
                     </p>
 
@@ -131,7 +131,8 @@
 
                         <div class="form-group" v-bind:class="{ 'has-error': formErrors['density'] }">
                             <label for="density">จำนวนต้นต่อไร่</label>
-                            <input readonly type="text" class="form-control" id="density" v-bind:value="calculateDensity"
+                            <input readonly type="text" class="form-control" id="density"
+                                   v-bind:value="calculateDensity"
                                    placeholder="จำนวนต้นต่อไร่">
                             <span v-if="formErrors['density']"
                                   class="help-block">{{ formErrors['density'] }}</span>
@@ -160,9 +161,10 @@
 
                         <div class="form-group">
                             <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
-                            <div id="map">
-                                draw map
-                            </div>
+
+                            <g-map></g-map>
+
+
                         </div>
 
                     </div>
@@ -185,6 +187,7 @@
 
 <script>
     import Province from '../../shared/Province.vue'
+    import GMap from '../../shared/GMap.vue'
 
     export default {
         props: {
@@ -195,7 +198,8 @@
             farmerId: Number,
         },
         components: {
-            Province
+            Province,
+            GMap
         },
         data() {
             return {
@@ -261,5 +265,9 @@
             this.load()
         }
     }
+
+
+
+
 
 </script>

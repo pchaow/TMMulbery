@@ -22,6 +22,9 @@
             "csrfToken": document.getElementById('csrf_token').attributes['content'].value,
         }
     </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9CAN7kLir7HYusQHDLkUTJsCVedbCE4E" async defer></script>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div id="app" class="wrapper">

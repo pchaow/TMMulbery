@@ -12,12 +12,14 @@
     "laravel-elixir-vue-2": "^0.2.0",
     "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.16.2",
-    "vue": "^2.0.1",
-    "vue-resource": "^1.0.3"
+    "vue": "^2.1.*",
+    "vue-resource": "^1.1.1",
+    "marker-clusterer-plus": "^2.1.4",
+    "string-template": "^1.0.0",
+    "vue2-google-maps": "^0.5.2"
   },
   "dependencies": {
     "admin-lte": "^2.3.11",
-    "font-awesome": "^4.7.0",
-    "string-template": "^1.0.0"
+    "font-awesome": "^4.7.0"
   }
 }

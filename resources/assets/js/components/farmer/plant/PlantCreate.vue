@@ -41,8 +41,12 @@
 
                     <strong><i class="fa fa-map-marker margin-r-5"></i> ที่อยู่</strong>
 
-                    <p class="text-muted">{{farmer.address}} {{farmer.district.name}} {{farmer.amphure.name}}
-                        {{farmer.province.name}}</p>
+                    <p class="text-muted">
+                        {{farmer.address}}
+                        {{farmer.district ? farmer.district.name : ''}}
+                        {{farmer.amphure  ? farmer.amphure.name : ''}}
+                        {{farmer.province ? farmer.province.name : ''}}
+                    </p>
 
                     <hr>
 

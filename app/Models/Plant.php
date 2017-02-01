@@ -18,4 +18,19 @@ class Plant extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function amphure()
+    {
+        return $this->belongsTo(Amphure::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
 }

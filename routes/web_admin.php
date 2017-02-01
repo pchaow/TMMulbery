@@ -8,7 +8,6 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 
-
 Route::group(['prefix' => 'roles'], function () {
     Route::get('/', "Admin\\RoleController@index");
     Route::get('create', "Admin\\RoleController@create");
@@ -21,6 +20,7 @@ Route::group(['prefix' => 'farmers'], function () {
     Route::get('{id}/edit', 'Admin\\FarmerController@edit');
     Route::get('{id}/view', 'Admin\\FarmerController@view');
 
+    Route::get('{id}/plant/create', "Admin\\FarmerPlantController@create");
 });
 
 Route::group(['prefix' => 'plants'], function () {

@@ -30,7 +30,7 @@ class FarmerPlantResourceController extends Controller
      */
     public function create($farmerId)
     {
-        //
+
     }
 
     /**

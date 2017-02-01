@@ -45,9 +45,9 @@
                                     <th>E-mail</th>
                                     <th>Username</th>
                                     <th>Name</th>
-                                    <th>Province</th>
-                                    <th>Amphure</th>
                                     <th>District</th>
+                                    <th>Amphure</th>
+                                    <th>Province</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -56,9 +56,9 @@
                                     <td>{{farmer.email}}</td>
                                     <td>{{farmer.username}}</td>
                                     <td>{{farmer.name}}</td>
-                                    <td>{{farmer.province ? farmer.province.name : '-'}}</td>
-                                    <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
                                     <td>{{farmer.district ? farmer.district.name : '-'}}</td>
+                                    <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
+                                    <td>{{farmer.province ? farmer.province.name : '-'}}</td>
                                     <td>
 
 
@@ -103,11 +103,11 @@
 <script>
     export default {
         props: {
-            editUrl : String,
-            viewUrl : String,
-            loadFarmerUrl : String,
-            deleteUrl : String,
-            createFarmerUrl : String
+            editUrl: String,
+            viewUrl: String,
+            loadFarmerUrl: String,
+            deleteUrl: String,
+            createFarmerUrl: String
         },
         data() {
             return {
@@ -120,7 +120,7 @@
             }
         },
         methods: {
-            strFormat : window.strFormat,
+            strFormat: window.strFormat,
             reset: function () {
                 this.form = {
                     keyword: "",
@@ -146,7 +146,7 @@
             },
             deleteFarmer: function (farmer) {
                 if (confirm("Do you want to delete this farmer?")) {
-                    this.$http.delete(this.strFormat(this.deleteUrl,{id:farmer.id}), {
+                    this.$http.delete(this.strFormat(this.deleteUrl, {id: farmer.id}), {
                         params: this.form
                     }).then(function (r) {
                         this.load()
@@ -159,16 +159,6 @@
             this.load();
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
 </script>

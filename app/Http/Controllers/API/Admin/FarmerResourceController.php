@@ -77,10 +77,11 @@ class FarmerResourceController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        $user->roles;
-        $user->identity;
-        return $user;
+        $query = User::query();
+        $query->with(["province",'district','amphure']);
+        $query->where('id',$id);
+
+        return $query->first();
     }
 
     /**

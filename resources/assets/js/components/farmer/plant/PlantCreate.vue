@@ -162,7 +162,10 @@
                         <div class="form-group">
                             <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
 
-                            <g-map></g-map>
+                            <g-map
+                                    v-bind:lat="19.1163145"
+                                    v-bind:lng="99.9073988"
+                            ></g-map>
 
 
                         </div>

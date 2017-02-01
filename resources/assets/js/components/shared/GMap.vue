@@ -1,6 +1,6 @@
 <template>
     <div class="vue-map-container">
-        <div class="vue-map"></div>
+        <div class="vue-map" ref="vueMap"></div>
         <slot></slot>
     </div>
 </template>
@@ -18,7 +18,11 @@
 </style>
 <script>
     export default{
-        props: {},
+        props: {
+            lat : Number,
+            lng : Number,
+
+        },
         data(){
             return {
                 mapObject: null,
@@ -26,17 +30,37 @@
         },
         methods: {
             initMap: function () {
-                const element = this.$el.getElementsByClassName('vue-map')[0];
+                const element = this.$refs.vueMap;
                 this.map = new google.maps.Map(element, {
-                    center: {lat: 19.1163145, lng: 99.9073988},
+                    center: {
+                        lat: this.lat,
+                        lng: this.lng},
                     scrollwheel: false,
                     zoom: 10
                 })
+
+                var drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.MARKER,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                        position: google.maps.ControlPosition.TOP_CENTER,
+                        drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
+                    },
+                    markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+                    circleOptions: {
+                        fillColor: '#ffff00',
+                        fillOpacity: 1,
+                        strokeWeight: 5,
+                        clickable: false,
+                        editable: true,
+                        zIndex: 1
+                    }
+                });
+                drawingManager.setMap(this.map);
             }
         },
         mounted: function () {
             this.initMap();
-            console.log('test');
         }
     }
 </script>

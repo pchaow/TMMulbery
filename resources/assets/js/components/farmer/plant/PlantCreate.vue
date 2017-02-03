@@ -151,16 +151,16 @@
                         <strong><i class="fa fa-map-signs margin-r-5"></i> ข้อมูลพิกัดแปลงหม่อน</strong>
 
                         <province v-bind:province="formInputs.province_id"
-                                  v-on:province_update="formInputs.province_id = arguments[0]"
+                                  v-on:province_update="provinceUpdate(arguments[0],arguments[1])"
                                   v-bind:amphure="formInputs.amphure_id"
-                                  v-on:amphure_update="formInputs.amphure_id = arguments[0]"
+                                  v-on:amphure_update="amphureUpdate(arguments[0],arguments[1])"
                                   v-bind:district="formInputs.district_id"
-                                  v-on:district_update="formInputs.district_id = arguments[0]"
+                                  v-on:district_update="districtUpdate(arguments[0],arguments[1])"
                                   v-bind:formErrors="formErrors"
                         ></province>
-
                         <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
                         <g-map
+                                v-bind:text="textSearch"
                                 v-bind:lat="19.1163145"
                                 v-bind:lng="99.9073988"
                         ></g-map>
@@ -209,6 +209,7 @@
                     area_rai: 0,
                     area_ngan: 0
                 },
+                textSearch: "",
                 plants: null,
                 formErrors: {},
             }
@@ -225,7 +226,6 @@
                 return sqm;
             },
             calculateDensity: function () {
-                console.log("test")
                 var row_spacing = this.formInputs.row_spacing
                 var plant_spacing = this.formInputs.plant_spacing
                 var density = 1600 / (row_spacing * plant_spacing)
@@ -233,6 +233,7 @@
 
                 return density
             },
+
         },
         methods: {
             save: function () {
@@ -245,7 +246,6 @@
                     });
             },
 
-
             load: function () {
                 return this.$http.get(this.loadUrl)
                     .then((response) => {
@@ -256,6 +256,25 @@
 
                     })
             },
+            provinceUpdate: function (val, name) {
+                this.formInputs.province_id = val
+                this.formInputs.province_name = name
+                this.calculateAddress()
+            },
+            amphureUpdate: function (val, name) {
+                this.formInputs.amphure_id = val
+                this.formInputs.amphure_name = name
+                this.calculateAddress()
+            },
+            districtUpdate: function (val, name) {
+                this.formInputs.district_id = val
+                this.formInputs.district_name = name
+                this.calculateAddress()
+            },
+            calculateAddress: function () {
+                var text = this.formInputs.district_name+ " " + this.formInputs.amphure_name + " " + this.formInputs.province_name ;
+                this.textSearch = text;
+            }
         }
         ,
         mounted()
@@ -264,9 +283,6 @@
             this.load()
         }
     }
-
-
-
 
 
 </script>

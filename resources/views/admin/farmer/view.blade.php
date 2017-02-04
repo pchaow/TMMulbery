@@ -3,12 +3,12 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Farmer Management
+            จัดการเกษตรกร
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/farmers"><i class="fa fa-user"></i> Farmer Management</a></li>
+            <li><a href="/admin/farmers"><i class="fa fa-user"></i>จัดการเกษตรกร</a></li>
             <li><a href="/admin/farmers/{{$userId}}/view"><i class="fa fa-search"></i>ดูข้อมูลเกษตรกร</a></li>
-            <li>Farmers ID : {{$userId}}</li>
+            <li>รหัสเกษตรกร : {{$userId}}</li>
         </ol>
     </section>
 

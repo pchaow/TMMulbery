@@ -230,6 +230,7 @@
                 var plant_spacing = this.formInputs.plant_spacing
                 var density = 1600 / (row_spacing * plant_spacing)
                 this.formInputs.density = Math.floor(density);
+                
 
                 return density
             },

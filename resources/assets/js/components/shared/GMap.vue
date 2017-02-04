@@ -3,7 +3,7 @@
         <div class="row" style="margin-bottom: 1em;">
             <div class="col-md-12">
                 <div class="input-group input-group-sm">
-                    <input type="text" ref="address" class="form-control" placeholder="ค้นหาจากที่อยู่">
+                    <input v-bind:value="text" type="text" ref="address" class="form-control" placeholder="ค้นหาจากที่อยู่">
                     <span class="input-group-btn">
                       <button v-on:click="searchClick"
                               type="button" ref="search" class="btn btn-info btn-flat">Go!</button>
@@ -38,6 +38,7 @@
         props: {
             lat: Number,
             lng: Number,
+            text: String,
 
         },
         data(){
@@ -96,7 +97,6 @@
                 drawingManager.setMap(this.map);
 
                 this.geocoder = new google.maps.Geocoder();
-
 
 
             }

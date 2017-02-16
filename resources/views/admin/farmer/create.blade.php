@@ -2,10 +2,12 @@
 
 @section('content')
     <section class="content-header">
-
+        <h1>
+            ลงทะเบียนเกษตรกร
+        </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/farmers"><i class="fa fa-user"></i> Farmer Management</a></li>
-            <li><a href="/admin/farmers/create"><i class="fa fa-plus"></i> Create Farmer</a></li>
+            <li><a href="/admin/farmers"><i class="fa fa-user"></i> จัดการเกษตรกร</a></li>
+            <li><a href="/admin/farmers/create"><i class="fa fa-plus"></i> ลงทะเบียนเกษตรกร</a></li>
         </ol>
     </section>
 

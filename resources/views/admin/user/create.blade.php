@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            User Management
+            ลงทะเบียนผู้ใช้งาน
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/users"><i class="fa fa-user"></i> User Management</a></li>

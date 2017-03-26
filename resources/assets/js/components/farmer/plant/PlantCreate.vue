@@ -159,12 +159,13 @@
                                   v-bind:formErrors="formErrors"
                         ></province>
                         <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
-                        <g-map
-                                v-bind:text="textSearch"
-                                v-bind:lat="19.1163145"
-                                v-bind:lng="99.9073988"
-                        ></g-map>
 
+                        <div class="box" style="height: 20em; width: 100%;">
+                            <gmap-map style="width: 100%; height: 100%; position: absolute; left:0; top:0"
+                                      :center="{lat: 1.38, lng: 103.8}"
+                                      :zoom="12"
+                            ></gmap-map>
+                        </div>
 
                     </div>
 
@@ -186,7 +187,6 @@
 
 <script>
     import Province from '../../shared/Province.vue'
-    import GMap from '../../shared/GMap.vue'
 
     export default {
         props: {
@@ -197,8 +197,7 @@
             farmerId: Number,
         },
         components: {
-            Province,
-            GMap
+            Province
         },
         data() {
             return {

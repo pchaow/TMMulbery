@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -22,7 +21,7 @@ require('vue-resource');
 
 window.strFormat = require("string-template")
 
-require('vue2-google-maps')
+window.VueGoogleMaps = require('vue2-google-maps')
 
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of

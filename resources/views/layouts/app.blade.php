@@ -23,7 +23,7 @@
         }
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9CAN7kLir7HYusQHDLkUTJsCVedbCE4E&libraries=drawing" async defer></script>
+    <!-- script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9CAN7kLir7HYusQHDLkUTJsCVedbCE4E&libraries=drawing" async defer></script-->
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

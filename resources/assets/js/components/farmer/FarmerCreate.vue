@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    Create Farmer
+                    แบบฟอร์มลงทะเบียนเกษตรกร
                 </div>
 
                 <div class="panel-body">
@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['email'] }">
-                                    <label class="control-label">E-mail : </label>
+                                    <label class="control-label">อีเมล : </label>
                                     <input class="form-control" placeholder="E-mail" v-model="formInputs.email"/>
                                     <span v-if="formErrors['email']" class="help-block">{{ formErrors['email'] }}</span>
                                 </div>
@@ -113,8 +113,8 @@
                             </fieldset>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <a v-bind:href="successUrl" class="btn btn-default">ยกเลิก</a>
                             </div>
                         </form>
                     </div>

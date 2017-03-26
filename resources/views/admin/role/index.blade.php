@@ -3,11 +3,11 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Role Management
+            จัดการสิทธิการใช้งาน
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/roles"><i class="fa fa-sign-in"></i> Role Management</a></li>
-            <li>Here</li>
+            <li><a href="/admin/roles"><i class="fa fa-sign-in"></i> จัดการสิทธิการใช้งาน</a></li>
+            <li>รายการสิทธิการใช้งาน</li>
         </ol>
     </section>
 

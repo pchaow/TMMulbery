@@ -43,7 +43,14 @@ Vue.component('farmer-edit', require('./components/farmer/FarmerEdit.vue'));
 Vue.component('farmer-view', require('./components/farmer/FarmerView.vue'));
 Vue.component('farmer-plant-create', require('./components/farmer/plant/PlantCreate.vue'));
 
+
+Vue.use(VueGoogleMaps, {
+    load: {
+      key: 'AIzaSyAQhqp6RRe4zDyB2I1IeAiVsyQsVRJbHCA',
+      v: '3.27',
+      // libraries: 'places', //// If you need to use place input
+    }
+  });
 const app = new Vue({
     el: '#app',
 });
-

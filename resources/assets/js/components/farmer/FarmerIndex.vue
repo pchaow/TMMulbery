@@ -4,7 +4,7 @@
 
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    Search Farmer
+                    ค้นหาเกษตรกร
                 </div>
 
                 <div class="panel-body">
@@ -12,13 +12,13 @@
                     <div class="col-lg-12">
                         <form class="form-horizontal" v-on:submit.prevent="search">
                             <div class="form-group">
-                                <label>Keyword : </label>
-                                <input class="form-control" v-model="form.keyword" @keypress placeholder="keyword"/>
+                                <label>ค้นหาตามคำสำคัญ : </label>
+                                <input class="form-control" v-model="form.keyword" @keypress placeholder="คำสำคัญ"/>
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Search</button>
-                                <button type="button" @click="reset" class="btn btn-default">Clear</button>
+                                <button type="submit" class="btn btn-primary">ค้นหา</button>
+                                <button type="button" @click="reset" class="btn btn-default">ล้าง</button>
                             </div>
 
                         </form>
@@ -30,9 +30,9 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="btn-group btn-group-sm pull-right">
-                        <a v-bind:href="createFarmerUrl" class="btn btn-default">Create Farmer</a>
+                        <a v-bind:href="createFarmerUrl" class="btn btn-default">ลงทะเบียนเกษตรกร</a>
                     </div>
-                    Farmer Table
+                    รายการเกษตรกร
                 </div>
 
                 <div class="panel-body">
@@ -42,13 +42,13 @@
                             <table class="table table-condensed">
                                 <thead>
                                 <tr>
-                                    <th>E-mail</th>
-                                    <th>Username</th>
-                                    <th>Name</th>
-                                    <th>District</th>
-                                    <th>Amphure</th>
-                                    <th>Province</th>
-                                    <th>Action</th>
+                                    <th>อีเมล</th>
+                                    <th>บัญชีผู้ใช้</th>
+                                    <th>ชื่อ-ชื่อสกุล</th>
+                                    <th>ตำบล</th>
+                                    <th>อำเภอ</th>
+                                    <th>จังหวัด</th>
+                                    <th>จัดการ</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -61,15 +61,15 @@
                                     <td>{{farmer.province ? farmer.province.name : '-'}}</td>
                                     <td>
 
-
-                                        <a v-bind:href="strFormat(editUrl,{id : farmer.id})"
-                                           class="btn btn-primary">Edit</a>
-
                                         <a v-bind:href="strFormat(viewUrl,{id : farmer.id})"
-                                           class="btn btn-success">View</a>
+                                           class="btn btn-success">ดู</a>
+                                        <a v-bind:href="strFormat(editUrl,{id : farmer.id})"
+                                           class="btn btn-primary">แก้ไข</a>
+
+
 
                                         <button type="button" class="btn btn-danger" v-on:click="deleteFarmer(farmer)">
-                                            Delete
+                                            ลบ
                                         </button>
                                     </td>
 

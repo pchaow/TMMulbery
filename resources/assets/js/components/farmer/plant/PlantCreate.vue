@@ -160,9 +160,9 @@
                         ></province>
                         <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
 
-                        <div class="box" style="height: 20em; width: 100%;">
+                        <div class="box" style="height: 50em; width: 100%;">
                             <gmap-map style="width: 100%; height: 100%; position: absolute; left:0; top:0"
-                                      :center="{lat: 1.38, lng: 103.8}"
+                                      :center="map_default_position"
                                       :zoom="12"
                             ></gmap-map>
                         </div>
@@ -211,6 +211,7 @@
                 textSearch: "",
                 plants: null,
                 formErrors: {},
+                map_default_position: {lat: 19.1399606, lng: 99.907986}
             }
         },
         computed: {
@@ -229,13 +230,28 @@
                 var plant_spacing = this.formInputs.plant_spacing
                 var density = 1600 / (row_spacing * plant_spacing)
                 this.formInputs.density = Math.floor(density);
-                
+
 
                 return density
             },
 
         },
         methods: {
+            updatePositionFromCurrentLocation: function () {
+                let self = this
+                let x = function (position) {
+                    self.map_default_position =
+                        {lat: position.coords.latitude, lng: position.coords.longitude}
+
+                    console.log(self.map_default_position)
+                }
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(x);
+                }else {
+                    this.map_default_position = {lat: 19.1399606, lng: 99.907986}
+                }
+            },
             save: function () {
                 this.$http.post(this.savePlantUrl, this.formInputs)
                     .then((response) => {
@@ -272,11 +288,13 @@
                 this.calculateAddress()
             },
             calculateAddress: function () {
-                var text = this.formInputs.district_name+ " " + this.formInputs.amphure_name + " " + this.formInputs.province_name ;
+                var text = this.formInputs.district_name + " " + this.formInputs.amphure_name + " " + this.formInputs.province_name;
                 this.textSearch = text;
             }
-        }
-        ,
+        },
+        created() {
+            this.updatePositionFromCurrentLocation()
+        },
         mounted()
         {
             console.log('ready to view farmer.id =', this.farmerId)

@@ -160,10 +160,19 @@
                         ></province>
                         <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
 
-                        <div class="box" style="height: 50em; width: 100%;">
-                            <gmap-map style="width: 100%; height: 100%; position: absolute; left:0; top:0"
-                                      :center="map_default_position"
-                                      :zoom="12"
+                        <div class="form-group">
+                            <button type="button"
+                                    @click="updatePositionFromAddress"
+                                    class="btn btn-default">แสดงตำแหน่งจากที่อยู่
+                            </button>
+                        </div>
+
+                        <div class="box" style="height: 40em; width: 100%;">
+                            <gmap-map
+                                    ref="map"
+                                    style="width: 100%; height: 100%; position: absolute; left:0; top:0"
+                                    :center="map_default_position"
+                                    :zoom="15"
                             ></gmap-map>
                         </div>
 
@@ -237,20 +246,32 @@
 
         },
         methods: {
-            updatePositionFromCurrentLocation: function () {
-                let self = this
-                let x = function (position) {
-                    self.map_default_position =
-                        {lat: position.coords.latitude, lng: position.coords.longitude}
+            updatePositionFromAddress: function () {
+                let map = this.$refs.map.$mapObject
 
-                    console.log(self.map_default_position)
+                if (!(this.formInputs.province_name && this.formInputs.amphure_name && this.formInputs.district_name )) {
+                    alert('กรุณาเลือก จังหวัด อำเภอ ตำบล')
+                } else {
+                    let addressStr = "จังหวัด"+this.formInputs.province_name
+                    addressStr += '+ อำเภอ' + this.formInputs.amphure_name
+                    addressStr += '+ ตำบล' + this.formInputs.district_name
+
+                    let geocoder = new google.maps.Geocoder();
+                    let self = this
+                    geocoder.geocode({'address': addressStr}, function (results, status) {
+                        if (status === 'OK') {
+                            self.map_default_position = {
+                                lat: results[0].geometry.location.lat(),
+                                lng: results[0].geometry.location.lng()
+                            }
+
+                        } else {
+                            console.log('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
                 }
 
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(x);
-                }else {
-                    this.map_default_position = {lat: 19.1399606, lng: 99.907986}
-                }
+
             },
             save: function () {
                 this.$http.post(this.savePlantUrl, this.formInputs)
@@ -293,7 +314,6 @@
             }
         },
         created() {
-            this.updatePositionFromCurrentLocation()
         },
         mounted()
         {

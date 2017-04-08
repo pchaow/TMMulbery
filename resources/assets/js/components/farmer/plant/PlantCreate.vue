@@ -165,6 +165,18 @@
                                     @click="updatePositionFromAddress"
                                     class="btn btn-default">แสดงตำแหน่งจากที่อยู่
                             </button>
+
+                            <button v-if="!marker_toggle" type="button"
+                                    @click="toggleMarkerOption"
+                                    class="btn btn-success">ระบุตำแหน่ง
+                            </button>
+
+                            <button v-if="marker_toggle" type="button"
+                                    @click="toggleMarkerOption"
+                                    class="btn btn-danger">ยกเลิก
+                            </button>
+
+
                         </div>
 
                         <div class="box" style="height: 40em; width: 100%;">
@@ -173,7 +185,11 @@
                                     style="width: 100%; height: 100%; position: absolute; left:0; top:0"
                                     :center="map_default_position"
                                     :zoom="15"
-                            ></gmap-map>
+                                    @click="mapClick"
+                            >
+                                <google-marker v-for="m in formInputs.markers" :position="m.position"></google-marker>
+
+                            </gmap-map>
                         </div>
 
                     </div>
@@ -197,6 +213,9 @@
 <script>
     import Province from '../../shared/Province.vue'
 
+    Vue.component('google-marker', VueGoogleMaps.Marker);
+
+
     export default {
         props: {
             loadUrl: String,  //load farmer
@@ -206,7 +225,7 @@
             farmerId: Number,
         },
         components: {
-            Province
+            Province,
         },
         data() {
             return {
@@ -215,12 +234,15 @@
                     row_spacing: 2.5,
                     plant_spacing: 0.75,
                     area_rai: 0,
-                    area_ngan: 0
+                    area_ngan: 0,
+                    markers: [],
                 },
                 textSearch: "",
                 plants: null,
                 formErrors: {},
-                map_default_position: {lat: 19.1399606, lng: 99.907986}
+                map_default_position: {lat: 19.1399606, lng: 99.907986},
+                marker_toggle: false,
+                mapObject: {},
             }
         },
         computed: {
@@ -246,13 +268,42 @@
 
         },
         methods: {
+            mapClick: function (event) {
+                console.log(event)
+                let latLng = event.latLng
+                if (this.marker_toggle) {
+                    this.formInputs.markers.push({
+                        position: {
+                            lat: latLng.lat(),
+                            lng: latLng.lng()
+                        }
+                    })
+                    this.toggleMarkerOption()
+                } else {
+
+                }
+            },
+            toggleMarkerOption: function () {
+                this.marker_toggle = !this.marker_toggle
+                let map = this.$refs.map.$mapObject
+                if (this.marker_toggle) {
+
+                    map.setOptions({
+                        draggableCursor: 'crosshair'
+                    });
+                } else {
+                    map.setOptions({
+                        draggableCursor: 'default'
+                    });
+                }
+            },
             updatePositionFromAddress: function () {
                 let map = this.$refs.map.$mapObject
 
                 if (!(this.formInputs.province_name && this.formInputs.amphure_name && this.formInputs.district_name )) {
                     alert('กรุณาเลือก จังหวัด อำเภอ ตำบล')
                 } else {
-                    let addressStr = "จังหวัด"+this.formInputs.province_name
+                    let addressStr = "จังหวัด" + this.formInputs.province_name
                     addressStr += '+ อำเภอ' + this.formInputs.amphure_name
                     addressStr += '+ ตำบล' + this.formInputs.district_name
 
@@ -319,7 +370,8 @@
         {
             console.log('ready to view farmer.id =', this.farmerId)
             this.load()
-        }
+
+        },
     }
 
 

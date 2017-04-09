@@ -15,6 +15,7 @@
     <section class="content">
         <farmer-plant-create
                 v-bind:save-plant-url="'/api/admin/farmer/{{$userId}}/plant'"
+                success-url="/admin/farmers/{{$userId}}/view"
                 v-bind:load-url="'/api/admin/farmer/{{$userId}}'"
                 v-bind:edit-url="'/admin/farmers/{{$userId}}/edit'"
                 v-bind:load-plant-url="'/api/admin/farmer/{{$userId}}/plant'"

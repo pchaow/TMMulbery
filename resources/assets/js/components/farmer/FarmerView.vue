@@ -44,7 +44,7 @@
                     <p class="text-muted">
                         {{farmer.address}}
                         {{farmer.district ? farmer.district.name : ''}}
-                        {{farmer.amphure  ? farmer.amphure.name : ''}}
+                        {{farmer.amphure ? farmer.amphure.name : ''}}
                         {{farmer.province ? farmer.province.name : ''}}
                     </p>
 
@@ -98,61 +98,24 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr v-for="plant in plants">
 
-                                            <td>A1</td>
-                                            <td>100000</td>
-                                            <td><span class="badge bg-yellow">60%</span></td>
-                                            <td>แม่กา</td>
-                                            <td>เมือง</td>
-                                            <td>พะเยา</td>
+                                            <td>{{plant.name}}</td>
+                                            <td>{{plant.area_sqm}}</td>
+                                            <td><span class="badge bg-gray">Unknown</span></td>
+                                            <td>{{plant.district.name}}</td>
+                                            <td>{{plant.amphure.name}}</td>
+                                            <td>{{plant.province.name}}</td>
                                             <td>
 
-                                                <a class="btn btn-primary">แก้ไข</a>
+                                                <a class="btn btn-primary"
+                                                   v-bind:href="strFormat(plantEditUrl,{id : plant.id})">แก้ไข</a>
                                                 <button type="button" class="btn btn-danger">
                                                     ลบ
                                                 </button>
                                             </td>
 
                                         </tr>
-                                        <tr>
-
-                                            <td>A2</td>
-                                            <td>5000</td>
-                                            <td><span class="badge bg-red">30%</span></td>
-
-                                            <td>แม่นาเรือ</td>
-                                            <td>เมือง</td>
-                                            <td>พะเยา</td>
-
-                                            <td>
-                                                <a class="btn btn-primary">แก้ไข</a>
-                                                <button type="button" class="btn btn-danger">
-                                                    ลบ
-                                                </button>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-
-                                            <td>A3</td>
-                                            <td>3000</td>
-                                            <td><span class="badge bg-green">100%</span></td>
-
-                                            <td>เวียง</td>
-                                            <td>เมือง</td>
-                                            <td>พะเยา</td>
-
-                                            <td>
-                                                <a class="btn btn-primary">แก้ไข</a>
-                                                <button type="button" class="btn btn-danger">
-                                                    ลบ
-                                                </button>
-                                            </td>
-
-                                        </tr>
-
-
                                         </tbody>
                                         <tfoot>
                                         <tr>
@@ -194,6 +157,7 @@
             editUrl: String,
             loadPlantUrl: String,
             plantCreateUrl: String,
+            plantEditUrl: String,
             farmerId: Number,
         },
         data() {
@@ -203,6 +167,7 @@
             }
         },
         methods: {
+            strFormat: window.strFormat,
 
             load: function () {
                 return this.$http.get(this.loadUrl)

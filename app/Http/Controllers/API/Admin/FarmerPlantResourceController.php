@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Requests\PlantRequest;
 use App\Http\Requests\UserRequest;
+use App\Models\Plant;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class FarmerPlantResourceController extends Controller
     public function index(Request $request, $farmerId)
     {
         $farmer = User::find($farmerId);
-        return $farmer->plants()->get();
+        return $farmer->plants()->with(['province', 'amphure', 'district'])->get();
     }
 
     /**
@@ -41,6 +42,18 @@ class FarmerPlantResourceController extends Controller
      */
     public function store(PlantRequest $request, $farmerId)
     {
+        $farmer = User::find($farmerId);
+        $form = $request->all();
+        $plant = new Plant();
+        if ($farmer) {
+            $plant->fill($form);
+            $plant->user()->associate($farmer);
+            $plant->save();
+            return $plant;
+
+        } else {
+            return abort(404, 'Error.');
+        }
 
     }
 

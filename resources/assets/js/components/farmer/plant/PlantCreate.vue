@@ -166,7 +166,7 @@
                                     class="btn btn-default">แสดงตำแหน่งจากที่อยู่
                             </button>
 
-                            <button v-if="!marker_toggle" type="button"
+                            <button v-if="!marker_toggle && formInputs.map.length == 0" type="button"
                                     @click="toggleMarkerOption"
                                     class="btn btn-success">ระบุตำแหน่ง
                             </button>
@@ -176,6 +176,10 @@
                                     class="btn btn-danger">ยกเลิก
                             </button>
 
+                            <button v-if="!marker_toggle && formInputs.map.length > 0" type="button"
+                                    @click="removeMarker"
+                                    class="btn btn-danger">ลบพิกัด
+                            </button>
 
                         </div>
 
@@ -187,7 +191,7 @@
                                     :zoom="15"
                                     @click="mapClick"
                             >
-                                <google-marker v-for="m in formInputs.markers" :position="m.position"></google-marker>
+                                <google-marker v-for="m in formInputs.map" :position="m.position"></google-marker>
 
                             </gmap-map>
                         </div>
@@ -222,6 +226,7 @@
             editUrl: String,
             savePlantUrl: String,
             plantCreateUrl: String,
+            successUrl: String,
             farmerId: Number,
         },
         components: {
@@ -235,7 +240,7 @@
                     plant_spacing: 0.75,
                     area_rai: 0,
                     area_ngan: 0,
-                    markers: [],
+                    map: [],
                 },
                 textSearch: "",
                 plants: null,
@@ -268,11 +273,14 @@
 
         },
         methods: {
+            removeMarker: function () {
+                this.formInputs.map = []
+            },
             mapClick: function (event) {
                 console.log(event)
                 let latLng = event.latLng
                 if (this.marker_toggle) {
-                    this.formInputs.markers.push({
+                    this.formInputs.map.push({
                         position: {
                             lat: latLng.lat(),
                             lng: latLng.lng()
@@ -325,9 +333,10 @@
 
             },
             save: function () {
+                this.formErrors = {}
                 this.$http.post(this.savePlantUrl, this.formInputs)
                     .then((response) => {
-
+                        window.location.href = this.successUrl
                     }, (response) => {
                         // error callback
                         this.formErrors = response.data;

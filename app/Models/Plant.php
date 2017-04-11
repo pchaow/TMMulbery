@@ -11,7 +11,7 @@ class Plant extends Model
 
     protected $table = "plants";
 
-    protected $fillable = ['name', 'quality', 'map', 'area_sqm', 'row_spacing', 'plant_spacing', 'province_id', 'amphure_id', 'district_id', 'user_id'];
+    protected $fillable = ['name', 'quality', 'map', 'area_sqm', 'area_rai', 'area_ngan', 'row_spacing', 'plant_spacing', 'province_id', 'amphure_id', 'district_id', 'user_id'];
 
     protected $casts = [
         'map' => 'array',

@@ -284,7 +284,7 @@
             },
             save: function () {
                 this.formErrors = {}
-                this.$http.post(this.savePlantUrl, this.formInputs)
+                this.$http.patch(this.savePlantUrl, this.formInputs)
                     .then((response) => {
                         window.location.href = this.successUrl
                     }, (response) => {
@@ -318,6 +318,7 @@
         mounted()
         {
             this.formInputs = this.plant
+            console.log(this.formInputs);
 
         },
     }

@@ -74,7 +74,7 @@ class FarmerPlantResourceController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($farmerId, $plantId)
+    public function edit(Request $request, $farmerId, $plantId)
     {
 
     }
@@ -88,7 +88,16 @@ class FarmerPlantResourceController extends Controller
      */
     public function update(PlantRequest $request, $farmerId, $plantId)
     {
-
+        $farmer = User::find($farmerId);
+        $form = $request->all();
+        $plant = Plant::find($plantId);
+        if ($farmer && $plant) {
+            $plant->fill($form);
+            $plant->save();
+            return $plant;
+        } else {
+            return abort(404, 'Error.');
+        }
     }
 
     /**

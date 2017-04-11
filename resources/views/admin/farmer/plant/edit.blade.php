@@ -17,7 +17,7 @@
     <section class="content">
         <farmer-plant-edit
                 success-url="/admin/farmers/{{$user->id}}/view"
-                save-plant-url="'/api/admin/farmer/{{$user->id}}/plant/{{$plant->id}}'"
+                save-plant-url="/api/admin/farmer/{{$user->id}}/plant/{{$plant->id}}"
                 edit-farmer-url="/admin/farmers/{{$user->id}}/edit"
                 :farmer="{{json_encode($user)}}"
                 :plant="{{json_encode($plant)}}"

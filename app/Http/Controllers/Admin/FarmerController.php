@@ -34,12 +34,15 @@ class FarmerController extends Controller
 
     public function view($userId)
     {
-        if (!User::find($userId)->hasRole('farmer')) {
+        $user = User::with(['plants','plants.province','plants.amphure','plants.district'
+            ,'amphure', 'district', 'province'])->where('id', $userId)->first();
+
+        if (!$user->hasRole('farmer')) {
             return redirect("/admin/farmers");
         }
 
         return view('admin.farmer.view')
-            ->with('userId', $userId);
+            ->with('farmer', $user);
 
     }
 

@@ -21,6 +21,7 @@ Route::group(['prefix' => 'farmers'], function () {
     Route::get('{id}/view', 'Admin\\FarmerController@view');
 
     Route::get('{id}/plant/create', "Admin\\FarmerPlantController@create");
+    Route::get('{id}/plant/{pid}/edit', "Admin\\FarmerPlantController@edit");
 });
 
 Route::group(['prefix' => 'plants'], function () {

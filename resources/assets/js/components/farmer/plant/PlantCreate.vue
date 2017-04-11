@@ -2,58 +2,11 @@
     <div class="row" v-if="farmer">
         <div class="col-md-3">
 
-            <!-- Profile Image -->
-            <div class="box box-primary">
-                <div class="box-body box-profile">
-                    <h3 class="profile-username text-center">{{farmer.name}}</h3>
+            <farmer-profile-column
+                    :farmer="farmer"
+                    :edit-url="editUrl"
+            ></farmer-profile-column>
 
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <b>แปลงทั้งหมด</b> <a v-if="plants" class="pull-right">{{plants.length}}</a>
-                        </li>
-
-
-                    </ul>
-
-                    <a v-bind:href="editUrl" class="btn btn-primary btn-block"><b>แก้ไขข้อมูลลงทะเบียน</b></a>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-
-            <!-- About Me Box -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">ข้อมูลส่วนตัว</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <strong><i class="fa fa-file-text-o margin-r-5"></i> เลขประจำตัวประชาชน</strong>
-
-                    <p>{{farmer.identity}}</p>
-                    <hr>
-                    <strong><i class="fa fa-pencil margin-r-5"></i> ข้อมูลติดต่อ</strong>
-                    <p class="text-muted">{{farmer.contact_number}}</p>
-                    <p class="text-muted">{{farmer.email}}</p>
-
-
-                    <hr>
-
-                    <strong><i class="fa fa-map-marker margin-r-5"></i> ที่อยู่</strong>
-
-                    <p class="text-muted">
-                        {{farmer.address}}
-                        {{farmer.district ? farmer.district.name : ''}}
-                        {{farmer.amphure ? farmer.amphure.name : ''}}
-                        {{farmer.province ? farmer.province.name : ''}}
-                    </p>
-
-                    <hr>
-
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
         </div>
         <div class="col-md-9">
 
@@ -216,6 +169,7 @@
 
 <script>
     import Province from '../../shared/Province.vue'
+    import FarmerProfileColumn from '../FarmerProfileColumn.vue'
 
     Vue.component('google-marker', VueGoogleMaps.Marker);
 
@@ -227,14 +181,14 @@
             savePlantUrl: String,
             plantCreateUrl: String,
             successUrl: String,
-            farmerId: Number,
+            farmer: Object,
         },
         components: {
-            Province,
+            Province, FarmerProfileColumn
         },
         data() {
             return {
-                farmer: null,
+
                 formInputs: {
                     row_spacing: 2.5,
                     plant_spacing: 0.75,
@@ -343,16 +297,6 @@
                     });
             },
 
-            load: function () {
-                return this.$http.get(this.loadUrl)
-                    .then((response) => {
-                        // success callback
-                        // console.log(response);
-                        this.farmer = response.data;
-                    }, (response) => {
-
-                    })
-            },
             provinceUpdate: function (val, name) {
                 this.formInputs.province_id = val
                 this.formInputs.province_name = name
@@ -377,9 +321,6 @@
         },
         mounted()
         {
-            console.log('ready to view farmer.id =', this.farmerId)
-            this.load()
-
         },
     }
 

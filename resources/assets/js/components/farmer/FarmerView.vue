@@ -103,9 +103,9 @@
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_sqm}}</td>
                                             <td><span class="badge bg-gray">Unknown</span></td>
-                                            <td>{{plant.district.name}}</td>
-                                            <td>{{plant.amphure.name}}</td>
-                                            <td>{{plant.province.name}}</td>
+                                            <td>{{plant.district ? plant.district.name : '-'}}</td>
+                                            <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
+                                            <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
 
                                                 <a class="btn btn-primary"

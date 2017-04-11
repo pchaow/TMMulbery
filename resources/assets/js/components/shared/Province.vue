@@ -1,30 +1,36 @@
 <template>
     <div>
-        <div class="form-group">
+        <div class="form-group" v-bind:class="{ 'has-error': formErrors['province_id'] }">
             <label class="control-label">จังหวัด : </label>
             <select class="form-control" v-model="provinceId"
                     v-on:change="updateProvince($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="province in provinces" v-bind:value="province.id">{{province.name}}</option>
             </select>
+            <span v-if="formErrors['province_id']"
+                  class="help-block">{{ formErrors['province_id'] }}</span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" v-bind:class="{ 'has-error': formErrors['amphure_id'] }">
             <label class="control-label">อำเภอ : </label>
             <select class="form-control" v-model="amphureId"
                     v-on:change="updateAmphure($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="amphure in amphures" v-bind:value="amphure.id">{{amphure.name}}</option>
             </select>
+            <span v-if="formErrors['amphure_id']"
+                  class="help-block">{{ formErrors['amphure_id'] }}</span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" v-bind:class="{ 'has-error': formErrors['district_id'] }">
             <label class="control-label">ตำบล : </label>
             <select class="form-control" v-model="districtId"
                     v-on:change="updateDistrict($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="district in districts" v-bind:value="district.id">{{district.name}}</option>
             </select>
+            <span v-if="formErrors['district_id']"
+                  class="help-block">{{ formErrors['district_id'] }}</span>
         </div>
     </div>
 </template>
@@ -33,15 +39,15 @@
     export default{
         props: {
             province: {
-                type: [Number,String],
+                type: [Number, String],
                 default: 0
             },
             amphure: {
-                type: [Number,String],
+                type: [Number, String],
                 default: 0
             },
             district: {
-                type: [Number,String],
+                type: [Number, String],
                 default: 0
             },
             formErrors: {

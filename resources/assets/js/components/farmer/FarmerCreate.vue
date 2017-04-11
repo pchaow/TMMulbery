@@ -46,17 +46,6 @@
                                           class="help-block">{{ formErrors['address'] }}</span>
                                 </div>
 
-                                <!--<div class="form-group" v-bind:class="{ 'has-error': formErrors['province_id'] }">-->
-                                <!--<label class="control-label">จังหวัด : </label>-->
-                                <!--<select class="form-control" v-model="formInputs.province_id">-->
-                                <!--<option>กรุณาเลือก</option>-->
-                                <!--<option>AAA</option>-->
-                                <!--<option>AAA</option>-->
-                                <!--</select>-->
-                                <!--<span v-if="formErrors['province_id']" class="help-block">{{ formErrors['province_id'] }}</span>-->
-                                <!--</div>-->
-
-
                                 <province v-bind:province="formInputs.province_id"
                                           v-on:province_update="formInputs.province_id = arguments[0]"
                                           v-bind:amphure="formInputs.amphure_id"

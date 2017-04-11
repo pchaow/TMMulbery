@@ -30,30 +30,45 @@ class FarmerRequest extends FormRequest
                 return [];
             }
             case 'POST': {
-                return [
-                    'email' => 'required|email|max:255|unique:users',
-                    'username' => 'required|max:255|unique:users',
-                    'name' => 'required|max:255',
-                    'password' => 'required|min:6|confirmed',
-                    'province_id' => 'required',
-                    'amphure_id' => 'required',
-                    'district_id' => 'required',
+                $validator = [
 
+                    'name' => 'required|max:255',
+//                    'province_id' => 'required',
+//                    'amphure_id' => 'required',
+//                    'district_id' => 'required',
                 ];
+                if ($this->request->has('email')) {
+                    $validator['eamil'] = 'required|email|max:255|unique:users';
+                }
+                if ($this->request->has('username')) {
+                    $validator['username'] = 'required|max:255|unique:users';
+                }
+                if ($this->request->has('password')) {
+                    $validator['password'] = 'required|min:6|confirmed';
+                }
+                return $validator;
             }
             case 'PUT':
             case 'PATCH': {
                 $user = $this->get('id');
 
-                return [
-                    'email' => "required|email|max:255|unique:users,email,$user",
-                    'username' => "required|email|max:255|unique:users,username,$user",
-                    'password' => 'min:6|confirmed|nullable|same:password_confirmation',
+                $validator = [
+
                     'name' => 'required|max:255',
-                    'province_id' => 'required',
-                    'amphure_id' => 'required',
-                    'district_id' => 'required',
+                    //'province_id' => 'required',
+                    //'amphure_id' => 'required',
+                    //'district_id' => 'required',
                 ];
+                if ($this->request->has('email')) {
+                    $validator['eamil'] = "required|email|max:255|unique:users,email,$user";
+                }
+                if ($this->request->has('username')) {
+                    $validator['username'] = "required|email|max:255|unique:users,username,$user";
+                }
+                if ($this->request->has('password')) {
+                    $validator['password'] = 'required|min:6|confirmed';
+                }
+                return $validator;
             }
             default:
                 break;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\FarmerRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class FarmerResourceController extends Controller
     {
 
         $query = User::query();
-        $query->with(["province",'district','amphure']);
+        $query->with(["province", 'district', 'amphure']);
 
         if ($request->has('keyword')) {
             $keyword = $request->get('keyword');
@@ -55,12 +55,19 @@ class FarmerResourceController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(FarmerRequest $request)
     {
         $form = $request->all();
         $user = new User();
         $user->fill($form);
-        $user->password = Hash::make($form['password']);
+        if ($request->has('password')) {
+            $user->password = Hash::make($form['password']);
+        }
+
+        if ($user->province_id == 0) $user->province_id = null;
+        if ($user->amphure_id == 0) $user->amphure_id = null;
+        if ($user->district_id == 0) $user->district_id = null;
+
         $user->save();
 
         $farmer = Role::where('name', 'farmer')->first();
@@ -78,8 +85,8 @@ class FarmerResourceController extends Controller
     public function show($id)
     {
         $query = User::query();
-        $query->with(["province",'district','amphure']);
-        $query->where('id',$id);
+        $query->with(["province", 'district', 'amphure']);
+        $query->where('id', $id);
 
         return $query->first();
     }
@@ -111,6 +118,10 @@ class FarmerResourceController extends Controller
         $user = User::find($id);
         $user->fill($form);
 
+
+        if ($user->province_id == 0) $user->province_id = null;
+        if ($user->amphure_id == 0) $user->amphure_id = null;
+        if ($user->district_id == 0) $user->district_id = null;
 
         if (isset($form['password'])) {
             $user->password = Hash::make($form['password']);

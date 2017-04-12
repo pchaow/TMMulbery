@@ -62,7 +62,7 @@
                                     <td>
 
                                         <a v-bind:href="strFormat(viewUrl,{id : farmer.id})"
-                                           class="btn btn-success">ดู</a>
+                                           class="btn btn-success">รายละเอียด</a>
                                         <a v-bind:href="strFormat(editUrl,{id : farmer.id})"
                                            class="btn btn-primary">แก้ไข</a>
 

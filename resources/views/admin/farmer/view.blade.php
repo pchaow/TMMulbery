@@ -17,11 +17,14 @@
 
         <farmer-view
                 v-bind:load-url="'/api/admin/farmer/{{$farmer->id}}'"
-                v-bind:edit-url="'/admin/farmers/{{$farmer->id}}/edit'"
+                v-bind:farmer-edit-url="'/admin/farmers/{{$farmer->id}}/edit'"
                 v-bind:load-plant-url="'/api/admin/farmer/{{$farmer->id}}/plant'"
                 v-bind:plant-create-url="'/admin/farmers/{{$farmer->id}}/plant/create'"
                 v-bind:plant-edit-url="'/admin/farmers/{{$farmer->id}}/plant/{id}/edit'"
-                v-bind:farmer="{{json_encode($farmer)}}">
+                plant-delete-url="/api/admin/farmer/{{$farmer->id}}/plant/{id}"
+                v-bind:farmer="{{json_encode($farmer)}}"
+                farmer-load-url="/api/admin/farmer/{{$farmer->id}}"
+        >
         </farmer-view>
 
     </section>

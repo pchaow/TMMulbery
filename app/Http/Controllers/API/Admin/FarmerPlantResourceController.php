@@ -108,6 +108,7 @@ class FarmerPlantResourceController extends Controller
      */
     public function destroy($farmerId, $plantId)
     {
-
+        $plant = Plant::find($plantId);
+        return [$plant->delete()];
     }
 }

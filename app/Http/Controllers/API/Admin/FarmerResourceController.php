@@ -85,7 +85,7 @@ class FarmerResourceController extends Controller
     public function show($id)
     {
         $query = User::query();
-        $query->with(["province", 'district', 'amphure']);
+        $query->with(["province", 'district', 'amphure', 'plants']);
         $query->where('id', $id);
 
         return $query->first();

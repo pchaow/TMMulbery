@@ -2,9 +2,9 @@
     <div class="row" v-if="farmer">
         <div class="col-md-3">
 
-            <farmer-profile-column
-                    :farmer="farmer"
-                    :edit-url="farmerEditUrl"
+            <farmer-profile-column v-if="farmerData"
+                                   :farmer="farmerData"
+                                   :edit-url="farmerEditUrl"
             ></farmer-profile-column>
 
         </div>
@@ -51,7 +51,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="plant in farmer.plants">
+                                        <tr v-for="plant in farmerData.plants">
 
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_sqm}}</td>
@@ -63,7 +63,8 @@
 
                                                 <a class="btn btn-primary"
                                                    v-bind:href="strFormat(plantEditUrl,{id : plant.id})">แก้ไข</a>
-                                                <button type="button" class="btn btn-danger">
+                                                <button @click="deletePlant(plant)" type="button"
+                                                        class="btn btn-danger">
                                                     ลบ
                                                 </button>
                                             </td>
@@ -110,23 +111,44 @@
         props: {
             loadUrl: String,
             farmerEditUrl: String,
-            loadPlantUrl: String,
+            farmerLoadUrl: String,
             plantCreateUrl: String,
             plantEditUrl: String,
+            plantDeleteUrl: String,
             farmer: Object,
         },
         components: {
             FarmerProfileColumn
         },
         data() {
-            return {}
+            return {
+                farmerData: {}
+            }
         },
         methods: {
             strFormat: window.strFormat,
+            loadFarmerData: function () {
+                this.$http.get(this.farmerLoadUrl).then(
+                    function (response) {
+                        this.farmerData = response.data
+                    }
+                )
+            },
+            deletePlant: function (plant) {
+                if (confirm("Do you want to delete this plant?")) {
+                    this.$http.delete(this.strFormat(this.plantDeleteUrl, {id: plant.id}), {}).then(function (r) {
+                        this.loadFarmerData();
+                    })
+                }
+            },
 
         },
+        created() {
+            this.farmerData = this.farmer;
+        },
         mounted() {
-            console.log('ready to view farmer.id =', this.farmerId)
+
+            console.log(this.farmerData)
         }
     }
 </script>

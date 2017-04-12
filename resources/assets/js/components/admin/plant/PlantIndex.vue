@@ -40,6 +40,7 @@
                                 <thead>
                                 <tr>
                                     <th>ชื่อแปลง</th>
+                                    <th>เกษตรกร</th>
                                     <th>พื้นที่(ตรม.)</th>
                                     <th>คงเหลือเก็บเกี่ยว</th>
                                     <th>ตำบล</th>
@@ -50,6 +51,7 @@
                                 <tbody>
                                 <tr v-for="plant in plants">
                                     <td>{{plant.name}}</td>
+                                    <td>{{plant.user ? plant.user.name : '-' }}</td>
                                     <td>{{plant.area_sqm}}</td>
                                     <td><span class="badge bg-gray">Unknown</span></td>
                                     <td>{{plant.district ? plant.district.name : '-'}}</td>

@@ -29,20 +29,23 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 
-Vue.component('user-index', require('./components/user/UserIndex.vue'));
-Vue.component('user-create', require('./components/user/UserCreate.vue'));
-Vue.component('user-edit', require('./components/user/UserEdit.vue'));
+Vue.component('user-index', require('./components/admin/user/UserIndex.vue'));
+Vue.component('user-create', require('./components/admin/user/UserCreate.vue'));
+Vue.component('user-edit', require('./components/admin/user/UserEdit.vue'));
 
-Vue.component('role-index', require('./components/role/RoleIndex.vue'));
-Vue.component('role-create', require('./components/role/RoleCreate.vue'));
-Vue.component('role-edit', require('./components/role/RoleEdit.vue'));
+Vue.component('role-index', require('./components/admin/role/RoleIndex.vue'));
+Vue.component('role-create', require('./components/admin/role/RoleCreate.vue'));
+Vue.component('role-edit', require('./components/admin/role/RoleEdit.vue'));
 
-Vue.component('farmer-index', require('./components/farmer/FarmerIndex.vue'));
-Vue.component('farmer-create', require('./components/farmer/FarmerCreate.vue'));
-Vue.component('farmer-edit', require('./components/farmer/FarmerEdit.vue'));
-Vue.component('farmer-view', require('./components/farmer/FarmerView.vue'));
-Vue.component('farmer-plant-create', require('./components/farmer/plant/PlantCreate.vue'));
-Vue.component('farmer-plant-edit', require('./components/farmer/plant/PlantEdit.vue'));
+Vue.component('plant-index', require('./components/admin/plant/PlantIndex.vue'));
+
+
+Vue.component('farmer-index', require('./components/admin/farmer/FarmerIndex.vue'));
+Vue.component('farmer-create', require('./components/admin/farmer/FarmerCreate.vue'));
+Vue.component('farmer-edit', require('./components/admin/farmer/FarmerEdit.vue'));
+Vue.component('farmer-view', require('./components/admin/farmer/FarmerView.vue'));
+Vue.component('farmer-plant-create', require('./components/admin/farmer/plant/PlantCreate.vue'));
+Vue.component('farmer-plant-edit', require('./components/admin/farmer/plant/PlantEdit.vue'));
 
 
 Vue.use(VueGoogleMaps, {

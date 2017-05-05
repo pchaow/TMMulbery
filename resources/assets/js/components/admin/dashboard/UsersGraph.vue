@@ -14,6 +14,7 @@
 <script type="text/javascript">
 
     import VueHighcharts from 'vue2-highcharts'
+    import Highcharts from 'Highcharts'
 
     export default {
         components: {
@@ -38,14 +39,11 @@
                             display: 'none'
                         }
                     },
-                    xAxis: {
-                        categories: ['a', 'b', 'c', 'd'],
-                        crosshair: true
-                    },
+                    xAxis: {},
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Rainfall (mm)'
+                            text: ''
                         }
                     },
                     tooltip: {},
@@ -55,10 +53,7 @@
                             borderWidth: 0
                         }
                     },
-                    series: [
-                        {
-                            data: [1, 2, 3, 4]
-                        }]
+                    series: [],
                 }
             }
         },
@@ -66,19 +61,16 @@
             loadData: function () {
                 let columnCharts = this.$refs.columnCharts;
                 let charts = columnCharts.chart
-                console.log(charts);
+                console.log(columnCharts);
                 columnCharts.delegateMethod('showLoading', 'Loading...');
                 this.$http.get('/api/admin/dashboard/sum_users_by_type')
                     .then(
                         function (response) {
+
                             this.apiData = response.data;
-                            charts.xAxis[0].setCategories(['1', '2', '3', '4'], true)
-                            charts.series = [
-                                {
-                                    data: [5, 6, 7, 8]
-                                }
-                            ]
-                            charts.redraw();
+                            console.log(this.apiData);
+                            charts.xAxis[0].setCategories(this.apiData.labels, true);
+                            columnCharts.addSeries(this.apiData.series);
                             columnCharts.hideLoading();
                         },
                         function (response) {

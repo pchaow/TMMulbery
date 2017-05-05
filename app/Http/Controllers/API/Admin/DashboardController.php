@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $query->select(['name']);
         $query->addSelect(DB::raw('count(role_user.user_id) as users'));
 
-        $query->join('role_user', 'roles.id', '=', 'role_user.role_id');
+        $query->leftJoin('role_user', 'roles.id', '=', 'role_user.role_id');
         $query->groupBy('roles.name');
 
         $roles = $query->get();

@@ -19,6 +19,7 @@
   "dependencies": {
     "admin-lte": "^2.3.11",
     "font-awesome": "^4.7.0",
-    "vue2-google-maps": "^0.7.2"
+    "vue2-google-maps": "^0.7.2",
+    "vue2-highcharts": "^1.0.3"
   }
 }

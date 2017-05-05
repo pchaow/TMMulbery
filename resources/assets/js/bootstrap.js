@@ -23,6 +23,8 @@ window.strFormat = require("string-template")
 
 window.VueGoogleMaps = require('vue2-google-maps')
 
+
+
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware

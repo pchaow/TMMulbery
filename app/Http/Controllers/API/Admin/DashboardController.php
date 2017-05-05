@@ -25,22 +25,20 @@ class DashboardController extends Controller
         $map = [];
         $i = 0;
         foreach ($roles as $role) {
-            $map[$role->name] = ['index' => sizeof($map), 'users' => $role->users];
+            $map[$role->name] = ['name' => $role->name, 'index' => sizeof($map), 'users' => $role->users];
         }
 
         //return $map;
         $output = [];
+        $output['labels'] = array_fill(0, sizeof($map), "");
         $output['series'] = [];
-        foreach ($roles as $role) {
-            $output['labels'][] = $role->name;
-        }
-
 
         $x = new \stdClass();
         $x->name = 'Roles';
         $x->data = array_fill(0, sizeof($map), 0);
 
         foreach ($map as $m) {
+            $output['labels'][$m['index']] = $m['name'];
             $x->data[$m['index']] = $m['users'];
         }
         $output['series'] = $x;

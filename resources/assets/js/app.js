@@ -13,21 +13,12 @@ require('./bootstrap');
  */
 
 Vue.component('example', require('./components/Example.vue'));
-
-Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue')
-);
-
-Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue')
-);
-
-Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue')
-);
+/*
+ Administrator
+ */
+Vue.component('passport-clients', require('./components/passport/Clients.vue'));
+Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
+Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
 
 Vue.component('user-index', require('./components/admin/user/UserIndex.vue'));
 Vue.component('user-create', require('./components/admin/user/UserCreate.vue'));
@@ -39,7 +30,6 @@ Vue.component('role-edit', require('./components/admin/role/RoleEdit.vue'));
 
 Vue.component('plant-index', require('./components/admin/plant/PlantIndex.vue'));
 
-
 Vue.component('farmer-index', require('./components/admin/farmer/FarmerIndex.vue'));
 Vue.component('farmer-create', require('./components/admin/farmer/FarmerCreate.vue'));
 Vue.component('farmer-edit', require('./components/admin/farmer/FarmerEdit.vue'));
@@ -47,6 +37,16 @@ Vue.component('farmer-view', require('./components/admin/farmer/FarmerView.vue')
 Vue.component('farmer-plant-create', require('./components/admin/farmer/plant/PlantCreate.vue'));
 Vue.component('farmer-plant-edit', require('./components/admin/farmer/plant/PlantEdit.vue'));
 
+//Dashboard Graph Item
+Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGraph.vue'));
+
+/*
+ Farmer
+ */
+
+/*
+ Buyer
+ */
 
 Vue.use(VueGoogleMaps, {
     load: {

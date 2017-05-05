@@ -1,12 +1,12 @@
 <ul class="sidebar-menu">
-    <li class="header">หัวข้อ</li>
+    <--li class="header">หัวข้อ</--li>
     <!-- Optionally, you can add icons to the links -->
     <li class="{{ Request::is('home') ? 'active' : '' }}"><a href="/home"><i class="fa fa-tachometer "></i>
             <span>หน้าหลัก</span></a></li>
 
 
 
-    <li class="treeview {{ Request::is('admin/*') ? 'active' : '' }}">
+    <li class="treeview {{ Request::is('admin/*') || \Laratrust::hasRole('administrator') ? 'active' : '' }}">
         <a href="#"><i class="fa fa-link"></i> <span>ผู้ดูแลระบบ</span>
             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
         </a>

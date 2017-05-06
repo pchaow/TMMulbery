@@ -1,10 +1,12 @@
 <template>
     <div class="row" v-if="farmer">
         <div class="col-md-3">
+
             <farmer-profile-column
                     :farmer="farmer"
-                    :edit-url="editFarmerUrl"
+                    :edit-url="editUrl"
             ></farmer-profile-column>
+
         </div>
         <div class="col-md-9">
 
@@ -111,41 +113,65 @@
                         ></province>
                         <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
 
-                        <div class="form-group">
-                            <button type="button"
-                                    @click="updatePositionFromAddress"
-                                    class="btn btn-default">แสดงตำแหน่งจากที่อยู่
-                            </button>
+                        <div class="">
+                            <label>ระบุตำแหน่งจากพิกัด</label>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>lat</label>
+                                        <input type="text" v-model="lat" class="form-control" placeholder="lat"
+                                               :disabled="formInputs.map.length != 0"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>lng</label>
+                                        <input type="text" v-model="lng" class="form-control" placeholder="lng"
+                                               :disabled="formInputs.map.length != 0"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary"
+                                        v-bind:class="{ disabled: formInputs.map.length != 0 }"
+                                        @click="markPosition(lat,lng)">
+                                    ระบุตำแหน่งจากพิกัด
+                                </button>
+                                <button type="button"
+                                        @click="updatePositionFromAddress"
+                                        class="btn btn-default">แสดงตำแหน่งจากที่อยู่
+                                </button>
 
-                            <button v-if="!marker_toggle && formInputs.map.length == 0" type="button"
-                                    @click="toggleMarkerOption"
-                                    class="btn btn-success">ระบุตำแหน่ง
-                            </button>
+                                <button v-if="!marker_toggle && formInputs.map.length == 0" type="button"
+                                        @click="toggleMarkerOption"
+                                        class="btn btn-success">ระบุตำแหน่งบนแผนที่
+                                </button>
 
-                            <button v-if="marker_toggle" type="button"
-                                    @click="toggleMarkerOption"
-                                    class="btn btn-danger">ยกเลิก
-                            </button>
+                                <button v-if="marker_toggle" type="button"
+                                        @click="toggleMarkerOption"
+                                        class="btn btn-danger">ยกเลิก
+                                </button>
 
-                            <button v-if="!marker_toggle && formInputs.map.length > 0" type="button"
-                                    @click="removeMarker"
-                                    class="btn btn-danger">ลบพิกัด
-                            </button>
-
+                                <button v-if="!marker_toggle && formInputs.map.length > 0" type="button"
+                                        @click="removeMarker"
+                                        class="btn btn-danger">ลบพิกัด
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="box" style="height: 40em; width: 100%;">
+
+                        <div class="box" style="height: 30em; width: 100%;">
                             <gmap-map
                                     ref="map"
                                     style="width: 100%; height: 100%; position: absolute; left:0; top:0"
                                     :center="map_default_position"
                                     :zoom="15"
-                                    @click="mapClick"
-                            >
+                                    @click="mapClick">
                                 <google-marker v-for="m in formInputs.map" :position="m.position"></google-marker>
 
                             </gmap-map>
                         </div>
+
 
                     </div>
 
@@ -168,29 +194,34 @@
 <script>
     import Province from '../../../shared/Province.vue'
     import FarmerProfileColumn from '../FarmerProfileColumn.vue'
+
     Vue.component('google-marker', VueGoogleMaps.Marker);
 
 
     export default {
         props: {
+            loadUrl: String,  //load farmer
+            editUrl: String,
             savePlantUrl: String,
+            plantCreateUrl: String,
             successUrl: String,
-            editFarmerUrl: String,
             farmer: Object,
             plant: Object,
-            editUrl: String
         },
         components: {
             Province, FarmerProfileColumn
         },
         data() {
             return {
+
                 formInputs: {
                     row_spacing: 2.5,
                     plant_spacing: 0.75,
                     area_rai: 0,
                     area_ngan: 0,
                     map: [],
+                    lat: null,
+                    lng: null,
                 },
                 textSearch: "",
                 plants: null,
@@ -226,16 +257,23 @@
             removeMarker: function () {
                 this.formInputs.map = []
             },
+            markPosition: function (lat, lng) {
+                if (lat && lng) {
+                    console.log(lat, lng)
+                    this.formInputs.map.push({
+                        position: {
+                            lat: parseFloat(lat),
+                            lng: parseFloat(lng)
+                        }
+                    })
+                }
+
+            },
             mapClick: function (event) {
                 console.log(event)
                 let latLng = event.latLng
                 if (this.marker_toggle) {
-                    this.formInputs.map.push({
-                        position: {
-                            lat: latLng.lat(),
-                            lng: latLng.lng()
-                        }
-                    })
+                    this.markPosition(latLng.lat(), latLng.lng())
                     this.toggleMarkerOption()
                 } else {
 
@@ -284,7 +322,7 @@
             },
             save: function () {
                 this.formErrors = {}
-                this.$http.patch(this.savePlantUrl, this.formInputs)
+                this.$http.post(this.savePlantUrl, this.formInputs)
                     .then((response) => {
                         window.location.href = this.successUrl
                     }, (response) => {
@@ -318,8 +356,7 @@
         mounted()
         {
             this.formInputs = this.plant
-            console.log(this.formInputs);
-
+            console.log(this.formInputs)
         },
     }
 

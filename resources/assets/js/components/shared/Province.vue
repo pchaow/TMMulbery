@@ -102,7 +102,7 @@
                 this.provinceId = value
                 this.loadAmphure(this.provinceId)
                 this.amphureId = 0
-                this.distrcitId = 0
+                this.districtId = 0
                 this.$emit('province_update', this.provinceId, elem.options[elem.selectedIndex].text)
                 this.$emit('amphure_update', this.amphureId, "")
                 this.$emit('district_update', this.districtId, "")
@@ -111,7 +111,7 @@
 
                 if (value) {
                     this.amphureId = value
-                    this.distrcitId = 0
+                    this.districtId = 0
                     this.loadDistrict(this.provinceId, this.amphureId)
                     this.$emit('amphure_update', this.amphureId, elem.options[elem.selectedIndex].text)
                     this.$emit('district_update', this.districtId, "")

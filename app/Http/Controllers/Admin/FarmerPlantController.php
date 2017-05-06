@@ -29,6 +29,10 @@ class FarmerPlantController extends Controller
         $user = User::with(['plants', 'amphure', 'district', 'province'])->where('id', $userId)->first();
         $plant = Plant::find($plantId);
 
+        $plant->province_name = $plant->province->name;
+        $plant->amphure_name = $plant->amphure->name;
+        $plant->district_name = $plant->district->name;
+
         return view('admin.farmer.plant.edit')
             ->with('user', $user)
             ->with('plant', $plant);

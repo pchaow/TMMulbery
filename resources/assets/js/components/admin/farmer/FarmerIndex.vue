@@ -42,9 +42,9 @@
                             <table class="table table-condensed">
                                 <thead>
                                 <tr>
-                                    <th>อีเมล</th>
-                                    <th>บัญชีผู้ใช้</th>
                                     <th>ชื่อ-ชื่อสกุล</th>
+                                    <th>บัญชีผู้ใช้</th>
+                                    <th>อีเมล</th>
                                     <th>ตำบล</th>
                                     <th>อำเภอ</th>
                                     <th>จังหวัด</th>
@@ -53,9 +53,9 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="farmer in farmers">
-                                    <td>{{farmer.email}}</td>
-                                    <td>{{farmer.username}}</td>
                                     <td>{{farmer.name}}</td>
+                                    <td>{{farmer.username}}</td>
+                                    <td>{{farmer.email}}</td>
                                     <td>{{farmer.district ? farmer.district.name : '-'}}</td>
                                     <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
                                     <td>{{farmer.province ? farmer.province.name : '-'}}</td>

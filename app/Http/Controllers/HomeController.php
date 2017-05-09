@@ -28,6 +28,8 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user->hasRole('administrator')) {
             return view('admin.home');
+        } elseif ($user->hasRole('farmer')) {
+            return view('farmer.home');
         } else {
             return 'Underconstruction';
         }

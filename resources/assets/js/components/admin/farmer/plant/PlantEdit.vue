@@ -20,7 +20,7 @@
                 </div>
                 <!-- form start -->
 
-                <form role="form" v-on:submit.prevent="save">
+                <form method="post" role="form" v-on:submit.prevent="save">
 
                     <div class="box-body">
 
@@ -322,7 +322,7 @@
             },
             save: function () {
                 this.formErrors = {}
-                this.$http.post(this.savePlantUrl, this.formInputs)
+                this.$http.put(this.savePlantUrl, this.formInputs)
                     .then((response) => {
                         window.location.href = this.successUrl
                     }, (response) => {

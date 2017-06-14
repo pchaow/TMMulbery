@@ -28,6 +28,11 @@ Vue.component('role-index', require('./components/admin/role/RoleIndex.vue'));
 Vue.component('role-create', require('./components/admin/role/RoleCreate.vue'));
 Vue.component('role-edit', require('./components/admin/role/RoleEdit.vue'));
 
+Vue.component('plant-transaction-status-index', require('./components/admin/plant_transaction_status/index.vue'));
+Vue.component('plant-transaction-status-create', require('./components/admin/plant_transaction_status/create.vue'));
+Vue.component('plant-transaction-status-edit', require('./components/admin/plant_transaction_status/edit.vue'));
+
+
 Vue.component('plant-index', require('./components/admin/plant/PlantIndex.vue'));
 
 Vue.component('farmer-index', require('./components/admin/farmer/FarmerIndex.vue'));
@@ -36,6 +41,7 @@ Vue.component('farmer-edit', require('./components/admin/farmer/FarmerEdit.vue')
 Vue.component('farmer-view', require('./components/admin/farmer/FarmerView.vue'));
 Vue.component('farmer-plant-create', require('./components/admin/farmer/plant/PlantCreate.vue'));
 Vue.component('farmer-plant-edit', require('./components/admin/farmer/plant/PlantEdit.vue'));
+
 
 //Dashboard Graph Item
 Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGraph.vue'));

@@ -61,7 +61,7 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="5">
+                                    <td colspan="7">
                                         <div>
                                             จำนวนทั้งหมด {{plantsPage.total}} รายการ
                                         </div>

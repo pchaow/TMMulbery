@@ -28,6 +28,7 @@ Route::group(["prefix" => 'admin'], function () {
     Route::resource('user', "API\\Admin\\UserResourceController");
     Route::resource('role', "Api\\Admin\\RoleResourceController");
     Route::resource('plant', "API\\Admin\\PlantResourceController");
+    Route::resource('plant_transaction_status', "API\\Admin\\PlantTransactionStatusController");
 
     Route::get('dashboard/sum_users_by_type', "API\\Admin\\DashboardController@sum_users_by_type");
 

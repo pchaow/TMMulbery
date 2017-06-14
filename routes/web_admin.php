@@ -14,6 +14,13 @@ Route::group(['prefix' => 'roles'], function () {
     Route::get('{id}/edit', 'Admin\\RoleController@edit');
 });
 
+
+Route::group(['prefix' => 'plant_transaction_status'], function () {
+    Route::get('/', "Admin\\PlantTransactionStatusController@index");
+    Route::get('create', "Admin\\PlantTransactionStatusController@create");
+    Route::get('{id}/edit', 'Admin\\PlantTransactionStatusController@edit');
+});
+
 Route::group(['prefix' => 'farmers'], function () {
     Route::get('/', "Admin\\FarmerController@index");
     Route::get('create', "Admin\\FarmerController@create");

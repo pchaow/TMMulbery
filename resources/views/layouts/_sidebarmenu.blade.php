@@ -16,6 +16,14 @@
                         จัดการผู้ใช้งาน
                     </a>
                 </li>
+
+                <li class="{{ Request::is('admin/users') ? 'active' : '' }}">
+                    <a href="/admin/plant_transaction_status">
+                        <i class="fa fa-user"></i>
+                        จัดการสถานะการปลูก
+                    </a>
+                </li>
+
                 <li class="{{ Request::is('admin/roles') ? 'active' : '' }}">
                     <a href="/admin/roles">
                         <i class="fa fa-sign-in"></i>จัดการสิทธิการใช้งาน
@@ -35,7 +43,8 @@
     @endif
 
     @if(\Laratrust::hasRole('farmer'))
-        <li class="{{ Request::is('/home/plant') ? 'active' : '' }}"><a href="/farmer/plant"><i class="fa fa-table "></i>
+        <li class="{{ Request::is('/home/plant') ? 'active' : '' }}"><a href="/farmer/plant"><i
+                        class="fa fa-table "></i>
                 <span>แปลงปลูก</span></a></li>
     @endif
 </ul>

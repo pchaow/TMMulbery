@@ -46,6 +46,7 @@
                                     <th>ตำบล</th>
                                     <th>อำเภอ</th>
                                     <th>จังหวัด</th>
+                                    <th>การจัดการ</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -57,6 +58,10 @@
                                     <td>{{plant.district ? plant.district.name : '-'}}</td>
                                     <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                     <td>{{plant.province ? plant.province.name : '-'}}</td>
+                                    <td>
+                                        <a :href="pageUrl + '/' + plant.id + '/view' "
+                                           class="btn btn-primary">การปลูก</a>
+                                    </td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
@@ -88,6 +93,7 @@
     export default {
         props: {
             plantLoadUrl: String,
+            pageUrl: String,
         },
         data() {
             return {

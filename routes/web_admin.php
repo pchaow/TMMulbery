@@ -33,20 +33,8 @@ Route::group(['prefix' => 'farmers'], function () {
 
 Route::group(['prefix' => 'plants'], function () {
 
-    Route::get('/', function () {
-        //show index view
-        return view('admin.plant.index');
-    });
-
-    Route::get('create', function () {
-        //show create view
-        return view('admin.plant.create');
-    });
-
-    Route::get('{id}/edit', function ($id) {
-        //show edit form
-        return view('admin.plant.edit')
-            ->with('plantId', $id);
-    });
-
+    Route::get('/', 'Admin\\PlantController@index');
+    Route::get('create', 'Admin\\PlantController@create');
+    Route::get('{id}/edit', 'Admin\\PlantController@edit');
+    Route::get('{id}/view', 'Admin\\PlantController@view');
 });

@@ -15,7 +15,8 @@
     <section class="content">
 
         <plant-index
-                plant-load-url="/api/admin/plant"
+                plant-load-url="{{url("/api/admin/plant")}}"
+                page-url="{{url("/admin/plants")}}"
         >
         </plant-index>
 

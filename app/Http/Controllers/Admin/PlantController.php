@@ -36,7 +36,8 @@ class PlantController extends Controller
         $user = $plant->user()->with(['amphure', 'district', 'province'])->first();
 
         return view('admin.plant.view')
-            ->with('farmer', $user);
+            ->with('farmer', $user)
+            ->with('plant',$plant);
 
     }
 

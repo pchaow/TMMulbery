@@ -6,7 +6,7 @@
             จัดการแปลงหม่อน
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/users"><i class="fa fa-user"></i> จัดการแปลงหม่อน</a></li>
+            <li><a href="/admin/plants"><i class="fa fa-user"></i> จัดการแปลงหม่อน</a></li>
             <li>รายการแปลงหม่อน</li>
         </ol>
     </section>

@@ -34,6 +34,7 @@ Vue.component('plant-transaction-status-edit', require('./components/admin/plant
 
 
 Vue.component('plant-index', require('./components/admin/plant/PlantIndex.vue'));
+Vue.component('plant-view', require('./components/admin/plant/PlantView.vue'));
 
 Vue.component('farmer-index', require('./components/admin/farmer/FarmerIndex.vue'));
 Vue.component('farmer-create', require('./components/admin/farmer/FarmerCreate.vue'));

@@ -27,17 +27,44 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            เริ่มต้นปลูก
-                        </div>
-                        <div class="col-lg-12">
-                            <button class="btn btn-default" @click="changeState(0)">ยกเลิก</button>
+                            <form @submit.prevent="saveInitialForm()">
+                                <div class="form-group">
+                                    <label>Date:</label>
+
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input v-model="initialForm.date" type="date" class="form-control pull-right">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+
+                                <div class="form-group">
+                                    <label>จำนวนต้น:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calculator"></i>
+                                        </div>
+                                        <input v-model="initialForm.amount" type="number"
+                                               class="form-control pull-right">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">save</button>
+                                    <button class="btn btn-default" @click="changeState(0)">ยกเลิก</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <div class="panel panel-info"  v-if="currentState == states[2]">
+            <div class="panel panel-info" v-if="currentState == states[2]">
                 <div class="panel-heading">
                     เก็บเกี่ยว
                 </div>
@@ -60,6 +87,47 @@
                 </div>
 
                 <div class="panel-body">
+                    <div class="table-responsive" v-if="pages">
+                        <table class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount (ต้น)</th>
+                                <th>Balance (กิโลกรัม)</th>
+                                <th>Status</th>
+                                <th>การจัดการ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="transaction in transactions">
+                                <td>{{transaction.transaction_date}}</td>
+                                <td>{{transaction.type}}</td>
+                                <td>{{transaction.amount}}</td>
+                                <td>{{transaction.balance}}</td>
+                                <td>{{transaction.status.name}}</td>
+                                <td>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="7">
+                                    <div>
+                                        จำนวนทั้งหมด {{pages.total}} รายการ
+                                    </div>
+                                    <ul class="pagination">
+                                        <li v-bind:class="{ 'active' : (pages.current_page == n) }"
+
+                                            v-for="n in pages.last_page ">
+                                            <a style="cursor: default;" v-on:click="gotoPage(n)">{{ n }}</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,6 +135,7 @@
 </template>
 
 <script>
+
     export default {
         props: {
             plantTransactionApiUrl: String,
@@ -75,21 +144,69 @@
         },
         data() {
             return {
-                states : ["none","new","harvest"],
-                currentState : "none",
+                states: ["none", "new", "harvest"],
+                currentState: "none",
+
+                plant: {},
+                pages: {},
+                transactions: [],
+
+                initialForm: {
+                    date: '',
+                    amount: 100,
+                },
+                form: {
+                    keyword: "",
+                    page: 1,
+                }
             }
         },
         methods: {
             strFormat: window.strFormat,
-            changeState : function(stateId){
+            calculateNumberOfTrees : function(){
+                return this.plant.area_sqm / (this.plant.plant_spacing * this.plant.row_spacing)
+            },
+            saveInitialForm: function () {
+                console.log(this.initialForm);
+            },
+            initializeInitialForm: function () {
+                this.initialForm.date = moment().format("YYYY-MM-DD")
+                this.initialForm.amount = Math.floor( this.calculateNumberOfTrees() );
+            },
+            changeState: function (stateId) {
                 this.currentState = this.states[stateId];
-            }
+            },
+            loadPlant: function () {
+                return axios.get(this.plantApiUrl)
+                    .then(response => {
+                        this.plant = response.data;
+                    })
+            },
+            loadTransaction: function () {
+                return axios.get(this.plantTransactionApiUrl, {
+                    params: this.form
+                }).then(response => {
+                    this.pages = response.data
+                    this.transaction = this.pages.data
+                })
+            },
+            gotoPage: function (n) {
+                this.form.page = n;
+                this.load()
+            },
 
         },
         created(){
         },
         mounted() {
+            var self = this;
+            axios.all([this.loadPlant(), this.loadTransaction()])
+                .then(axios.spread(function (acct, perms) {
+                    self.initializeInitialForm();
+                }));
+
             console.log('Component mounted.')
+
 
         }
     }

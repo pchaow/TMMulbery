@@ -23,6 +23,7 @@ window.strFormat = require("string-template")
 
 window.VueGoogleMaps = require('vue2-google-maps')
 
+window.moment = require('moment');
 
 
 /**
@@ -36,6 +37,18 @@ Vue.http.interceptors.push((request, next) => {
 
     next();
 });
+
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+let token = Laravel.csrfToken
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

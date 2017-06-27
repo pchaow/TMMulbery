@@ -21,7 +21,7 @@ class PlantTransactionController extends Controller
         $query->where('id', '=', $plantId);
 
         $plant = $query->first();
-        return $plant->transactions;
+        return $plant->transactions()->with("status")->paginate();
     }
 
     /**

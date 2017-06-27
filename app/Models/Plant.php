@@ -37,4 +37,8 @@ class Plant extends Model
         return $this->belongsTo(District::class);
     }
 
+    public function transactions(){
+        return $this->hasMany(PlantTransaction::class);
+    }
+
 }

@@ -13,4 +13,6 @@ class PlantTransaction extends Model
         return $this->belongsTo(PlantTransactionStatus::class, 'status_id');
     }
 
+
+
 }

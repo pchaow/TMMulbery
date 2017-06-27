@@ -14,7 +14,10 @@
 
     <!-- Main content -->
     <section class="content">
-        <plant-view>
+        <plant-view
+            plant-transaction-api-url="/api/admin/plant/{{$plant->id}}/transaction"
+            plant-api-url="/api/admin/plant/{{$plant->id}}"
+            plant-page="/admin/plant">
 
         </plant-view>
     </section>

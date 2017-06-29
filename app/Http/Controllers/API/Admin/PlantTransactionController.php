@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Models\Plant;
+use App\Models\PlantTransaction;
+use App\Models\PlantTransactionStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +18,7 @@ class PlantTransactionController extends Controller
     public function index($plantId)
     {
         $query = Plant::query();
-
+        $query->orderBy('created_at','desc');
 
         $query->where('id', '=', $plantId);
 
@@ -40,9 +42,22 @@ class PlantTransactionController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $plantId)
     {
-        //
+        $plant = Plant::find($plantId);
+        $form = $request->all();
+        if($plant->transactions()->count() == 0){
+            if($form['type'] == "+"){
+                $status = PlantTransactionStatus::where('name','=','INIT')->first();
+                $transaction = new PlantTransaction();
+                $transaction->fill($form);
+                $transaction->balance = 0;
+                $transaction->status()->associate($status);
+                $plant->transactions()->save($transaction);
+                return $transaction;
+            }
+        }else if($form['type'] == "+"){
+        }
     }
 
     /**

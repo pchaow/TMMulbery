@@ -8,7 +8,8 @@
                 </div>
 
                 <div class="panel-body">
-                    <button @click="changeState(1)" class="btn btn-app">
+                    <button @click="changeState(1)" class="btn btn-app"
+                            v-bind:class="{disabled : transactions.length > 0}">
                         <i class="fa fa-pencil"></i> เริ่มต้นปลูก
                     </button>
 
@@ -35,7 +36,8 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input v-model="initialForm.date" type="date" class="form-control pull-right">
+                                        <input v-model="initialForm.transaction_date" type="date"
+                                               class="form-control pull-right">
                                     </div>
                                     <!-- /.input group -->
                                 </div>
@@ -75,7 +77,39 @@
                             เก็บเกี่ยว
                         </div>
                         <div class="col-lg-12">
-                            <button class="btn btn-default" @click="changeState(0)">ยกเลิก</button>
+                            <form @submit.prevent="saveHarvestForm()">
+                                <div class="form-group">
+                                    <label>Date:</label>
+
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input @change="updateHarvestAmount()" v-model="harvestForm.transaction_date"
+                                               type="date"
+                                               class="form-control pull-right">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+
+                                <div class="form-group">
+                                    <label>น้ำหนัก (เก็บเกี่ยว):</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calculator"></i>
+                                        </div>
+                                        <input v-model="harvestForm.amount" type="number"
+                                               class="form-control pull-right">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">save</button>
+                                    <button class="btn btn-default" @click="changeState(0)">ยกเลิก</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -152,8 +186,15 @@
                 transactions: [],
 
                 initialForm: {
-                    date: '',
+                    type: "+",
+                    transaction_date: '',
                     amount: 100,
+                },
+
+                harvestForm: {
+                    type: "-",
+                    transaction_date: '',
+                    amount: 0,
                 },
                 form: {
                     keyword: "",
@@ -163,17 +204,49 @@
         },
         methods: {
             strFormat: window.strFormat,
-            calculateNumberOfTrees : function(){
+            calculateNumberOfTrees: function () {
                 return this.plant.area_sqm / (this.plant.plant_spacing * this.plant.row_spacing)
             },
             saveInitialForm: function () {
-                console.log(this.initialForm);
+                axios.post(this.plantTransactionApiUrl, this.initialForm)
+                    .then(response => {
+                        console.log(response);
+                        this.loadTransaction().then(r => {
+                            this.currentState = this.states[0];
+                        });
+                    })
             },
             initializeInitialForm: function () {
-                this.initialForm.date = moment().format("YYYY-MM-DD")
-                this.initialForm.amount = Math.floor( this.calculateNumberOfTrees() );
+                this.initialForm.transaction_date = moment().format("YYYY-MM-DD")
+                this.initialForm.amount = Math.floor(this.calculateNumberOfTrees());
             },
+            updateHarvestAmount: function () {
+                var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD")
+                var lastBalance = this.transactions[0].balance;
+                var lastTransaction = moment(this.transactions[0].transaction_date)
+                var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))
+                console.log(daydiff);
+                this.harvestForm.amount = lastBalance + (0.008 * daydiff) * this.transactions[0].amount;
+            },
+            initializeHarvestForm: function () {
+                this.harvestForm.transaction_date = moment().format("YYYY-MM-DD")
+                var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD")
+                var lastBalance = this.transactions[0].balance;
+                var lastTransaction = moment(this.transactions[0].transaction_date)
+                var daydiff = lastTransaction.diff(transaction_date, 'days')
+                this.harvestForm.amount = lastBalance + (0.08 * daydiff);
+            },
+
+
             changeState: function (stateId) {
+                if (stateId == 1) {
+                    if (this.transactions.length > 0) {
+                        return;
+                    }
+                }
+                if (stateId == 2) {
+
+                }
                 this.currentState = this.states[stateId];
             },
             loadPlant: function () {
@@ -187,12 +260,11 @@
                     params: this.form
                 }).then(response => {
                     this.pages = response.data
-                    this.transaction = this.pages.data
+                    this.transactions = this.pages.data
                 })
             },
             gotoPage: function (n) {
                 this.form.page = n;
-                this.load()
             },
 
         },
@@ -203,6 +275,8 @@
             axios.all([this.loadPlant(), this.loadTransaction()])
                 .then(axios.spread(function (acct, perms) {
                     self.initializeInitialForm();
+                    self.initializeHarvestForm();
+                    console.log(self.transactions)
                 }));
 
             console.log('Component mounted.')

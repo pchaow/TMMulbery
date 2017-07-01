@@ -189,22 +189,41 @@
                 initialForm: {
                     type: "+",
                     transaction_date: '',
-                    amount: 100,
+                    status: "N",
+                    amount: 100
                 },
 
                 harvestForm: {
                     type: "-",
                     transaction_date: '',
-                    amount: 0,
+                    status: "H",
+                    amount: 0
                 },
                 form: {
                     keyword: "",
-                    page: 1,
+                    page: 1
                 }
             }
         },
         methods: {
             strFormat: window.strFormat,
+            resetForm : function(form){
+                if (form == this.initialForm){
+                    this.initialForm =  {
+                        type: "+",
+                        transaction_date: '',
+                        status: "N",
+                        amount: 100,
+                    }
+                }else if(form == this.harvestForm){
+                    this.harvestForm = {
+                        type: "-",
+                        transaction_date: '',
+                        status: "H",
+                        amount: 0
+                    }
+                }
+            },
             calculateNumberOfTrees: function () {
                 return this.plant.area_sqm / (this.plant.plant_spacing * this.plant.row_spacing)
             },
@@ -214,6 +233,7 @@
                         console.log(response);
                         this.loadTransaction().then(r => {
                             this.currentState = this.states[0];
+                            this.resetForm(this.initialForm);
                         });
                     })
             },
@@ -236,7 +256,7 @@
 
             },
 
-            saveHarvestForm : function () {
+            saveHarvestForm: function () {
             },
             initializeHarvestForm: function () {
                 this.harvestForm.transaction_date = moment().format("YYYY-MM-DD")

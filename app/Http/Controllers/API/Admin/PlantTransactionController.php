@@ -48,7 +48,7 @@ class PlantTransactionController extends Controller
         $form = $request->all();
         if($plant->transactions()->count() == 0){
             if($form['type'] == "+"){
-                $status = PlantTransactionStatus::where('name','=','INIT')->first();
+                $status = PlantTransactionStatus::where('name','=','N')->first();
                 $transaction = new PlantTransaction();
                 $transaction->fill($form);
                 $transaction->balance = 0;

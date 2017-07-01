@@ -13,7 +13,8 @@
                         <i class="fa fa-pencil"></i> เริ่มต้นปลูก
                     </button>
 
-                    <button @click="changeState(2)" class="btn btn-app">
+                    <button @click="changeState(2)" class="btn btn-app"
+                            v-bind:class="{disabled : transactions.length == 0}">
                         <i class="fa fa-money"></i> เก็บเกี่ยว
                     </button>
                 </div>
@@ -135,11 +136,11 @@
                             </thead>
                             <tbody>
                             <tr v-for="transaction in transactions">
-                                <td>{{transaction.transaction_date}}</td>
+                                <td>{{transaction.transaction_date | moment("YYYY-MM-DD")}}</td>
                                 <td>{{transaction.type}}</td>
                                 <td>{{transaction.amount}}</td>
                                 <td>{{transaction.balance}}</td>
-                                <td>{{transaction.status.name}}</td>
+                                <td>{{transaction.status ? transaction.status.name : ''}}</td>
                                 <td>
                                 </td>
                             </tr>
@@ -222,19 +223,34 @@
             },
             updateHarvestAmount: function () {
                 var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD")
-                var lastBalance = this.transactions[0].balance;
-                var lastTransaction = moment(this.transactions[0].transaction_date)
-                var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))
-                console.log(daydiff);
-                this.harvestForm.amount = lastBalance + (0.008 * daydiff) * this.transactions[0].amount;
+                var lastBalance = 0
+                if (this.transactions.length > 0) {
+                    var lastBalance = this.transactions[0].balance;
+                    var lastTransaction = moment(this.transactions[0].transaction_date)
+                    var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))
+                    console.log(daydiff);
+                    this.harvestForm.amount = lastBalance + (0.008 * daydiff) * this.transactions[0].amount;
+                } else {
+                    this.harvestForm.amount = 0;
+                }
+
+            },
+
+            saveHarvestForm : function () {
             },
             initializeHarvestForm: function () {
                 this.harvestForm.transaction_date = moment().format("YYYY-MM-DD")
                 var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD")
-                var lastBalance = this.transactions[0].balance;
-                var lastTransaction = moment(this.transactions[0].transaction_date)
-                var daydiff = lastTransaction.diff(transaction_date, 'days')
-                this.harvestForm.amount = lastBalance + (0.08 * daydiff);
+
+                if (this.transactions.length > 0) {
+                    var lastBalance = this.transactions[0].balance;
+                    var lastTransaction = moment(this.transactions[0].transaction_date)
+                    var daydiff = lastTransaction.diff(transaction_date, 'days')
+                    this.harvestForm.amount = lastBalance + (0.08 * daydiff);
+                } else {
+                    this.harvestForm.amount = 0;
+                }
+
             },
 
 
@@ -245,7 +261,9 @@
                     }
                 }
                 if (stateId == 2) {
-
+                    if (this.transactions.length == 0) {
+                        return;
+                    }
                 }
                 this.currentState = this.states[stateId];
             },

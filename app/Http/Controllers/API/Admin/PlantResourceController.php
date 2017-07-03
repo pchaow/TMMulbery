@@ -27,10 +27,22 @@ class PlantResourceController extends Controller
 //            $query->orWhere('email', 'LIKE', "%$keyword%");
 //            $query->orWhere('username', 'LIKE', "%$keyword%");
 //            $query->orWhere('name', 'LIKE', "%$keyword%");
-
         }
+
         $query->with('user');
-        return $query->paginate();
+
+        if($request->has("withbalance")){
+            if($request->get("withbalance")== true){
+                $page = $query->paginate();
+                foreach ($page as $data){
+                    $data->remainingBalance = $data->remainingBalance();
+                }
+                return $page;
+            }
+        }else {
+            return $query->paginate();
+        }
+
     }
 
 
@@ -41,5 +53,12 @@ class PlantResourceController extends Controller
         $plant->with(['user', 'province', 'amphure', 'district']);
 
         return $plant->first();
+    }
+
+
+    public function balance($id){
+
+        $plant = Plant::find($id);
+        return $plant->remainingBalance();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -37,8 +38,31 @@ class Plant extends Model
         return $this->belongsTo(District::class);
     }
 
-    public function transactions(){
+    public function transactions()
+    {
         return $this->hasMany(PlantTransaction::class);
+    }
+
+    public function remainingBalance()
+    {
+        $initStatus = PlantTransactionStatus::where('name', '=', 'N')->first();
+        $lastTransaction = $this->transactions()->orderBy('transaction_date', 'desc')->first();
+        $firstTransaction = $this->transactions()
+            ->where('status_id', '=', $initStatus->id)
+            ->orderBy('transaction_date', 'desc')->first();
+        $amount = $firstTransaction->amount;
+        $lastDate = $lastTransaction->transaction_date;
+        $lastBalance = $lastTransaction->balance;
+        $lastDate = Carbon::parse(Carbon::parse($lastDate));
+        $now = Carbon::now();
+
+        return $this->calculateRemainingBalance($lastDate, $now, $amount, $lastBalance);
+    }
+
+    private function calculateRemainingBalance($lastDate, $currentDate, $amount, $balance)
+    {
+        $currentBalance = ($currentDate->diffInDays($lastDate) * $amount * 0.008) + $balance;
+        return $currentBalance;
     }
 
 }

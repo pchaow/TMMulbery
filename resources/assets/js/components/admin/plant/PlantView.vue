@@ -228,7 +228,7 @@
                 return this.plant.area_sqm / (this.plant.plant_spacing * this.plant.row_spacing)
             },
             saveInitialForm: function () {
-                axios.post(this.plantTransactionApiUrl, this.initialForm)
+                axios.post(this.plantTransactionApiUrl+"/initialFarm", this.initialForm)
                     .then(response => {
                         console.log(response);
                         this.loadTransaction().then(r => {

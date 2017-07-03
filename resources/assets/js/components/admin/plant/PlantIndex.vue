@@ -42,7 +42,7 @@
                                     <th>ชื่อแปลง</th>
                                     <th>เกษตรกร</th>
                                     <th>พื้นที่(ตรม.)</th>
-                                    <th>คงเหลือเก็บเกี่ยว</th>
+                                    <th>คงเหลือเก็บเกี่ยว (กก.)</th>
                                     <th>ตำบล</th>
                                     <th>อำเภอ</th>
                                     <th>จังหวัด</th>
@@ -54,7 +54,7 @@
                                     <td>{{plant.name}}</td>
                                     <td>{{plant.user ? plant.user.name : '-' }}</td>
                                     <td>{{plant.area_sqm}}</td>
-                                    <td><span class="badge bg-gray">Unknown</span></td>
+                                    <td>{{plant.remainingBalance ? plant.remainingBalance : '-'}}</td>
                                     <td>{{plant.district ? plant.district.name : '-'}}</td>
                                     <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                     <td>{{plant.province ? plant.province.name : '-'}}</td>
@@ -102,6 +102,7 @@
                 form: {
                     keyword: "",
                     page: 1,
+                    withbalance: true,
                 }
             }
         },
@@ -111,6 +112,7 @@
                 this.form = {
                     keyword: "",
                     page: 1,
+                    withbalance: true,
                 }
             },
             search: function () {

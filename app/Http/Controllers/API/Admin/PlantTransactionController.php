@@ -18,7 +18,7 @@ class PlantTransactionController extends Controller
     public function index($plantId)
     {
         $query = Plant::query();
-        $query->orderBy('created_at','desc');
+        $query->orderBy('created_at', 'desc');
 
         $query->where('id', '=', $plantId);
 
@@ -36,6 +36,26 @@ class PlantTransactionController extends Controller
         //
     }
 
+
+    public function initialFarm(Request $request, $plantId)
+    {
+        $plant = Plant::find($plantId);
+        $form = $request->all();
+
+        $status = PlantTransactionStatus::where('name', '=', 'N')->first();
+        $transaction = new PlantTransaction();
+        $transaction->fill($form);
+        $transaction->balance = 0;
+        $transaction->status()->associate($status);
+        $plant->transactions()->save($transaction);
+        return $transaction;
+    }
+
+    public function harvestFarm(Request $request, $plantId)
+    {
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,17 +66,11 @@ class PlantTransactionController extends Controller
     {
         $plant = Plant::find($plantId);
         $form = $request->all();
-        if($plant->transactions()->count() == 0){
-            if($form['type'] == "+"){
-                $status = PlantTransactionStatus::where('name','=','N')->first();
-                $transaction = new PlantTransaction();
-                $transaction->fill($form);
-                $transaction->balance = 0;
-                $transaction->status()->associate($status);
-                $plant->transactions()->save($transaction);
-                return $transaction;
+        if ($plant->transactions()->count() == 0) {
+            if ($form['type'] == "+") {
+                return $this->initialFarm($request, $plantId);
             }
-        }else if($form['type'] == "+"){
+        } else if ($form['type'] == "-") {
         }
     }
 

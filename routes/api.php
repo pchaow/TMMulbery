@@ -41,5 +41,7 @@ Route::group(["prefix" => 'admin'], function () {
 
     Route::resource('plant.transaction', "API\\Admin\\PlantTransactionController");
     Route::post("plant/{plantId}/transaction/initialFarm","API\\Admin\\PlantTransactionController@initialFarm");
+    Route::post("plant/{plantId}/transaction/harvestFarm","API\\Admin\\PlantTransactionController@harvestFarm");
+
 
 });

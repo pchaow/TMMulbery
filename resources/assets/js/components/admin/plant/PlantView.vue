@@ -100,7 +100,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calculator"></i>
                                         </div>
-                                        <input v-model="harvestForm.amount" type="number"
+                                        <input v-model="harvestForm.amount" type="number" step="0.01"
                                                class="form-control pull-right">
                                     </div>
                                     <!-- /.input group -->
@@ -108,7 +108,8 @@
 
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">save</button>
-                                    <button class="btn btn-default" @click="changeState(0)">ยกเลิก</button>
+                                    <button class="btn btn-default" type="button" @click="changeState(0)">ยกเลิก
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -128,7 +129,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Type</th>
-                                <th>Amount (ต้น)</th>
+                                <th>Amount</th>
                                 <th>Balance (กิโลกรัม)</th>
                                 <th>Status</th>
                                 <th>การจัดการ</th>
@@ -138,7 +139,9 @@
                             <tr v-for="transaction in transactions">
                                 <td>{{transaction.transaction_date | moment("YYYY-MM-DD")}}</td>
                                 <td>{{transaction.type}}</td>
-                                <td>{{transaction.amount}}</td>
+                                <td v-bind:class="{ danger : transaction.type=='-', 'text-right' : transaction.type=='-'}">
+                                    {{transaction.amount}} {{ transaction.status.name == "N" ? 'ต้น' : 'กก.' }}
+                                </td>
                                 <td>{{transaction.balance}}</td>
                                 <td>{{transaction.status ? transaction.status.name : ''}}</td>
                                 <td>
@@ -207,28 +210,23 @@
         },
         methods: {
             strFormat: window.strFormat,
-            resetForm : function(form){
-                if (form == this.initialForm){
-                    this.initialForm =  {
+            resetForm: function (form) {
+                if (form == this.initialForm) {
+                    this.initialForm = {
                         type: "+",
                         transaction_date: '',
                         status: "N",
                         amount: 100,
                     }
-                }else if(form == this.harvestForm){
-                    this.harvestForm = {
-                        type: "-",
-                        transaction_date: '',
-                        status: "H",
-                        amount: 0
-                    }
+                } else if (form == this.harvestForm) {
+                    this.initializeHarvestForm;
                 }
             },
             calculateNumberOfTrees: function () {
                 return this.plant.area_sqm / (this.plant.plant_spacing * this.plant.row_spacing)
             },
             saveInitialForm: function () {
-                axios.post(this.plantTransactionApiUrl+"/initialFarm", this.initialForm)
+                axios.post(this.plantTransactionApiUrl + "/initialFarm", this.initialForm)
                     .then(response => {
                         console.log(response);
                         this.loadTransaction().then(r => {
@@ -257,16 +255,35 @@
             },
 
             saveHarvestForm: function () {
+                axios.post(this.plantTransactionApiUrl + "/harvestFarm", this.harvestForm)
+                    .then(response => {
+                        console.log(response);
+                        this.loadTransaction().then(r => {
+                            this.currentState = this.states[0];
+                            this.resetForm(this.harvestForm);
+                        });
+                    })
             },
             initializeHarvestForm: function () {
                 this.harvestForm.transaction_date = moment().format("YYYY-MM-DD")
                 var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD")
 
                 if (this.transactions.length > 0) {
-                    var lastBalance = this.transactions[0].balance;
-                    var lastTransaction = moment(this.transactions[0].transaction_date)
+
+                    //find last amount
+                    var amount = 0;
+                    for (var i = 0; i < this.transactions.length; i++) {
+                        if (this.transactions[i].status.name == 'N') {
+                            amount = this.transactions[i].amount;
+                            break;
+                        }
+                    }
+                    var lastBalance = this.transactions[this.transactions.length-1].balance;
+                    var lastTransaction = moment(this.transactions[this.transactions.length-1].transaction_date)
                     var daydiff = lastTransaction.diff(transaction_date, 'days')
-                    this.harvestForm.amount = lastBalance + (0.08 * daydiff);
+                    var nextbalance = lastBalance + (0.008 * Math.abs(daydiff) * amount);
+                    this.harvestForm.amount = nextbalance.toFixed(2)
+                    console.log(lastBalance)
                 } else {
                     this.harvestForm.amount = 0;
                 }

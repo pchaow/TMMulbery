@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Admin;
 use App\Models\Plant;
 use App\Models\PlantTransaction;
 use App\Models\PlantTransactionStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -39,13 +40,35 @@ class PlantTransactionController extends Controller
 
     public function initialFarm(Request $request, $plantId)
     {
+
+        /** @var Plant $plant */
         $plant = Plant::find($plantId);
         $form = $request->all();
 
         $status = PlantTransactionStatus::where('name', '=', 'N')->first();
         $transaction = new PlantTransaction();
         $transaction->fill($form);
-        $transaction->balance = 0;
+        $transaction->balance = $plant->rrem;
+        $transaction->status()->associate($status);
+        $plant->transactions()->save($transaction);
+        return $transaction;
+    }
+
+    private function updateBalanceFarm(Request $request, $plantId)
+    {
+
+        /** @var Plant $plant */
+        $plant = Plant::find($plantId);
+        $lsatTransaction = $plant->transactions()->orderBy('created_at', 'desc')->first();
+        $form = $request->all();
+
+        $status = PlantTransactionStatus::where('name', '=', 'U')->first();
+        $transaction = new PlantTransaction();;
+        $transactionDateTime = Carbon::parse($form['transaction_date']);
+        $transaction->transaction_date = $transactionDateTime;
+        $transaction->amount = round($plant->remainingBalance(), 2) - round($lsatTransaction->balance, 2);
+        $transaction->balance = round($plant->remainingBalance(), 2);
+        $transaction->type = "+";
         $transaction->status()->associate($status);
         $plant->transactions()->save($transaction);
         return $transaction;
@@ -54,6 +77,23 @@ class PlantTransactionController extends Controller
     public function harvestFarm(Request $request, $plantId)
     {
 
+        $this->updateBalanceFarm($request, $plantId);
+
+        $plant = Plant::find($plantId);
+        $form = $request->all();
+
+        $status = PlantTransactionStatus::where('name', '=', 'H')->first();
+        $transaction = new PlantTransaction();
+        $transactionDateTime = Carbon::parse($form['transaction_date']);
+        $transactionDateTime->addSeconds(1);
+        $transaction->transaction_date = $transactionDateTime;
+        $roundAmount = round($form  ['amount'], 2);
+        $transaction->amount = $roundAmount;
+        $transaction->balance = round(round($plant->remainingBalance(), 2) - $roundAmount, 2);
+        $transaction->type = '-';
+        $transaction->status()->associate($status);
+        $plant->transactions()->save($transaction);
+        return $transaction;
     }
 
     /**

@@ -143,7 +143,7 @@
                                     {{transaction.amount}} {{ transaction.status.name == "N" ? 'ต้น' : 'กก.' }}
                                 </td>
                                 <td>{{transaction.balance}}</td>
-                                <td>{{transaction.status ? transaction.status.name : ''}}</td>
+                                <td>{{transaction.status ? transaction.status.description : ''}}</td>
                                 <td>
                                 </td>
                             </tr>

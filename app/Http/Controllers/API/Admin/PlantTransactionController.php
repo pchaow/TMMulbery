@@ -48,7 +48,7 @@ class PlantTransactionController extends Controller
         $status = PlantTransactionStatus::where('name', '=', 'N')->first();
         $transaction = new PlantTransaction();
         $transaction->fill($form);
-        $transaction->balance = $plant->rrem;
+        $transaction->balance = 0;
         $transaction->status()->associate($status);
         $plant->transactions()->save($transaction);
         return $transaction;

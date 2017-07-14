@@ -50,7 +50,7 @@ class Plant extends Model
         $firstTransaction = $this->transactions()
             ->where('status_id', '=', $initStatus->id)
             ->orderBy('transaction_date', 'desc')->first();
-        if ($firstTransaction) {
+        if ($firstTransaction != null) {
             $amount = $firstTransaction->amount;
             $lastDate = $lastTransaction->transaction_date;
             $lastBalance = $lastTransaction->balance;

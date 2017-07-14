@@ -61,7 +61,27 @@ class Plant extends Model
         } else {
             return 0;
         }
+    }
 
+    public function lastHarvestDate()
+    {
+        $harvestStatus = PlantTransactionStatus::where('name', '=', 'H')->first();
+        $initStatus = PlantTransactionStatus::where('name', '=', 'N')->first();
+        $lastHarvest = $this->transactions()
+            ->where('status_id', '=', $harvestStatus->id)
+            ->orderBy('transaction_date', 'desc')->first();
+
+        $firstInit = $this->transactions()
+            ->where('status_id', '=', $initStatus->id)
+            ->orderBy('transaction_date', 'desc')->first();
+
+        if ($lastHarvest) {
+            return $lastHarvest->transaction_date;
+        } else if ($firstInit) {
+            return $firstInit->transaction_date;
+        } else {
+            return null;
+        }
     }
 
     private function calculateRemainingBalance($lastDate, $currentDate, $amount, $balance)

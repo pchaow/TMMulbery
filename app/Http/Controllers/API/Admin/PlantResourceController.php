@@ -31,17 +31,25 @@ class PlantResourceController extends Controller
 
         $query->with('user');
 
+        $page = $query->paginate();
+
         if($request->has("withbalance")){
             if($request->get("withbalance")== true){
-                $page = $query->paginate();
                 foreach ($page as $data){
                     $data->remainingBalance = $data->remainingBalance();
                 }
-                return $page;
             }
-        }else {
-            return $query->paginate();
         }
+
+        if($request->has("withLastHarvest")){
+            if($request->get("withLastHarvest")== true){
+                foreach ($page as $data){
+                    $data->lastHarvestDate = $data->lastHarvestDate();
+                }
+            }
+        }
+
+        return $page;
 
     }
 

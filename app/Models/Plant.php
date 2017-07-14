@@ -50,13 +50,18 @@ class Plant extends Model
         $firstTransaction = $this->transactions()
             ->where('status_id', '=', $initStatus->id)
             ->orderBy('transaction_date', 'desc')->first();
-        $amount = $firstTransaction->amount;
-        $lastDate = $lastTransaction->transaction_date;
-        $lastBalance = $lastTransaction->balance;
-        $lastDate = Carbon::parse(Carbon::parse($lastDate));
-        $now = Carbon::now();
+        if ($firstTransaction) {
+            $amount = $firstTransaction->amount;
+            $lastDate = $lastTransaction->transaction_date;
+            $lastBalance = $lastTransaction->balance;
+            $lastDate = Carbon::parse(Carbon::parse($lastDate));
+            $now = Carbon::now();
 
-        return $this->calculateRemainingBalance($lastDate, $now, $amount, $lastBalance);
+            return $this->calculateRemainingBalance($lastDate, $now, $amount, $lastBalance);
+        } else {
+            return 0;
+        }
+
     }
 
     private function calculateRemainingBalance($lastDate, $currentDate, $amount, $balance)

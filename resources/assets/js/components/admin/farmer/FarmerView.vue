@@ -61,7 +61,7 @@
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
 
-                                                <a class="btn btn-primary" v-bind:class="{ disabled :  plant.hasTransaction}"
+                                                <a class="btn btn-primary"
                                                    v-bind:href="strFormat(plantEditUrl,{id : plant.id})">แก้ไข</a>
                                                 <button @click="deletePlant(plant)" type="button"
                                                         class="btn btn-danger">

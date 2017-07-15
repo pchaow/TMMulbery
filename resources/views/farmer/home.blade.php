@@ -15,7 +15,19 @@
     <!-- Main content -->
     <section class="content">
             <div class="row">
-                <admin-users-graph></admin-users-graph>
+                <div class="col-lg-12">
+                <farmer-view
+                        v-bind:load-url="'/api/farmer/{{$farmer->id}}'"
+                        v-bind:farmer-edit-url="'/farmers/edit'"
+                        v-bind:load-plant-url="'/api/farmer/plant'"
+                        v-bind:plant-create-url="'/farmers/plant/create'"
+                        v-bind:plant-edit-url="'/farmers/plant/{id}/edit'"
+                        plant-delete-url="/api/farmer/plant/{id}"
+                        v-bind:farmer="{{json_encode($farmer)}}"
+                        farmer-load-url="/api/farmer"
+                >
+                </farmer-view>
+                </div>
             </div>
     </section>
     <!-- /.content -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laratrust\Laratrust;
@@ -29,10 +30,28 @@ class HomeController extends Controller
         if ($user->hasRole('administrator')) {
             return view('admin.home');
         } elseif ($user->hasRole('farmer')) {
-            return view('farmer.home');
+            return $this->farmerHome();
         } else {
             return 'Underconstruction';
         }
+    }
+
+    private function farmerHome()
+    {
+        $user = Auth::user();
+        $userId = $user->id;
+        $user = User::with(['plants', 'plants.province', 'plants.amphure', 'plants.district'
+            , 'amphure', 'district', 'province'])->where('id', $userId)->first();
+
+        foreach ($user->plants as $data) {
+            $data->remainingBalance = $data->remainingBalance();
+            $data->lastHarvestDate = $data->lastHarvestDate();
+            $data->hasTransaction = $data->transactions()->first() != null ? true : false;
+        }
+
+        return view('farmer.home')
+            ->with('farmer', $user);
 
     }
 }
+

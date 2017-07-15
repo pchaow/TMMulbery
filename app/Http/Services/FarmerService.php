@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Http\Services;
+
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 /**
  * Created by PhpStorm.
  * User: chaow
@@ -9,6 +14,34 @@ namespace App\Http\Services;
  */
 class FarmerService
 {
+
+    public static function getFarmersList($keyword = null, $paginate = true)
+    {
+
+        $query = User::query();
+        $query->with(["province", 'district', 'amphure']);
+
+        if ($keyword != null) {
+            $query->where(function ($q) use ($keyword) {
+                $q->orWhere('email', 'LIKE', "%$keyword%");
+                $q->orWhere('username', 'LIKE', "%$keyword%");
+                $q->orWhere('name', 'LIKE', "%$keyword%");
+            });
+
+        }
+
+        $query->whereHas('roles', function ($q) {
+            $q->where('name', 'farmer');
+        });
+
+        if ($paginate) {
+            return $query->paginate();
+        } else {
+            return $query->get();
+        }
+
+
+    }
 
     public static function getFarmerById($id)
     {
@@ -36,5 +69,28 @@ class FarmerService
         return $farmer;
 
     }
+
+    public static function storeFarmer($formData)
+    {
+        $form = $formData;
+        $user = new User();
+        $user->fill($form);
+        if (isset($form['password'])) {
+            $user->password = Hash::make($form['password']);
+        }
+
+        if ($user->province_id == 0) $user->province_id = null;
+        if ($user->amphure_id == 0) $user->amphure_id = null;
+        if ($user->district_id == 0) $user->district_id = null;
+
+        $user->save();
+
+        $farmer = RoleService::getRoleByName("farmer");
+        $user->roles()->save($farmer);
+        $user->roles;
+        return $user;
+    }
+
+
 
 }

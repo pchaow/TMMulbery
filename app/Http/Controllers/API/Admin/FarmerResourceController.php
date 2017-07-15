@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Requests\FarmerRequest;
+use App\Http\Services\FarmerService;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,24 +20,14 @@ class FarmerResourceController extends Controller
     public function index(Request $request)
     {
 
-        $query = User::query();
-        $query->with(["province", 'district', 'amphure']);
+       $keyword = null;
 
         if ($request->has('keyword')) {
             $keyword = $request->get('keyword');
-            $query->where(function ($q) use ($keyword) {
-                $q->orWhere('email', 'LIKE', "%$keyword%");
-                $q->orWhere('username', 'LIKE', "%$keyword%");
-                $q->orWhere('name', 'LIKE', "%$keyword%");
-            });
-
         }
 
-        $query->whereHas('roles', function ($q) {
-            $q->where('name', 'farmer');
-        });
+        return FarmerService::getFarmersList($keyword,true);
 
-        return $query->paginate();
     }
 
     /**

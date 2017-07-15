@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\FarmerService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,14 +41,8 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $userId = $user->id;
-        $user = User::with(['plants', 'plants.province', 'plants.amphure', 'plants.district'
-            , 'amphure', 'district', 'province'])->where('id', $userId)->first();
 
-        foreach ($user->plants as $data) {
-            $data->remainingBalance = $data->remainingBalance();
-            $data->lastHarvestDate = $data->lastHarvestDate();
-            $data->hasTransaction = $data->transactions()->first() != null ? true : false;
-        }
+        $user = FarmerService::getFarmerByIdWithPlantFullData($userId);
 
         return view('farmer.home')
             ->with('farmer', $user);

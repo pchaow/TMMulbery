@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Services\FarmerService;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -32,23 +33,17 @@ class FarmerController extends Controller
 
     }
 
-    public function view($userId)
+    public function view($farmerId)
     {
-        $user = User::with(['plants', 'plants.province', 'plants.amphure', 'plants.district'
-            , 'amphure', 'district', 'province'])->where('id', $userId)->first();
 
-        if (!$user->hasRole('farmer')) {
+        $farmer = FarmerService::getFarmerByIdWithPlantFullData($farmerId);
+
+        if ($farmer == null) {
             return redirect("/admin/farmers");
         }
 
-        foreach ($user->plants as $data) {
-            $data->remainingBalance = $data->remainingBalance();
-            $data->lastHarvestDate = $data->lastHarvestDate();
-            $data->hasTransaction = $data->transactions()->first() != null ? true : false;
-        }
-
         return view('admin.farmer.view')
-            ->with('farmer', $user);
+            ->with('farmer', $farmer);
 
     }
 

@@ -1,16 +1,17 @@
 <template>
     <div class="row" v-if="farmer">
-        <div class="col-md-3">
+        <div class="col-md-3" v-show="showSidePanel">
 
-            <farmer-profile-column
-                    :farmer="farmer"
-                    :edit-url="editUrl"
+            <farmer-profile-column v-if="farmer"
+                                   :farmer="farmer"
+                                   :edit-url="editUrl"
             ></farmer-profile-column>
 
         </div>
-        <div class="col-md-9">
+        <!-- /.col -->
+        <div v-bind:class="{'col-md-9' : showSidePanel,'col-md-12' : !showSidePanel}">
 
-            <!-- general form elements -->
+        <!-- general form elements -->
 
             <div class="box box-success">
 
@@ -206,6 +207,7 @@
             plantCreateUrl: String,
             successUrl: String,
             farmer: Object,
+            showSidePanel: Boolean,
         },
         components: {
             Province, FarmerProfileColumn

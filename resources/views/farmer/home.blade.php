@@ -25,7 +25,7 @@
                         plant-delete-url="/api/farmer/plant/{id}"
                         v-bind:farmer="{{json_encode($farmer)}}"
                         farmer-load-url="/api/farmer"
-                        plant-transaction-url="/farmer/plant/{id}/view"
+                        plant-transaction-url="/farmers/plant/{id}/view"
                         :show-side-panel="false"
 
                 >

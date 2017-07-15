@@ -23,6 +23,8 @@
                 v-bind:load-plant-url="'/api/admin/farmer/{{$user->id}}/plant'"
                 v-bind:plant-create-url="'/admin/farmers/{{$user->id}}/plant/create'"
                 v-bind:farmer="{{json_encode($user)}}"
+                :show-side-panel="true"
+
         ></farmer-plant-create>
     </section>
     <!-- /.content -->

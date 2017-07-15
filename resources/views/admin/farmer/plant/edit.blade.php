@@ -21,6 +21,7 @@
                 edit-farmer-url="/admin/farmers/{{$user->id}}/edit"
                 :farmer="{{json_encode($user)}}"
                 :plant="{{json_encode($plant)}}"
+                :show-side-panel="true"
 
         ></farmer-plant-edit>
     </section>

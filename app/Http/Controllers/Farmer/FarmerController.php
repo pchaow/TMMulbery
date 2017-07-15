@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Farmer;
 
+use App\Http\Services\PlantService;
 use App\Models\Plant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,5 +37,17 @@ class FarmerController extends Controller
         return view('farmer.plant.edit')
             ->with('user', $user)
             ->with('plant', $plant);
+    }
+
+    public function viewPlant( $plantId)
+    {
+        $plant = PlantService::getPlantById($plantId);
+
+        $user = $plant->user()->with(['amphure', 'district', 'province'])->first();
+
+        return view('farmer.plant.view')
+            ->with('farmer', $user)
+            ->with('plant',$plant);
+
     }
 }

@@ -25,4 +25,10 @@ class FarmerPlantResourceController extends Controller
     {
         return PlantService::destroyPlant($plantId);
     }
+
+    public function show($id)
+    {
+        return PlantService::getPlantById($id);
+    }
+
 }

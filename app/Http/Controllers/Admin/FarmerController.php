@@ -24,9 +24,11 @@ class FarmerController extends Controller
 
     public function edit($userId)
     {
-        if (!User::find($userId)->hasRole('farmer')) {
-            return redirect("/admin/farmers");
-        }
+        $user = FarmerService::getFarmerById($userId);
+
+        if ($user == null) {
+        return redirect("/admin/farmers");
+    }
 
         return view('admin.farmer.edit')
             ->with('userId', $userId);

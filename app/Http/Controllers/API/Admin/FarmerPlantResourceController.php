@@ -22,8 +22,7 @@ class FarmerPlantResourceController extends Controller
      */
     public function index(Request $request, $farmerId)
     {
-        $farmer = User::find($farmerId);
-        return $farmer->plants()->with(['province', 'amphure', 'district'])->get();
+        return PlantService::getPlantListByFarmerId($farmerId);
     }
 
     /**

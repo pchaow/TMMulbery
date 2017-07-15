@@ -43,10 +43,16 @@ class FarmerService
 
     }
 
-    public static function getFarmerById($id)
+    public static function getFarmerById($id, $withPlant = true)
     {
-        $farmer = \App\Models\User::with(['plants', 'plants.province', 'plants.amphure', 'plants.district'
-            , 'amphure', 'district', 'province'])->where('id', $id)->first();
+        $query = User::query();
+
+        if ($withPlant) {
+            $query->with(['plants', 'plants.province', 'plants.amphure', 'plants.district']);
+        }
+        $query->with(['amphure', 'district', 'province']);
+        $query->where('id', $id);
+        $farmer = $query->first();
 
         if (!$farmer->hasRole('farmer')) {
             return null;
@@ -91,6 +97,24 @@ class FarmerService
         return $user;
     }
 
+    public static function updateFarmer($id,$formData){
+        $form = $formData;
+        $user = User::find($id);
+        $user->fill($form);
+
+
+        if ($user->province_id == 0) $user->province_id = null;
+        if ($user->amphure_id == 0) $user->amphure_id = null;
+        if ($user->district_id == 0) $user->district_id = null;
+
+        if (isset($form['password'])) {
+            $user->password = Hash::make($form['password']);
+        }
+
+        $user->save();
+
+        return $user;
+    }
 
 
 }

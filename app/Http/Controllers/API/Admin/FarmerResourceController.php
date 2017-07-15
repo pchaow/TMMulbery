@@ -20,13 +20,8 @@ class FarmerResourceController extends Controller
     public function index(Request $request)
     {
 
-       $keyword = null;
-
-        if ($request->has('keyword')) {
-            $keyword = $request->get('keyword');
-        }
-
-        return FarmerService::getFarmersList($keyword,true);
+        $keyword = $request->has('keyword') ? $request->get('keyword') : null;
+        return FarmerService::getFarmersList($keyword, true);
 
     }
 
@@ -48,23 +43,7 @@ class FarmerResourceController extends Controller
      */
     public function store(FarmerRequest $request)
     {
-        $form = $request->all();
-        $user = new User();
-        $user->fill($form);
-        if ($request->has('password')) {
-            $user->password = Hash::make($form['password']);
-        }
-
-        if ($user->province_id == 0) $user->province_id = null;
-        if ($user->amphure_id == 0) $user->amphure_id = null;
-        if ($user->district_id == 0) $user->district_id = null;
-
-        $user->save();
-
-        $farmer = Role::where('name', 'farmer')->first();
-        $user->roles()->save($farmer);
-        $user->roles;
-        return $user;
+        return FarmerService::storeFarmer($request->all());
     }
 
     /**
@@ -75,11 +54,7 @@ class FarmerResourceController extends Controller
      */
     public function show($id)
     {
-        $query = User::query();
-        $query->with(["province", 'district', 'amphure', 'plants']);
-        $query->where('id', $id);
-
-        return $query->first();
+        return FarmerService::getFarmerById($id);
     }
 
     /**
@@ -90,7 +65,7 @@ class FarmerResourceController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = FarmerService::getFarmerById($id);
         $user->roles;
         $user->identity;
         return $user;
@@ -103,24 +78,9 @@ class FarmerResourceController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FarmerRequest $request, $id)
     {
-        $form = $request->all();
-        $user = User::find($id);
-        $user->fill($form);
-
-
-        if ($user->province_id == 0) $user->province_id = null;
-        if ($user->amphure_id == 0) $user->amphure_id = null;
-        if ($user->district_id == 0) $user->district_id = null;
-
-        if (isset($form['password'])) {
-            $user->password = Hash::make($form['password']);
-        }
-
-        $user->save();
-
-        return $user;
+        return FarmerService::updateFarmer($id, $request->all());
     }
 
     /**

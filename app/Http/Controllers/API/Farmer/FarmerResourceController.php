@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Farmer;
 
 use App\Http\Requests\FarmerRequest;
 use App\Http\Services\FarmerService;
+use App\Http\Services\UserService;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,6 +28,12 @@ class FarmerResourceController extends Controller
     {
         $userId = Auth::user()->id;
         return FarmerService::createSellOrderTransaction($userId, $plantId, $request->all());
+    }
+
+    public function getOrders()
+    {
+        $id = Auth::user()->id;
+        return UserService::getOrderListByUserId($id, true, "farmer");
     }
 
 }

@@ -21,9 +21,10 @@ Route::resource('thailand/province', "API\\ProvinceController");
 Route::resource('thailand/province.amphure', "API\\ProvinceAmphureController");
 Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphureDistrictController");
 
-Route::group(["prefix" => 'admin'], function () {
+Route::group(["prefix" => 'admin', "middleware" => "auth:api"], function () {
 
     Route::resource('farmer', "API\\Admin\\FarmerResourceController");
+    Route::get("farmer/{id}/order", "API\\Admin\\FarmerResourceController@getOrders");
     Route::resource('farmer.plant', "API\\Admin\\FarmerPlantResourceController");
     Route::resource('user', "API\\Admin\\UserResourceController");
     Route::resource('role', "Api\\Admin\\RoleResourceController");
@@ -52,9 +53,11 @@ Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
     Route::resource('plant', "API\\Farmer\\FarmerPlantResourceController");
 
     Route::resource('plant.transaction', "API\\Admin\\PlantTransactionController");
-    //todo : refactor to api->farmer
+
     Route::post("plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
     Route::post("plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
+
+    Route::get("order", "API\\Farmer\\FarmerResourceController@getOrders");
     Route::post("plant/{plantId}/open/sell", "API\\Farmer\\FarmerResourceController@createSellOrder");
 
 

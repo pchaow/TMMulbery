@@ -135,6 +135,7 @@ class PlantService
     public static function destroyPlant($plantId)
     {
         $plant = Plant::find($plantId);
+        $plant->orders()->delete();
         return [$plant->delete()];
     }
 

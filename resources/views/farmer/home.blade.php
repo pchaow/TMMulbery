@@ -28,6 +28,8 @@
                         plant-transaction-url="/farmers/plant/{id}/view"
                         :show-side-panel="false"
                         plant-open-sell-order-url="/api/farmer/plant/{id}/open/sell"
+                        plant-load-order-url="/api/farmer/order"
+
                 >
                 </farmer-view>
             </div>

@@ -26,6 +26,7 @@
                 farmer-load-url="/api/admin/farmer/{{$farmer->id}}"
                 plant-transaction-url="/admin/plants/{id}/view"
                 :show-side-panel="true"
+                plant-load-order-url="/api/admin/farmer{{$farmer->id}}/order"
         >
         </farmer-view>
 

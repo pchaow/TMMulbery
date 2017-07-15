@@ -94,4 +94,9 @@ class Plant extends Model
     {
         return $this->transactions()->first() != null ? true : false;
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

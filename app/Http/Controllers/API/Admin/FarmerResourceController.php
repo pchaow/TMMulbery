@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Requests\FarmerRequest;
 use App\Http\Services\FarmerService;
+use App\Http\Services\UserService;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class FarmerResourceController extends Controller
      */
     public function edit($id)
     {
-        $user = FarmerService::getFarmerById($id,[]);
+        $user = FarmerService::getFarmerById($id, []);
         $user->roles;
         $user->identity;
         return $user;
@@ -94,5 +95,10 @@ class FarmerResourceController extends Controller
         $user = User::find($id);
         $user->delete();
         return [true];
+    }
+
+    public function getOrders($id)
+    {
+        return UserService::getOrderListByUserId($id, true, "farmer");
     }
 }

@@ -12,7 +12,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">แปลงหม่อน</a></li>
-                    <li><a href="#timeline" data-toggle="tab">ประวัติซื้อขาย</a></li>
+                    <li><a href="#timeline" @click="loadOrders()" data-toggle="tab">ประวัติซื้อขาย</a></li>
 
                 </ul>
                 <div class="tab-content">
@@ -83,7 +83,7 @@
                                         <tr>
                                             <td colspan="5">
                                                 <div>
-                                                    จำนวนทั้งหมด 3 รายการ
+                                                    จำนวนทั้งหมด {{farmerData.plants ? farmerData.plants.length : 0}} รายการ
                                                 </div>
                                                 <ul class="pagination">
                                                     <li></li>
@@ -113,7 +113,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="order in sellOrders">
+                                        <tr v-for="order in sellOrders.data">
 
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                             <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
@@ -128,7 +128,7 @@
                                         <tr>
                                             <td colspan="5">
                                                 <div>
-                                                    จำนวนทั้งหมด 3 รายการ
+                                                    จำนวนทั้งหมด {{sellOrders.total}} รายการ
                                                 </div>
                                                 <ul class="pagination">
                                                     <li></li>
@@ -166,6 +166,7 @@
             plantTransactionUrl: String,
             farmer: Object,
             plantOpenSellOrderUrl: String,
+            plantLoadOrderUrl: String,
             showSidePanel: true,
 
         },
@@ -183,6 +184,15 @@
         },
         methods: {
             strFormat: window.strFormat,
+
+            loadOrders: function () {
+
+                axios.get(this.plantLoadOrderUrl)
+                    .then(response => {
+                        this.sellOrders = response.data;
+                    })
+
+            },
 
             OpenSellOrder: function (plant) {
                 var form = {
@@ -215,8 +225,6 @@
         },
         created() {
             this.farmerData = this.farmer;
-            this.sellOrders = this.farmer.sell_orders;
-
         },
         mounted() {
 

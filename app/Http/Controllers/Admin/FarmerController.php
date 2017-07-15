@@ -34,11 +34,17 @@ class FarmerController extends Controller
 
     public function view($userId)
     {
-        $user = User::with(['plants','plants.province','plants.amphure','plants.district'
-            ,'amphure', 'district', 'province'])->where('id', $userId)->first();
+        $user = User::with(['plants', 'plants.province', 'plants.amphure', 'plants.district'
+            , 'amphure', 'district', 'province'])->where('id', $userId)->first();
 
         if (!$user->hasRole('farmer')) {
             return redirect("/admin/farmers");
+        }
+
+        foreach ($user->plants as $data) {
+            $data->remainingBalance = $data->remainingBalance();
+            $data->lastHarvestDate = $data->lastHarvestDate();
+            $data->hasTransaction = $data->transactions()->first() != null ? true : false;
         }
 
         return view('admin.farmer.view')

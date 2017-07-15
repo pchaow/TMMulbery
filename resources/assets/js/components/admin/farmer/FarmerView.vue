@@ -55,13 +55,13 @@
 
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_sqm}}</td>
-                                            <td><span class="badge bg-gray">Unknown</span></td>
+                                            <td>{{plant.remainingBalance}}</td>
                                             <td>{{plant.district ? plant.district.name : '-'}}</td>
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
 
-                                                <a class="btn btn-primary"
+                                                <a class="btn btn-primary" v-bind:class="{ disabled :  plant.hasTransaction}"
                                                    v-bind:href="strFormat(plantEditUrl,{id : plant.id})">แก้ไข</a>
                                                 <button @click="deletePlant(plant)" type="button"
                                                         class="btn btn-danger">
@@ -122,7 +122,9 @@
         },
         data() {
             return {
-                farmerData: {}
+                farmerData: {
+                    withbalance: true,
+                    withLastHarvest: true,                }
             }
         },
         methods: {

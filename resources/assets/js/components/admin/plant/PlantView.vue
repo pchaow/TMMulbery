@@ -79,7 +79,8 @@
                         </div>
                         <div class="col-lg-12">
                             <form @submit.prevent="saveHarvestForm()">
-                                <div class="form-group">
+                                <div class="form-group"
+                                     v-bind:class="{ 'has-error': harvestErrorForm['transaction_date'] }">
                                     <label>Date:</label>
 
                                     <div class="input-group date">
@@ -90,6 +91,8 @@
                                                type="date"
                                                class="form-control pull-right">
                                     </div>
+                                    <span v-if="harvestErrorForm['transaction_date']"
+                                          class="help-block">{{ harvestErrorForm['transaction_date'] }}</span>
                                     <!-- /.input group -->
                                 </div>
 
@@ -195,7 +198,7 @@
                     status: "N",
                     amount: 100
                 },
-
+                harvestErrorForm: {},
                 harvestForm: {
                     type: "-",
                     transaction_date: '',
@@ -219,7 +222,7 @@
                         amount: 100,
                     }
                 } else if (form == this.harvestForm) {
-                    this.initializeHarvestForm;
+                    this.initializeHarvestForm();
                 }
             },
             calculateNumberOfTrees: function () {
@@ -255,10 +258,10 @@
                     }
                     var lastBalance = this.transactions[this.transactions.length - 1].balance;
                     var lastTransaction = moment(this.transactions[this.transactions.length - 1].transaction_date)
-                    var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))
+                    var daydiff = lastTransaction.diff(transaction_date, 'days') * -1
                     var nextbalance = lastBalance + (0.008 * daydiff * amount);
                     this.harvestForm.amount = nextbalance.toFixed(2)
-//                    console.log(nextbalance, daydiff, lastTransaction, transaction_date)
+                    console.log(nextbalance, daydiff, lastTransaction, transaction_date)
                 } else {
                     this.harvestForm.amount = 0;
                 }
@@ -266,13 +269,20 @@
             },
 
             saveHarvestForm: function () {
+                this.harvestErrorForm = {}
                 axios.post(this.plantTransactionApiUrl + "/harvestFarm", this.harvestForm)
                     .then(response => {
-                        console.log(response);
-                        this.loadTransaction().then(r => {
-                            this.currentState = this.states[0];
-                            this.resetForm(this.harvestForm);
-                        });
+                            console.log(response);
+                            this.loadTransaction().then(r => {
+                                this.currentState = this.states[0];
+                                this.resetForm(this.harvestForm);
+                            });
+                        }
+                    )
+                    .catch(error => {
+                        console.log(error.response)
+                        this.harvestErrorForm = error.response.data;
+                        console.log(this.harvestErrorForm);
                     })
             },
             initializeHarvestForm: function () {

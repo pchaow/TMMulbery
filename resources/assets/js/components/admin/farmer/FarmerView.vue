@@ -43,7 +43,7 @@
                                             <th>ชื่อแปลง</th>
                                             <th>พื้นที่(ตรม.)</th>
                                             <th>คงเหลือเก็บเกี่ยว</th>
-
+                                            <th>วันเก็บเกี่ยวครั้งสุดท้าย	</th>
                                             <th>ตำบล</th>
                                             <th>อำเภอ</th>
                                             <th>จังหวัด</th>
@@ -56,6 +56,9 @@
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_sqm}}</td>
                                             <td>{{plant.remainingBalance}}</td>
+                                            <td>
+                                                {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
+                                            </td>
                                             <td>{{plant.district ? plant.district.name : '-'}}</td>
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>

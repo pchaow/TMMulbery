@@ -20,9 +20,7 @@ class AddSellBuyConfirmTbls extends Migration
             $table->integer('plant_id')->unsigned()->nullable();
             $table->enum('status', ['Open', 'Pending', 'Close']);
             $table->decimal('amount', 10, 2)->nullable();
-
             $table->timestamps();
-
         });
 
         Schema::create("comfirm_orders", function (Blueprint $table) {
@@ -32,7 +30,6 @@ class AddSellBuyConfirmTbls extends Migration
             $table->enum('status', ['Open', 'Pending', 'Close', 'Success']);
             $table->json('remark');
             $table->timestamps();
-
         });
 
     }

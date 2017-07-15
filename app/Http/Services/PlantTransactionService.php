@@ -13,6 +13,7 @@ use App\Models\Plant;
 use App\Models\PlantTransaction;
 use App\Models\PlantTransactionStatus;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
 
 class PlantTransactionService
 {
@@ -44,6 +45,20 @@ class PlantTransactionService
         return $transaction;
     }
 
+    public static function checkValidTransaction($plantId, $formData)
+    {
+        $plant = Plant::find($plantId);
+
+        $lastTransaction = $plant->transactions()->orderBy('created_at', 'desc')->first();
+
+        $transactionDateTime = Carbon::parse($formData['transaction_date']);
+
+        $transaction = new PlantTransaction();
+        $transaction->transaction_date = $transactionDateTime;
+
+        return $transactionDateTime >= $lastTransaction->transaction_date;
+    }
+
 
     public static function updateBalanceFarm($plantId, $formData)
     {
@@ -60,6 +75,7 @@ class PlantTransactionService
         $transactionDateTime = Carbon::parse($form['transaction_date']);
         $transaction->transaction_date = $transactionDateTime;
         $transaction->amount = round($plant->remainingBalance(), 2) - round($lsatTransaction->balance, 2);
+        if ($transaction->amount == 0) return null;
         $transaction->balance = round($plant->remainingBalance(), 2);
         $transaction->type = "+";
         $transaction->status()->associate($status);
@@ -71,24 +87,31 @@ class PlantTransactionService
 
     public static function harvestFarm($plantId, $formData)
     {
+        if (self::checkValidTransaction($plantId, $formData)) {
 
-        PlantTransactionService::updateBalanceFarm($plantId, $formData);
 
-        $plant = Plant::find($plantId);
-        $form = $formData;
+            PlantTransactionService::updateBalanceFarm($plantId, $formData);
 
-        $status = PlantTransactionStatus::where('name', '=', 'H')->first();
-        $transaction = new PlantTransaction();
-        $transactionDateTime = Carbon::parse($form['transaction_date']);
-        $transactionDateTime->addSeconds(1);
-        $transaction->transaction_date = $transactionDateTime;
-        $roundAmount = round($form  ['amount'], 2);
-        $transaction->amount = $roundAmount;
-        $transaction->balance = round(round($plant->remainingBalance(), 2) - $roundAmount, 2);
-        $transaction->type = '-';
-        $transaction->status()->associate($status);
-        $plant->transactions()->save($transaction);
+            $plant = Plant::find($plantId);
+            $form = $formData;
 
-        return $transaction;
+            $status = PlantTransactionStatus::where('name', '=', 'H')->first();
+            $transaction = new PlantTransaction();
+            $transactionDateTime = Carbon::parse($form['transaction_date']);
+            $transactionDateTime->addSeconds(1);
+            $transaction->transaction_date = $transactionDateTime;
+            $roundAmount = round($form  ['amount'], 2);
+            $transaction->amount = $roundAmount;
+            $transaction->balance = round(round($plant->remainingBalance(), 2) - $roundAmount, 2);
+            $transaction->type = '-';
+            $transaction->status()->associate($status);
+            $plant->transactions()->save($transaction);
+
+            return $transaction;
+        } else {
+            return \response([
+                "transaction_date" => "Transaction date is not valid."
+            ], 422);
+        }
     }
 }

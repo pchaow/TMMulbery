@@ -14,8 +14,8 @@
 
     <!-- Main content -->
     <section class="content">
-            <div class="row">
-                <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
                 <farmer-view
                         v-bind:load-url="'/api/farmer/{{$farmer->id}}'"
                         v-bind:farmer-edit-url="'/farmers/edit'"
@@ -25,10 +25,13 @@
                         plant-delete-url="/api/farmer/plant/{id}"
                         v-bind:farmer="{{json_encode($farmer)}}"
                         farmer-load-url="/api/farmer"
+                        plant-transaction-url="/farmer/plant/{id}/view"
+                        :show-side-panel="false"
+
                 >
                 </farmer-view>
-                </div>
             </div>
+        </div>
     </section>
     <!-- /.content -->
 @endsection

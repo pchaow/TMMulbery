@@ -1,6 +1,6 @@
 <template>
     <div class="row" v-if="farmer">
-        <div class="col-md-3">
+        <div class="col-md-3" v-show="showSidePanel">
 
             <farmer-profile-column v-if="farmerData"
                                    :farmer="farmerData"
@@ -9,7 +9,7 @@
 
         </div>
         <!-- /.col -->
-        <div class="col-md-9">
+        <div v-bind:class="{'col-md-9' : showSidePanel,'col-md-12' : !showSidePanel}">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">แปลงหม่อน</a></li>
@@ -60,7 +60,11 @@
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
-
+                                                <a class="btn btn-success"
+                                                   v-bind:href="strFormat(plantTransactionUrl,{id : plant.id})"
+                                                >
+                                                    การปลูก
+                                                </a>
                                                 <a class="btn btn-primary"
                                                    v-bind:href="strFormat(plantEditUrl,{id : plant.id})">แก้ไข</a>
                                                 <button @click="deletePlant(plant)" type="button"
@@ -115,7 +119,10 @@
             plantCreateUrl: String,
             plantEditUrl: String,
             plantDeleteUrl: String,
+            plantTransactionUrl: String,
             farmer: Object,
+            showSidePanel: true,
+
         },
         components: {
             FarmerProfileColumn
@@ -124,7 +131,8 @@
             return {
                 farmerData: {
                     withbalance: true,
-                    withLastHarvest: true,                }
+                    withLastHarvest: true,
+                }
             }
         },
         methods: {
@@ -150,7 +158,8 @@
         },
         mounted() {
 
-            console.log(this.farmerData)
+            console.log(this.showSidePanel)
+
         }
     }
 </script>

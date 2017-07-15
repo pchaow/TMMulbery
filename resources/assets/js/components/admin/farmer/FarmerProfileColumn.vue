@@ -1,57 +1,49 @@
 <template>
-    <div>
-        <!-- Profile Image -->
-        <div class="box box-primary">
-            <div class="box-body box-profile">
-                <h3 class="profile-username text-center">{{farmer.name}}</h3>
+    <div class="row">
+        <div class="col-lg-12">
 
-                <ul class="list-group list-group-unbordered">
-                    <li class="list-group-item">
-                        <b>แปลงทั้งหมด</b> <a class="pull-right">{{farmer.plants.length}}</a>
-                    </li>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    {{farmer.name}}
+
+                    <div class="btn-group btn-group-sm pull-right">
+                        <a v-bind:href="editUrl"
+                           class=" btn btn-primary"><b>แก้ไขข้อมูลลงทะเบียน</b></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <p>
+                                <label>จำนวนแปลง</label> :
+                                <span>{{farmer.plants.length}}</span> <br/>
+                            </p>
+                            <p>
+                                <label>เลขประจำตัวประชาชน</label> :
+                                <span>{{farmer.identity ? farmer.identity : '-'}}</span>
+                            </p>
+                            <p>
+                                <label>ข้อมูลติดต่อ</label> <br/>
+                                <span class="text-muted">{{farmer.contact_number}}</span>
+                                <span class="text-muted">{{farmer.email}}</span>
+
+                                <label>ที่อยู่</label>
+
+                                <span class="text-muted">
+                                {{farmer.address}}
+                                {{farmer.district ? farmer.district.name : ''}}
+                                {{farmer.amphure ? farmer.amphure.name : ''}}
+                                {{farmer.province ? farmer.province.name : ''}}
+                            </span>
+                            </p>
+                        </div>
+                    </div>
 
 
-                </ul>
-
-                <a v-bind:href="editUrl" class="btn btn-primary btn-block"><b>แก้ไขข้อมูลลงทะเบียน</b></a>
+                </div>
             </div>
-            <!-- /.box-body -->
         </div>
-        <!-- /.box -->
-
-        <!-- About Me Box -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">ข้อมูลส่วนตัว</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <strong><i class="fa fa-file-text-o margin-r-5"></i> เลขประจำตัวประชาชน</strong>
-
-                <p>{{farmer.identity}}</p>
-                <hr>
-                <strong><i class="fa fa-pencil margin-r-5"></i> ข้อมูลติดต่อ</strong>
-                <p class="text-muted">{{farmer.contact_number}}</p>
-                <p class="text-muted">{{farmer.email}}</p>
-
-
-                <hr>
-
-                <strong><i class="fa fa-map-marker margin-r-5"></i> ที่อยู่</strong>
-
-                <p class="text-muted">
-                    {{farmer.address}}
-                    {{farmer.district ? farmer.district.name : ''}}
-                    {{farmer.amphure ? farmer.amphure.name : ''}}
-                    {{farmer.province ? farmer.province.name : ''}}
-                </p>
-
-                <hr>
-
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
     </div>
 
 </template>

@@ -65,7 +65,7 @@ class FarmerResourceController extends Controller
      */
     public function edit($id)
     {
-        $user = FarmerService::getFarmerById($id);
+        $user = FarmerService::getFarmerById($id,[]);
         $user->roles;
         $user->identity;
         return $user;

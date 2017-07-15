@@ -51,4 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Plant::class);
     }
 
+    public function sellOrders()
+    {
+        if ($this->hasRole("farmer")) {
+            return $this->hasMany(Order::class);
+        }
+    }
+
 }

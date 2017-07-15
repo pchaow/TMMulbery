@@ -23,4 +23,10 @@ class FarmerResourceController extends Controller
         return FarmerService::getFarmerById(Auth::user()->id);
     }
 
+    public function createSellOrder(Request $request, $plantId)
+    {
+        $userId = Auth::user()->id;
+        return FarmerService::createSellOrderTransaction($userId, $plantId, $request->all());
+    }
+
 }

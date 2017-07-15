@@ -1,15 +1,14 @@
 <template>
     <div class="row" v-if="farmer">
-        <div class="col-md-3" v-show="showSidePanel">
+        <div class="col-md-12" v-show="showSidePanel">
 
             <farmer-profile-column v-if="farmerData"
                                    :farmer="farmerData"
                                    :edit-url="farmerEditUrl"
             ></farmer-profile-column>
-
         </div>
-        <!-- /.col -->
-        <div v-bind:class="{'col-md-9' : showSidePanel,'col-md-12' : !showSidePanel}">
+
+        <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">แปลงหม่อน</a></li>
@@ -63,7 +62,9 @@
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-warning">ประกาศขาย</button>
+                                                <button v-if="plantOpenSellOrderUrl" @click="OpenSellOrder(plant)"
+                                                        type="button" class="btn btn-warning">ประกาศขาย
+                                                </button>
                                                 <a class="btn btn-success"
                                                    v-bind:href="strFormat(plantTransactionUrl,{id : plant.id})">
                                                     การปลูก
@@ -97,6 +98,49 @@
                         <!-- Post -->
                     </div>
                     <div class="tab-pane" id="timeline">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+
+                                            <th>วันที่</th>
+                                            <th>แปลง</th>
+                                            <th>สถานะ</th>
+                                            <th>จำนวน (กก.)</th>
+                                            <th>จัดการ</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="order in sellOrders">
+
+                                            <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
+                                            <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
+                                            <td>{{order.status}}</td>
+                                            <td>{{order.amount}}</td>
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div>
+                                                    จำนวนทั้งหมด 3 รายการ
+                                                </div>
+                                                <ul class="pagination">
+                                                    <li></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <!-- /.tab-pane -->
                 </div>
@@ -104,11 +148,8 @@
             </div>
             <!-- /.nav-tabs-custom -->
         </div>
-        <!-- /.col -->
+
     </div>
-    <!-- /.row -->
-
-
 </template>
 
 <script>
@@ -124,6 +165,7 @@
             plantDeleteUrl: String,
             plantTransactionUrl: String,
             farmer: Object,
+            plantOpenSellOrderUrl: String,
             showSidePanel: true,
 
         },
@@ -135,11 +177,26 @@
                 farmerData: {
                     withbalance: true,
                     withLastHarvest: true,
-                }
+                },
+                sellOrders: [],
             }
         },
         methods: {
             strFormat: window.strFormat,
+
+            OpenSellOrder: function (plant) {
+                var form = {
+                    "amount": plant.remainingBalance.toFixed(2)
+                }
+
+                axios.post(this.strFormat(this.plantOpenSellOrderUrl, {id: plant.id}), form)
+                    .then(response => {
+                        var data = response.data;
+                    })
+                    .catch(error => {
+                        var data = error.response.data;
+                    })
+            },
             loadFarmerData: function () {
                 this.$http.get(this.farmerLoadUrl).then(
                     function (response) {
@@ -158,10 +215,12 @@
         },
         created() {
             this.farmerData = this.farmer;
+            this.sellOrders = this.farmer.sell_orders;
+
         },
         mounted() {
 
-            console.log(this.showSidePanel)
+            console.log(this.farmer)
 
         }
     }

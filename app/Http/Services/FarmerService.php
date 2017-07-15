@@ -2,8 +2,11 @@
 
 namespace App\Http\Services;
 
+use App\Models\Order;
+use App\Models\Plant;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -43,13 +46,12 @@ class FarmerService
 
     }
 
-    public static function getFarmerById($id, $withPlant = true)
+    public static function getFarmerById($id, $with = ['plants', 'plants.province', 'plants.amphure', 'plants.district'])
     {
         $query = User::query();
 
-        if ($withPlant) {
-            $query->with(['plants', 'plants.province', 'plants.amphure', 'plants.district']);
-        }
+        $query->with($with);
+
         $query->with(['amphure', 'district', 'province']);
         $query->where('id', $id);
         $farmer = $query->first();
@@ -63,7 +65,7 @@ class FarmerService
 
     public static function getFarmerByIdWithPlantFullData($id)
     {
-        $farmer = FarmerService::getFarmerById($id);
+        $farmer = FarmerService::getFarmerById($id, ['plants', 'plants.province', 'plants.amphure', 'plants.district', 'sellOrders', 'sellOrders.plant']);
         if ($farmer) {
             foreach ($farmer->plants as $data) {
                 $data->remainingBalance = $data->remainingBalance();
@@ -117,9 +119,23 @@ class FarmerService
         return $user;
     }
 
-    public static function createSellOrderTransaction($plantId, $formData)
+    public static function createSellOrderTransaction($userId, $plantId, $formData)
     {
+        $user = User::find($userId);
+        $plant = Plant::find($plantId);
 
+        $order = new Order();
+
+        $order->fill($formData);
+        $order->type = Order::$ORDER_TYPE_SELL;
+        $order->status = Order::$STATUS_OPEN;
+
+        $order->user()->associate($user);
+        $order->plant()->associate($plant);
+
+        $order->save();
+
+        return $order;
     }
 
 

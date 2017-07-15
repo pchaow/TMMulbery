@@ -18,17 +18,19 @@ class AddSellBuyConfirmTbls extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('plant_id')->unsigned()->nullable();
-            $table->enum('status', ['Open', 'Pending', 'Close']);
+            $table->enum('status', ['Open', 'Pending', 'Closed']);
             $table->decimal('amount', 10, 2)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
         Schema::create("comfirm_orders", function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('seller_id')->unsigned();
-            $table->integer('buyer_id')->unsigned();
-            $table->enum('status', ['Open', 'Pending', 'Close', 'Success']);
+            $table->integer('sell_order_id')->unsigned();
+            $table->integer('buy_order_id')->unsigned();
+            $table->enum('status', ['Open', 'Pending', 'Closed', 'Success']);
             $table->json('remark');
+            $table->softDeletes();
             $table->timestamps();
         });
 

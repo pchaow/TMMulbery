@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    use SoftDeletes;
     public static $STATUS_OPEN = "Open";
     public static $STATUS_PENDING = "Pending";
-    public static $STATUS_CLOSE = "Close";
+    public static $STATUS_CLOSE = "Closed";
 
     public static $ORDER_TYPE_BUY = "buy";
     public static $ORDER_TYPE_SELL = "sell";
@@ -33,9 +35,9 @@ class Order extends Model
     public function confirmOrder()
     {
         if ($this->type == Order::$ORDER_TYPE_BUY) {
-            return $this->belongsToMany(Order::class, "confirm_orders", "buyer_id");
+            return $this->belongsToMany(Order::class, "confirm_orders", "buy_order_id");
         } elseif ($this->type == $this->ORDER_TYPE_SELL) {
-            return $this->belongsToMany(Order::class, "confirm_orders", "seller_id");
+            return $this->belongsToMany(Order::class, "confirm_orders", "sell_order_id");
         } else {
             return null;
         }

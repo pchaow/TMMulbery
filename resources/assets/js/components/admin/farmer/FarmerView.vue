@@ -55,7 +55,7 @@
 
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_sqm}}</td>
-                                            <td>{{plant.remainingBalance}}</td>
+                                            <td>{{plant.remainingBalance.toFixed(2)}}</td>
                                             <td>
                                                 {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
                                             </td>

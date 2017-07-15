@@ -64,7 +64,7 @@
                                     <td>{{plant.province ? plant.province.name : '-'}}</td>
                                     <td>
                                         <a :href="pageUrl + '/' + plant.id + '/view' "
-                                           class="btn btn-primary">การปลูก</a>
+                                           class="btn btn-success">การปลูก</a>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -25,7 +25,7 @@
 
                                 <div class="pull-right">
 
-                                    <a v-bind:href="plantCreateUrl" class="btn btn-success">
+                                    <a v-bind:href="plantCreateUrl" class="btn btn-default">
                                         เพิ่มแปลงหม่อน
                                     </a>
 

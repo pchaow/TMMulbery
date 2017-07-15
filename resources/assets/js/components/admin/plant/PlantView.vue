@@ -240,14 +240,25 @@
                 this.initialForm.amount = Math.floor(this.calculateNumberOfTrees());
             },
             updateHarvestAmount: function () {
-                var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD")
-                var lastBalance = 0
+                var now = moment();
+                var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD").hours(now.hours())
+
                 if (this.transactions.length > 0) {
-                    var lastBalance = this.transactions[0].balance;
-                    var lastTransaction = moment(this.transactions[0].transaction_date)
+
+                    //find last amount
+                    var amount = 0;
+                    for (var i = 0; i < this.transactions.length; i++) {
+                        if (this.transactions[i].status.name == 'N') {
+                            amount = this.transactions[i].amount;
+                            break;
+                        }
+                    }
+                    var lastBalance = this.transactions[this.transactions.length - 1].balance;
+                    var lastTransaction = moment(this.transactions[this.transactions.length - 1].transaction_date)
                     var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))
-                    console.log(daydiff);
-                    this.harvestForm.amount = lastBalance + (0.008 * daydiff) * this.transactions[0].amount;
+                    var nextbalance = lastBalance + (0.008 * daydiff * amount);
+                    this.harvestForm.amount = nextbalance.toFixed(2)
+//                    console.log(nextbalance, daydiff, lastTransaction, transaction_date)
                 } else {
                     this.harvestForm.amount = 0;
                 }
@@ -266,7 +277,7 @@
             },
             initializeHarvestForm: function () {
                 this.harvestForm.transaction_date = moment().format("YYYY-MM-DD")
-                var transaction_date = moment(this.harvestForm.transaction_date, "YYYY-MM-DD")
+                var transaction_date = moment();
 
                 if (this.transactions.length > 0) {
 
@@ -278,12 +289,12 @@
                             break;
                         }
                     }
-                    var lastBalance = this.transactions[this.transactions.length-1].balance;
-                    var lastTransaction = moment(this.transactions[this.transactions.length-1].transaction_date)
-                    var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))+1
+                    var lastBalance = this.transactions[this.transactions.length - 1].balance;
+                    var lastTransaction = moment(this.transactions[this.transactions.length - 1].transaction_date)
+                    var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))
                     var nextbalance = lastBalance + (0.008 * daydiff * amount);
                     this.harvestForm.amount = nextbalance.toFixed(2)
-                    console.log(nextbalance,daydiff,lastTransaction,transaction_date)
+//                    console.log(nextbalance, daydiff, lastTransaction, transaction_date)
                 } else {
                     this.harvestForm.amount = 0;
                 }

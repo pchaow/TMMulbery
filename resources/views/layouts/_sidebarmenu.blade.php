@@ -43,8 +43,6 @@
     @endif
 
     @if(\Laratrust::hasRole('farmer'))
-        <li class="{{ Request::is('/home/plant') ? 'active' : '' }}"><a href="/farmer/plant"><i
-                        class="fa fa-table "></i>
-                <span>แปลงปลูก</span></a></li>
+
     @endif
 </ul>

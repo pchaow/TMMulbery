@@ -32,9 +32,14 @@ class HomeController extends Controller
             return view('admin.home');
         } elseif ($user->hasRole('farmer')) {
             return $this->farmerHome();
-        } else {
-            return 'Underconstruction';
+        } elseif ($user->hasRole('buyer')) {
+            return $this->buyerHome();
         }
+    }
+
+    private function buyerHome()
+    {
+        return view("buyer.home");
     }
 
     private function farmerHome()

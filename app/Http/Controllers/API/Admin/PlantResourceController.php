@@ -33,11 +33,9 @@ class PlantResourceController extends Controller
 
     public function show($id)
     {
-        $plant = Plant::query();
-        $plant->where('id', $id);
-        $plant->with(['user', 'province', 'amphure', 'district']);
+        $plant = PlantService::getPlantById($id);
 
-        return $plant->first();
+        return $plant;
     }
 
 

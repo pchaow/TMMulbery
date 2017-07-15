@@ -97,7 +97,8 @@ class FarmerService
         return $user;
     }
 
-    public static function updateFarmer($id,$formData){
+    public static function updateFarmer($id, $formData)
+    {
         $form = $formData;
         $user = User::find($id);
         $user->fill($form);
@@ -114,6 +115,11 @@ class FarmerService
         $user->save();
 
         return $user;
+    }
+
+    public static function createSellOrderTransaction($plantId, $formData)
+    {
+
     }
 
 

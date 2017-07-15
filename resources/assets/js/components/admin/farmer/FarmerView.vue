@@ -43,7 +43,7 @@
                                             <th>ชื่อแปลง</th>
                                             <th>พื้นที่(ตรม.)</th>
                                             <th>คงเหลือเก็บเกี่ยว</th>
-                                            <th>วันเก็บเกี่ยวครั้งสุดท้าย	</th>
+                                            <th>เก็บเกี่ยวล่าสุด</th>
                                             <th>ตำบล</th>
                                             <th>อำเภอ</th>
                                             <th>จังหวัด</th>
@@ -63,9 +63,9 @@
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
+                                                <button type="button" class="btn btn-warning">ประกาศขาย</button>
                                                 <a class="btn btn-success"
-                                                   v-bind:href="strFormat(plantTransactionUrl,{id : plant.id})"
-                                                >
+                                                   v-bind:href="strFormat(plantTransactionUrl,{id : plant.id})">
                                                     การปลูก
                                                 </a>
                                                 <a class="btn btn-primary"

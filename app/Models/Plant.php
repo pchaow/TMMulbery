@@ -90,4 +90,8 @@ class Plant extends Model
         return $currentBalance;
     }
 
+    public function hasTransaction()
+    {
+        return $this->transactions()->first() != null ? true : false;
+    }
 }

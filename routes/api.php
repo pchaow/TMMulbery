@@ -36,12 +36,18 @@ Route::group(["prefix" => 'admin'], function () {
 
 
     Route::resource('plant', "API\\Admin\\PlantResourceController");
-    Route::get("plant/{plantId}/balance","API\\Admin\\PlantResourceController@balance");
+    Route::get("plant/{plantId}/balance", "API\\Admin\\PlantResourceController@balance");
 
 
     Route::resource('plant.transaction', "API\\Admin\\PlantTransactionController");
-    Route::post("plant/{plantId}/transaction/initialFarm","API\\Admin\\PlantTransactionController@initialFarm");
-    Route::post("plant/{plantId}/transaction/harvestFarm","API\\Admin\\PlantTransactionController@harvestFarm");
+    Route::post("plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
+    Route::post("plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
 
+
+});
+
+Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
+    Route::get("/", "API\\Farmer\\FarmerResourceController@index");
+    Route::resource('plant', "API\\Farmer\\FarmerPlantResourceController");
 
 });

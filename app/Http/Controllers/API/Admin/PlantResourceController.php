@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Requests\PlantRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Services\PlantService;
 use App\Models\Plant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use GuzzleHttp;
 
 class PlantResourceController extends Controller
 {
@@ -19,38 +21,13 @@ class PlantResourceController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Plant::query();
-        $query->with(['user', 'province', 'amphure', 'district']);
 
-        if ($request->has('keyword')) {
-            $keyword = $request->get('keyword');
-//            $query->orWhere('email', 'LIKE', "%$keyword%");
-//            $query->orWhere('username', 'LIKE', "%$keyword%");
-//            $query->orWhere('name', 'LIKE', "%$keyword%");
-        }
+        $keyword = $request->has("keyword") ? $request->get("keyword") : null;
+        $options = $request->has("options") ? $request->get("options") : [];
 
-        $query->with('user');
-
-        $page = $query->paginate();
-
-        if($request->has("withbalance")){
-            if($request->get("withbalance")== true){
-                foreach ($page as $data){
-                    $data->remainingBalance = $data->remainingBalance();
-                }
-            }
-        }
-
-        if($request->has("withLastHarvest")){
-            if($request->get("withLastHarvest")== true){
-                foreach ($page as $data){
-                    $data->lastHarvestDate = $data->lastHarvestDate();
-                }
-            }
-        }
+        $page = PlantService::getPlantListWithFullData($keyword, true, $options);
 
         return $page;
-
     }
 
 
@@ -64,7 +41,8 @@ class PlantResourceController extends Controller
     }
 
 
-    public function balance($id){
+    public function balance($id)
+    {
 
         $plant = Plant::find($id);
         return $plant->remainingBalance();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Requests\PlantRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Services\FarmerService;
+use App\Http\Services\PlantService;
 use App\Models\Plant;
 use App\Models\Role;
 use App\Models\User;
@@ -42,19 +44,7 @@ class FarmerPlantResourceController extends Controller
      */
     public function store(PlantRequest $request, $farmerId)
     {
-        $farmer = User::find($farmerId);
-        $form = $request->all();
-        $plant = new Plant();
-        if ($farmer) {
-            $plant->fill($form);
-            $plant->user()->associate($farmer);
-            $plant->save();
-            return $plant;
-
-        } else {
-            return abort(404, 'Error.');
-        }
-
+        return PlantService::storePlantToFarmer($farmerId, $request->all());
     }
 
     /**
@@ -88,16 +78,7 @@ class FarmerPlantResourceController extends Controller
      */
     public function update(PlantRequest $request, $farmerId, $plantId)
     {
-        $farmer = User::find($farmerId);
-        $form = $request->all();
-        $plant = Plant::find($plantId);
-        if ($farmer && $plant) {
-            $plant->fill($form);
-            $plant->save();
-            return $plant;
-        } else {
-            return abort(404, 'Error.');
-        }
+        return PlantService::updatePlantToFarmer($farmerId, $plantId, $request->all());
     }
 
     /**
@@ -108,7 +89,6 @@ class FarmerPlantResourceController extends Controller
      */
     public function destroy($farmerId, $plantId)
     {
-        $plant = Plant::find($plantId);
-        return [$plant->delete()];
+        return PlantService::destroyPlant($plantId);
     }
 }

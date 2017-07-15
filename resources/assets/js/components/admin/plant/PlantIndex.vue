@@ -56,7 +56,9 @@
                                     <td>{{plant.user ? plant.user.name : '-' }}</td>
                                     <td>{{plant.area_sqm}}</td>
                                     <td>{{plant.remainingBalance ? plant.remainingBalance : '-'}}</td>
-                                    <td>{{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from","now")}}</td>
+                                    <td>
+                                        {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
+                                    </td>
                                     <td>{{plant.district ? plant.district.name : '-'}}</td>
                                     <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                     <td>{{plant.province ? plant.province.name : '-'}}</td>
@@ -104,8 +106,10 @@
                 form: {
                     keyword: "",
                     page: 1,
-                    withbalance: true,
-                    withLastHarvest: true,
+                    options: {
+                        lastHarvestDate: true,
+                        remainingBalance: true,
+                    }
                 }
             }
         },

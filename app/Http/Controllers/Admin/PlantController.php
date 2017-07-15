@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Services\PlantService;
 use App\Models\Plant;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class PlantController extends Controller
 
     public function view($id)
     {
-        $plant = Plant::with(['amphure', 'district', 'province'])->where('id','=',$id)->first();
+
+        $plant = PlantService::getPlantById($id);
 
         $user = $plant->user()->with(['amphure', 'district', 'province'])->first();
 

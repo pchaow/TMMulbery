@@ -22,4 +22,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-
+Route::get('/farmers/plant/create', "Farmer\\FarmerController@createPlant");
+Route::get("farmers/plant/{id}/edit", "Farmer\\FarmerController@editPlant");

@@ -112,7 +112,7 @@ class BuyerService
         return $user;
     }
 
-   /* public static function createSellOrderTransaction($userId, $plantId, $formData)
+    public static function createBuyOrderTransaction($userId, $plantId, $formData)
     {
         $user = User::find($userId);
         $plant = Plant::find($plantId);
@@ -120,7 +120,7 @@ class BuyerService
         $order = new Order();
 
         $order->fill($formData);
-        $order->type = Order::$ORDER_TYPE_SELL;
+        $order->type = Order::$ORDER_TYPE_BUY;
         $order->status = Order::$STATUS_OPEN;
 
         $order->user()->associate($user);
@@ -129,7 +129,7 @@ class BuyerService
         $order->save();
 
         return $order;
-    }*/
+    }
 
 
 }

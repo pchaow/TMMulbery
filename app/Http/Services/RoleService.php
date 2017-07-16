@@ -7,13 +7,14 @@
  */
 
 namespace App\Http\Services;
+use App\Models\Role;
 
 
 class RoleService
 {
     public static function getRoleByName($name)
     {
-        $farmer = Role::where('name', $name)->first();
-        return $farmer;
+        $user = Role::where('name', $name)->first();
+        return $user;
     }
 }

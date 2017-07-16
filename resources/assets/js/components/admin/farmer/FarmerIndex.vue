@@ -145,7 +145,7 @@
                 })
             },
             deleteFarmer: function (farmer) {
-                if (confirm("Do you want to delete this farmer?")) {
+                if (confirm("ต้องการลบเกษตรกร?")) {
                     this.$http.delete(this.strFormat(this.deleteUrl, {id: farmer.id}), {
                         params: this.form
                     }).then(function (r) {

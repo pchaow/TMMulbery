@@ -63,4 +63,11 @@ class User extends Authenticatable
         }
     }
 
+    public function buyOrders()
+    {
+        if ($this->hasRole("buyer")) {
+            return $this->hasMany(Order::class);
+        }
+    }
+
 }

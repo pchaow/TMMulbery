@@ -38,3 +38,10 @@ Route::group(['prefix' => 'plants'], function () {
     Route::get('{id}/edit', 'Admin\\PlantController@edit');
     Route::get('{id}/view', 'Admin\\PlantController@view');
 });
+
+Route::group(['prefix' => 'buyers'], function () {
+    Route::get('/', "Admin\\BuyerController@index");
+    Route::get('create', 'Admin\\BuyerController@create');
+    Route::get('{id}/view', 'Admin\\BuyerController@view');
+    Route::get('{id}/edit', 'Admin\\BuyerController@edit');
+});

@@ -29,6 +29,9 @@ Route::group(["prefix" => 'admin', "middleware" => "auth:api"], function () {
     Route::resource('user', "API\\Admin\\UserResourceController");
     Route::resource('role', "Api\\Admin\\RoleResourceController");
 
+    Route::resource('buyer', "API\\Admin\\BuyerResourceController");
+    Route::get("buyer/{id}/order", "API\\Admin\\BuyerResourceController@getOrders");
+
 
     Route::resource('plant_transaction_status', "API\\Admin\\PlantTransactionStatusController");
 

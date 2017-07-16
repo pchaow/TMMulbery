@@ -19,7 +19,7 @@
 
                 <li class="{{ Request::is('admin/users') ? 'active' : '' }}">
                     <a href="/admin/plant_transaction_status">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-check-square-o "></i>
                         จัดการสถานะการปลูก
                     </a>
                 </li>
@@ -31,7 +31,11 @@
                 </li>
 
                 <li class="{{ Request::is('admin/farmers') ? 'active' : '' }}"><a href="/admin/farmers"><i
-                                class="fa fa-male"></i><span>จัดการเกษตรกร</span></a></li>
+                                class="fa fa-users"></i><span>จัดการเกษตรกร</span></a></li>
+
+                <li class="{{ Request::is('admin/buyers') ? 'active' : '' }}"><a href="/admin/buyers"><i
+                                class="fa fa-user-circle-o "></i><span>จัดการผู้รับซื้อ</span></a></li>
+
 
                 <li class="{{ Request::is('admin/plants') ? 'active' : '' }}">
                     <a href="/admin/plants">

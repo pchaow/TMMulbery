@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 class UserService
 {
 
-    public static function getOrderListByUserId($id, $paginate = true, $role = null, $with = ["plant"])
+    public static function getOrderListByUserId($id, $paginate = true, $role = null, $with = ['plant'])
     {
         $user = User::find($id);
 

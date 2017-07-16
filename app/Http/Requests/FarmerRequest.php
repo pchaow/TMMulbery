@@ -38,7 +38,7 @@ class FarmerRequest extends FormRequest
 //                    'district_id' => 'required',
                 ];
                 if ($this->request->has('email')) {
-                    $validator['eamil'] = 'required|email|max:255|unique:users';
+                    $validator['email'] = 'required|email|max:255|unique:users';
                 }
                 if ($this->request->has('username')) {
                     $validator['username'] = 'required|max:255|unique:users';
@@ -60,10 +60,10 @@ class FarmerRequest extends FormRequest
                     //'district_id' => 'required',
                 ];
                 if ($this->request->has('email')) {
-                    $validator['eamil'] = "required|email|max:255|unique:users,email,$user";
+                    $validator['email'] = "required|email|max:255|unique:users,email,$user";
                 }
                 if ($this->request->has('username')) {
-                    $validator['username'] = "required|email|max:255|unique:users,username,$user";
+                    $validator['username'] = "required|max:255|unique:users,username,$user";
                 }
                 if ($this->request->has('password')) {
                     $validator['password'] = 'required|min:6|confirmed';

@@ -17,7 +17,7 @@
                     </a>
                 </li>
 
-                <li class="{{ Request::is('admin/users') ? 'active' : '' }}">
+                <li class="{{ Request::is('admin/plant_transaction_status') ? 'active' : '' }}">
                     <a href="/admin/plant_transaction_status">
                         <i class="fa fa-check-square-o "></i>
                         จัดการสถานะการปลูก

@@ -39,16 +39,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="remember"> จดจำฉัน
-                            </label>
-                        </div>
-                    </div>
                     <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">เข้าสู่ระบบ</button>
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-success btn-block btn-flat">เข้าสู่ระบบ</button>
                     </div>
                     <!-- /.col -->
                 </div>

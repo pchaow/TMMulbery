@@ -22,6 +22,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/farmers/plant/create', "Farmer\\FarmerController@createPlant");
-Route::get("farmers/plant/{id}/edit", "Farmer\\FarmerController@editPlant");
-Route::get("farmers/plant/{id}/view", "Farmer\\FarmerController@viewPlant");
+
+Route::group(["prefix" => "farmer"], function () {
+
+    Route::get('/plant/create', "Farmer\\FarmerController@createPlant");
+    Route::get("/plant/{id}/edit", "Farmer\\FarmerController@editPlant");
+    Route::get("/plant/{id}/view", "Farmer\\FarmerController@viewPlant");
+});
+
+
+Route::group(["prefix" => "buyer"], function () {
+    Route::get('/selllist', "Buyer\\BuyerController@sellList");
+
+});

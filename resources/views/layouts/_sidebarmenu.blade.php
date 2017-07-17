@@ -47,6 +47,13 @@
     @endif
 
     @if(\Laratrust::hasRole('farmer'))
+    @endif
 
+    @if(\Laratrust::hasRole('buyer'))
+        <li class="{{ Request::is('admin/plants') ? 'active' : '' }}">
+            <a href="/buyer/selllist">
+                <i class="fa fa-search"></i>รายการขาย
+            </a>
+        </li>
     @endif
 </ul>

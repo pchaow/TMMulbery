@@ -48,7 +48,10 @@
                                             <td>{{order.plant.user.contact_number}}</td>
 
 
-                                            <td></td>
+                                            <td>
+                                                <button type="button" class="btn btn-default">ยืนยัน</button>
+                                                <button type="button" class="btn btn-danger">ยกเลิก</button>
+                                            </td>
 
                                         </tr>
                                         </tbody>

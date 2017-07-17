@@ -32,12 +32,23 @@ class Order extends Model
         return $this->belongsTo(Plant::class);
     }
 
-    public function confirmOrder()
+    public function relatedOrders()
     {
         if ($this->type == Order::$ORDER_TYPE_BUY) {
             return $this->belongsToMany(Order::class, "confirm_orders", "buy_order_id");
         } elseif ($this->type == $this->ORDER_TYPE_SELL) {
             return $this->belongsToMany(Order::class, "confirm_orders", "sell_order_id");
+        } else {
+            return null;
+        }
+    }
+
+    public function confirmOrders()
+    {
+        if ($this->type == Order::$ORDER_TYPE_BUY) {
+            return $this->hasMany(ConfirmOrder::class, "buy_order_id");
+        } elseif ($this->type == $this->ORDER_TYPE_SELL) {
+            return $this->hasMany(ConfirmOrder::class, "sell_order_id");
         } else {
             return null;
         }

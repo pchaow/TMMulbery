@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\BuyerService;
 use App\Http\Services\FarmerService;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,7 +40,11 @@ class HomeController extends Controller
 
     private function buyerHome()
     {
-        return view("buyer.home");
+        $buyerId = Auth::user()->id;
+        $buyer = BuyerService::getBuyerByIdWithFullData($buyerId);
+
+        return view("buyer.home")
+            ->with('buyer', $buyer);
     }
 
     private function farmerHome()

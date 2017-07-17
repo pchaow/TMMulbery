@@ -15,7 +15,18 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <admin-users-graph></admin-users-graph>
+            <div class="col-lg-12">
+            <buyer-view
+                    :buyer="{{json_encode($buyer)}}"
+                    :show-side-panel="true"
+
+                    load-url="/api/buyer/{{$buyer->id}}"
+                    buyer-edit-url="/buyers/{{$buyer->id}}/edit"
+                    buyer-load-url="/api/buyer/{{$buyer->id}}"
+                    buyer-load-order-url="/api/buyer/{{$buyer->id}}/order"
+            >
+            </buyer-view>
+            </div>
         </div>
     </section>
     <!-- /.content -->

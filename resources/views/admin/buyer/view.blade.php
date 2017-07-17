@@ -14,16 +14,19 @@
 
     <!-- Main content -->
     <section class="content">
-
-        <buyer-view
-                v-bind:load-url="'/api/admin/buyer/{{$buyer->id}}'"
-                v-bind:buyer-edit-url="'/admin/buyers/{{$buyer->id}}/edit'"
-                v-bind:buyer="{{json_encode($buyer)}}"
-                buyer-load-url="/api/admin/buyer/{{$buyer->id}}"
-                :show-side-panel="true"
-                buyer-load-order-url="/api/admin/buyer/{{$buyer->id}}/order"
-        >
-        </buyer-view>
+        <div class="row">
+            <div class="col-lg-12">
+                <buyer-view
+                        v-bind:load-url="'/api/admin/buyer/{{$buyer->id}}'"
+                        v-bind:buyer-edit-url="'/admin/buyers/{{$buyer->id}}/edit'"
+                        v-bind:buyer="{{json_encode($buyer)}}"
+                        buyer-load-url="/api/admin/buyer/{{$buyer->id}}"
+                        :show-side-panel="true"
+                        buyer-load-order-url="/api/admin/buyer/{{$buyer->id}}/order"
+                >
+                </buyer-view>
+            </div>
+        </div>
 
     </section>
     <!-- /.content -->

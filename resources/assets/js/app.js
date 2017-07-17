@@ -51,8 +51,11 @@ Vue.component('buyer-create', require('./components/admin/buyer/BuyerCreate.vue'
 Vue.component('buyer-view', require('./components/admin/buyer/BuyerView.vue'));
 Vue.component('buyer-edit', require('./components/admin/buyer/BuyerEdit.vue'));
 
+Vue.component('sell-order-list', require('./components/buyer/SellOrderList.vue'));
+
 //Dashboard Graph Item
 Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGraph.vue'));
+
 
 /*
  Farmer

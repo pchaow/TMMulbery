@@ -51,7 +51,6 @@ class CreatePlantsTable extends Migration
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -63,7 +62,6 @@ class CreatePlantsTable extends Migration
             $table->double('balance');
             $table->integer('status_id')->nullable()->unsigned();
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('plant_id')->references('id')->on('plants')

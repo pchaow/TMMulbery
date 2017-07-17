@@ -24,7 +24,7 @@ class AddSellBuyConfirmTbls extends Migration
             $table->timestamps();
         });
 
-        Schema::create("comfirm_orders", function (Blueprint $table) {
+        Schema::create("confirm_orders", function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sell_order_id')->unsigned();
             $table->integer('buy_order_id')->unsigned();

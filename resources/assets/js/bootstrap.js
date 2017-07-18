@@ -24,6 +24,10 @@ window.strFormat = require("string-template")
 window.VueGoogleMaps = require('vue2-google-maps')
 
 window.moment = require('moment');
+window.numeral = require('numeral');
+
+
+Vue.prototype.numeral = window.numeral;
 
 
 /**

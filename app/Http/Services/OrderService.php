@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mockery\Exception;
 
 /**
  * Created by PhpStorm.
@@ -20,29 +21,32 @@ use Illuminate\Support\Facades\Hash;
 class OrderService
 {
 
-    private static function addAndWhereOptionsQuery($query, $options)
+    public static function getOrderOpenListByUser($id, $type, $paginate = true)
     {
+        $buyer = User::find($id);
 
-
-//        dd($options);die();
-        foreach ($options as $key => $value) {
-            $query->where($key, '=', $value);
-        }
-
-        return $query;
-
-    }
-
-    public static function getOrderListByOrder($buyerId, $paginate = true, $with = [], $options = [])
-    {
         $query = Order::query();
-        $query->with($with);
+        $query->where('type', '=', $type);
+        $query->with(["plant", "plant.user"]);
+        $query->where('status', '=', 'Open');
 
-        $query = self::addAndWhereOptionsQuery($query, $options);
-
-        $result = $paginate ? $query->paginate() : $query->get();
-        return $result;
+        return $paginate ? $query->paginate() : $query->get();
     }
+
+    public static function getOrderOpenPendingListByUser($id, $type, $paginate = true)
+    {
+        $buyer = User::find($id);
+
+        $query = Order::query();
+        $query->where('type', '=', $type);
+        $query->with(["plant", "plant.user"]);
+        $query->where(function ($query) {
+            $query->orWhere("status", '=', 'Pending');
+            $query->orWhere('status', '=', 'Open');
+        });
+        return $paginate ? $query->paginate() : $query->get();
+    }
+
 
     public static function getOrderById($id)
     {
@@ -85,24 +89,57 @@ class OrderService
 
         $confirmOrder = null;
 
-        DB::transaction(function () use ($order, $pairOrder, $confirmOrder) {
+        DB::beginTransaction();
+
+        try {
             $order->save();
             $pairOrder->save();
-
             $confirmOrder = self::openConfirmOrder($order, $pairOrder);
-        });
+        } catch (Exception $exception) {
+            DB::rollback();
+            throw $exception;
+        }
 
-        if ($confirmOrder) {
-            return [$order, $confirmOrder];
-        } else {
-            return response()->json(
-                ["errorMsg" => "Error"], 422);
+        DB::commit();
+
+        return [$order, $confirmOrder];
+    }
+
+    public
+    static function closedBuyOrder($id)
+    {
+
+        $order = null;
+        $confirmOrder = null;
+        $pairOrder = null;
+
+        DB::beginTransaction();
+        $order = Order::find($id);
+
+        if ($order) {
+            $order->status = Order::$STATUS_CLOSE;
+
+            $confirmOrder = $order->confirmOrders()->first();
+            if ($confirmOrder) {
+                if ($confirmOrder) $confirmOrder->status = ConfirmOrder::$STATUS_CLOSE;
+                $pairOrder = $confirmOrder->sellOrder()->first();
+                if ($pairOrder) $pairOrder->status = Order::$STATUS_CLOSE;
+            }
         }
 
 
-    }
+        try {
+            if ($order) $order->save();
+            if ($confirmOrder) $confirmOrder->save();
+            if ($pairOrder) $pairOrder->save();
+        } catch (Exception $exception) {
+            DB::rollback();
+            throw $exception;
+        }
 
-    public static function closedBuyOrder($id)
-    {
+        DB::commit();
+
+        return [$order, $confirmOrder];
+
     }
 }

@@ -17,12 +17,19 @@ class OrderResourceController extends Controller
      */
     public function index(Request $request)
     {
-        $buyer = Auth::user();
-        $paginate = true;
-        $options = \GuzzleHttp\json_decode($request->get("options"));
-        $with = ['plant'];
 
-        return OrderService::getOrderListByOrder($buyer->id, $paginate, $with, $options);
+    }
+
+    public function loadBuyOpenPendingOrder(Request $request)
+    {
+        $buyer = Auth::user();
+        return OrderService::getOrderOpenPendingListByUser($buyer->id, "buy", false);
+    }
+
+    public function loadSellOpenOrder(Request $request)
+    {
+        $buyer = Auth::user();
+        return OrderService::getOrderOpenListByUser($buyer->id, "sell", true);
     }
 
 

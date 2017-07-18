@@ -3,10 +3,14 @@
         <div class="col-md-12" v-show="showSidePanel">
 
             <buyer-profile-column v-if="buyerData"
-                                   :buyer="buyerData"
-                                   :edit-url="buyerEditUrl"
+                                  :buyer="buyerData"
+                                  :edit-url="buyerEditUrl"
             ></buyer-profile-column>
         </div>
+
+        <slot>
+        </slot>
+
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -38,11 +42,11 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="order in buyer.buy_orders">
+                                        <tr v-for="order in buyOrders">
 
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                             <td>{{order.status}}</td>
-                                            <td>{{order.amount}}</td>
+                                            <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                             <td>{{order.plant.name}}</td>
                                             <td>{{order.plant.user.name}}</td>
                                             <td>{{order.plant.user.contact_number}}</td>
@@ -50,7 +54,9 @@
 
                                             <td>
                                                 <button type="button" class="btn btn-default">ยืนยัน</button>
-                                                <button type="button" class="btn btn-danger">ยกเลิก</button>
+                                                <button type="button" @click="closeOrder(order)" class="btn btn-danger">
+                                                    ยกเลิก
+                                                </button>
                                             </td>
 
                                         </tr>
@@ -104,31 +110,43 @@
             buyer: Object,
             //plantOpenSellOrderUrl: String,
             buyerLoadOrderUrl: String,
+            orderApiUrl: String,
             showSidePanel: true,
-
-
         },
         components: {
             BuyerProfileColumn
         },
         data() {
             return {
-                buyerData: {
-                },
+                buyerData: {},
                 buyOrders: [],
             }
         },
         methods: {
             strFormat: window.strFormat,
 
+            closeOrder: function (order) {
+
+
+                if (confirm("คุณต้องการยกเลิกคำสั่งซื้อนี้หรือไม่")) {
+                    axios.post(this.orderApiUrl + "/" + order.id + "/closed")
+                        .then(response => {
+                            this.loadBuyOrders();
+                        })
+                        .catch(error => {
+
+                        })
+                }
+
+            },
+
             loadBuyOrders: function () {
 
-                axios.get(this.buyerLoadOrderUrl)
+                axios.post(this.orderApiUrl + "/loadBuyOpenPendingOrder")
                     .then(response => {
                         this.buyOrders = response.data;
-                        //console.log(this.buyOrders)
+                        console.log(this.buyOrders)
                     })
-
             },
 
             loadBuyerData: function () {
@@ -138,17 +156,13 @@
                     }
                 )
             },
-
         },
         created() {
             this.buyerData = this.buyer;
-            //this.buyOrders = this.loadBuyOrders();
+            this.loadBuyOrders();
         },
         mounted() {
-
             console.log(this.buyer)
-            //console.log(this.buyOrders)
-
         }
     }
 </script>

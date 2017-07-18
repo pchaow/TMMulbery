@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    รายการขาย
+                    รายการขายจากเกษตรกร
                 </div>
 
                 <div class="panel-body">
@@ -15,6 +15,8 @@
 
                                     <th>วันที่</th>
                                     <th>แปลง</th>
+                                    <th>ชื่อเกษตรกร</th>
+                                    <th>เบอร์โทรติดต่อ</th>
                                     <th>สถานะ</th>
                                     <th>จำนวน (กก.)</th>
                                     <th>จัดการ</th>
@@ -25,8 +27,12 @@
 
                                     <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                     <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
+                                    <td>{{order.plant.user.name}}</td>
+                                    <td>{{order.plant.user.contact_number}}</td>
+                                    <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
+
                                     <td>{{order.status}}</td>
-                                    <td>{{order.amount}}</td>
+                                    <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                     <td>
                                         <button @click="openBuyOrder(order)" type="button" class="btn btn-primary">
                                             ซื้อ
@@ -67,19 +73,13 @@
         data() {
             return {
                 sellOrder: null,
-                form: {
-                    options: {
-                        type: "sell",
-                        status: "Open",
-                    }
-                }
             }
         },
         methods: {
             strFormat: window.strFormat,
             loadSellOrder: function () {
                 this.sellOrders = []
-                axios.get(this.orderApi, {params: this.form})
+                axios.post(this.orderApi + "/loadSellOpenOrder")
                     .then(response => {
                         this.sellOrder = response.data;
                         console.log(this.sellOrder);

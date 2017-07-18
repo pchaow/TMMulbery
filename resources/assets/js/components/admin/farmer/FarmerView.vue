@@ -53,8 +53,8 @@
                                         <tr v-for="plant in farmerData.plants">
 
                                             <td>{{plant.name}}</td>
-                                            <td>{{plant.area_sqm}}</td>
-                                            <td>{{plant.remainingBalance.toFixed(2)}}</td>
+                                            <td>{{numeral(plant.area_sqm).format("0,0.00")}}</td>
+                                            <td>{{numeral(plant.remainingBalance).format("0,0.00")}}</td>
                                             <td>
                                                 {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
                                             </td>
@@ -118,7 +118,7 @@
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                             <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
                                             <td>{{order.status}}</td>
-                                            <td>{{order.amount}}</td>
+                                            <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                             <td>
                                             </td>
 
@@ -154,6 +154,7 @@
 
 <script>
     import FarmerProfileColumn from './FarmerProfileColumn.vue'
+    import numeral from 'numeral'
 
     export default {
         props: {
@@ -171,7 +172,8 @@
 
         },
         components: {
-            FarmerProfileColumn
+            FarmerProfileColumn,
+            numeral
         },
         data() {
             return {

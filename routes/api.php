@@ -67,7 +67,12 @@ Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
 
 Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
 
-    Route::resource('order', 'API\\Buyer\\OrderResourceController');
+    Route::resource('/','API\\Buyer\\BuyerController');
+
+    Route::resource('/order', 'API\\Buyer\\OrderResourceController');
+
+    Route::post('/order/loadSellOpenOrder', 'API\\Buyer\\OrderResourceController@loadSellOpenOrder');
+    Route::post('/order/loadBuyOpenPendingOrder', 'API\\Buyer\\OrderResourceController@loadBuyOpenPendingOrder');
     Route::post("/order/openWithConfirm", 'API\\Buyer\\OrderResourceController@openBuyOrderWithConfirm');
     Route::post("/order/{id}/closed", 'API\\Buyer\\OrderResourceController@closedBuyOrder');
 

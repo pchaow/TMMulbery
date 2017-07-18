@@ -21,6 +21,7 @@
     "axios": "^0.16.2",
     "font-awesome": "^4.7.0",
     "moment": "^2.18.1",
+    "numeral": "^2.0.6",
     "vue-moment": "^2.0.2",
     "vue2-google-maps": "^0.7.2",
     "vue2-highcharts": "^1.0.3"

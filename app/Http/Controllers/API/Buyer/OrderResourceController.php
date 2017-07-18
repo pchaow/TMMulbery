@@ -23,13 +23,19 @@ class OrderResourceController extends Controller
     public function loadBuyOpenPendingOrder(Request $request)
     {
         $buyer = Auth::user();
-        return OrderService::getOrderOpenPendingListByUser($buyer->id, "buy", false);
+        return OrderService::getOrderOpenPendingListByUser($buyer->id, "buy", true);
     }
 
     public function loadSellOpenOrder(Request $request)
     {
         $buyer = Auth::user();
-        return OrderService::getOrderOpenListByUser($buyer->id, "sell", true);
+        return OrderService::openSellOrderList(true);
+    }
+
+    public function loadBuyHistoryOrder(Request $request)
+    {
+        $buyer = Auth::user();
+        return OrderService::loadHistoryOrder($buyer->id, "buy", true);
     }
 
 

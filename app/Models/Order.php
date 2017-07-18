@@ -43,17 +43,15 @@ class Order extends Model
         }
     }
 
-    public function confirmOrders()
+    public function buyConfirmOrders()
     {
-        if ($this->type == Order::$ORDER_TYPE_BUY) {
-            return $this->hasMany(ConfirmOrder::class, "buy_order_id");
-        } elseif ($this->type == $this->ORDER_TYPE_SELL) {
-            return $this->hasMany(ConfirmOrder::class, "sell_order_id");
-        } else {
-            return null;
-        }
+        return $this->hasMany(ConfirmOrder::class, "buy_order_id");
     }
 
+    public function sellConfirmOrders(){
+        return $this->hasMany(ConfirmOrder::class, "sell_order_id");
+
+    }
 
 }
 

@@ -37,7 +37,7 @@ class OrderService
     {
         $buyer = User::find($id);
 
-        $query = Order::query();
+        $query = $buyer->orders();
         $query->where('type', '=', $type);
         $query->with(["plant", "plant.user"]);
         $query->where(function ($query) {
@@ -55,8 +55,14 @@ class OrderService
         return $query->first();
     }
 
-    public static function openBuyOrder()
+    public static function openSellOrderList($paginate = true)
     {
+        $query = Order::query();
+        $query->where('type', '=', "sell");
+        $query->with(["plant", "plant.user"]);
+        $query->where('status', '=', 'Open');
+
+        return $paginate ? $query->paginate() : $query->get();
     }
 
     public static function openConfirmOrder($buyOrder, $sellOrder)
@@ -123,7 +129,7 @@ class OrderService
             if ($confirmOrder) {
                 if ($confirmOrder) $confirmOrder->status = ConfirmOrder::$STATUS_CLOSE;
                 $pairOrder = $confirmOrder->sellOrder()->first();
-                if ($pairOrder) $pairOrder->status = Order::$STATUS_CLOSE;
+                if ($pairOrder) $pairOrder->status = Order::$STATUS_OPEN;
             }
         }
 
@@ -141,5 +147,18 @@ class OrderService
 
         return [$order, $confirmOrder];
 
+    }
+
+    public static function loadHistoryOrder($id, $type, $paginate)
+    {
+        $buyer = User::find($id);
+
+        $query = $buyer->orders();
+        $query->where('type', '=', $type);
+        $query->with(["plant", "plant.user", "buyConfirmOrders"]);
+        $query->where('status', '=', 'Closed');
+
+
+        return $paginate ? $query->paginate() : $query->get();
     }
 }

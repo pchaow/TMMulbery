@@ -42,7 +42,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="order in buyOrders">
+                                        <tr v-for="order in buyOrders.data">
 
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                             <td>{{order.status}}</td>
@@ -83,6 +83,41 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>วันที่</th>
+                                            <th>สถานะ</th>
+                                            <th>จำนวน(กก.)</th>
+                                            <th>ชื่อแปลง</th>
+                                            <th>ชื่อเกษตรกร</th>
+                                            <th>เบอร์โทรติดต่อ</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="order in buyHistoryOrders.data">
+
+                                            <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
+                                            <td>{{order.buy_confirm_orders.status}}</td>
+                                            <td>{{numeral(order.amount).format("0,0.00")}}</td>
+                                            <td>{{order.plant.name}}</td>
+                                            <td>{{order.plant.user.name}}</td>
+                                            <td>{{order.plant.user.contact_number}}</td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div>
+                                                    จำนวนทั้งหมด รายการ
+                                                </div>
+                                                <ul class="pagination">
+                                                    <li></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -120,18 +155,24 @@
             return {
                 buyerData: {},
                 buyOrders: [],
+                buyHistoryOrders: [],
             }
         },
         methods: {
             strFormat: window.strFormat,
 
+            refreshOrder: function () {
+                this.loadBuyOrders();
+                this.loadBuyHistoryOrders();
+            },
             closeOrder: function (order) {
 
 
                 if (confirm("คุณต้องการยกเลิกคำสั่งซื้อนี้หรือไม่")) {
                     axios.post(this.orderApiUrl + "/" + order.id + "/closed")
                         .then(response => {
-                            this.loadBuyOrders();
+//                            this.refreshOrder();
+                            window.location.href = window.location.href;
                         })
                         .catch(error => {
 
@@ -139,7 +180,14 @@
                 }
 
             },
+            loadBuyHistoryOrders: function () {
 
+                axios.post(this.orderApiUrl + "/loadBuyHistoryOrder")
+                    .then(response => {
+                        this.buyHistoryOrders = response.data;
+                        console.log(this.buyOrders)
+                    })
+            },
             loadBuyOrders: function () {
 
                 axios.post(this.orderApiUrl + "/loadBuyOpenPendingOrder")
@@ -159,7 +207,7 @@
         },
         created() {
             this.buyerData = this.buyer;
-            this.loadBuyOrders();
+            this.refreshOrder();
         },
         mounted() {
             console.log(this.buyer)

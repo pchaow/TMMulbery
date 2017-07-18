@@ -29,8 +29,6 @@
                                     <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
                                     <td>{{order.plant.user.name}}</td>
                                     <td>{{order.plant.user.contact_number}}</td>
-                                    <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
-
                                     <td>{{order.status}}</td>
                                     <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                     <td>

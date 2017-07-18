@@ -122,11 +122,11 @@
                                             <td>{{order.status}}</td>
                                             <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                             <td>
-                                                <ul>
-                                                    <li v-for="cforder in order.sell_confirm_orders">
+                                                <template>
+                                                    <template v-for="cforder in order.sell_confirm_orders">
                                                         {{cforder.buy_order.user.name}} - {{cforder.buy_order.user.contact_number}}
-                                                    </li>
-                                                </ul>
+                                                    </template>
+                                                </template>
                                             </td>
                                             <td>
                                                 <button v-if="order.status != 'Closed'" type="button"

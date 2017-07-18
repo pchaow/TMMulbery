@@ -120,24 +120,25 @@ class OrderService
         $pairOrder = null;
 
         DB::beginTransaction();
-        $order = Order::find($id);
-
-        if ($order) {
-            $order->status = Order::$STATUS_CLOSE;
-
-            $confirmOrder = $order->confirmOrders()->first();
-            if ($confirmOrder) {
-                if ($confirmOrder) $confirmOrder->status = ConfirmOrder::$STATUS_CLOSE;
-                $pairOrder = $confirmOrder->sellOrder()->first();
-                if ($pairOrder) $pairOrder->status = Order::$STATUS_OPEN;
-            }
-        }
-
-
         try {
-            if ($order) $order->save();
-            if ($confirmOrder) $confirmOrder->save();
-            if ($pairOrder) $pairOrder->save();
+            $order = Order::find($id);
+
+            if ($order) {
+                $order->status = Order::$STATUS_CLOSE;
+
+                $confirmOrder = $order->buyConfirmOrders()->first();
+                if ($confirmOrder) {
+                    if ($confirmOrder) $confirmOrder->status = ConfirmOrder::$STATUS_CLOSE;
+                    $pairOrder = $confirmOrder->sellOrder()->first();
+                    if ($pairOrder) {
+                        $pairOrder->status = Order::$STATUS_OPEN;
+                        $pairOrder->save();
+                    }
+                    $confirmOrder->save();
+                }
+                $order->save();
+            }
+
         } catch (Exception $exception) {
             DB::rollback();
             throw $exception;
@@ -160,5 +161,56 @@ class OrderService
 
 
         return $paginate ? $query->paginate() : $query->get();
+    }
+
+    public static function closeSellOrder($id)
+    {
+        $order = null;
+        $confirmOrder = null;
+        $pairOrder = null;
+
+        DB::beginTransaction();
+        $order = Order::find($id);
+
+        if ($order) {
+            $order->status = Order::$STATUS_CLOSE;
+
+            $confirmOrder = $order->sellConfirmOrders()->first();
+            if ($confirmOrder) {
+                if ($confirmOrder) $confirmOrder->status = ConfirmOrder::$STATUS_CLOSE;
+                $pairOrder = $confirmOrder->buyOrder()->first();
+                if ($pairOrder) $pairOrder->status = Order::$STATUS_OPEN;
+            }
+        }
+
+
+        try {
+            if ($order) $order->save();
+            if ($confirmOrder) $confirmOrder->save();
+            if ($pairOrder) $pairOrder->save();
+        } catch (Exception $exception) {
+            DB::rollback();
+            throw $exception;
+        }
+
+        DB::commit();
+
+        return [$order, $confirmOrder];
+    }
+
+    public static function getOrderListByUserId($id, $paginate = true, $role = null, $with = ['plant'])
+    {
+        $user = User::find($id);
+
+        $data = null;
+        if ($role == "farmer") {
+            $data = $user->sellOrders()->with(["sellConfirmOrders.buyOrder.user"]);
+        } elseif ($role == "buyer") {
+            $data = $user->orders();
+        }
+
+        $data->with($with);
+
+        return $paginate ? $data->paginate() : $data->get();
     }
 }

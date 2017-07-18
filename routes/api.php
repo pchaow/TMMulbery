@@ -53,21 +53,24 @@ Route::group(["prefix" => 'admin', "middleware" => "auth:api"], function () {
 Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
     Route::get("/", "API\\Farmer\\FarmerResourceController@index");
 
-    Route::resource('plant', "API\\Farmer\\FarmerPlantResourceController");
+    Route::resource('/plant', "API\\Farmer\\FarmerPlantResourceController");
 
-    Route::resource('plant.transaction', "API\\Admin\\PlantTransactionController");
+    Route::resource('/plant.transaction', "API\\Admin\\PlantTransactionController");
 
-    Route::post("plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
-    Route::post("plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
+    Route::post("/plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
+    Route::post("/plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
 
-    Route::get("order", "API\\Farmer\\FarmerResourceController@getOrders");
-    Route::post("plant/{plantId}/open/sell", "API\\Farmer\\FarmerResourceController@createSellOrder");
+    Route::get("/order", "API\\Farmer\\FarmerResourceController@getOrders");
+    Route::post('/order/{id}/close', "API\\Farmer\\FarmerResourceController@closeSellOrder");
+    Route::post("/plant/{plantId}/open/sell", "API\\Farmer\\FarmerResourceController@createSellOrder");
+
+
 });
 
 
 Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
 
-    Route::resource('/','API\\Buyer\\BuyerController');
+    Route::resource('/', 'API\\Buyer\\BuyerController');
 
     Route::resource('/order', 'API\\Buyer\\OrderResourceController');
 

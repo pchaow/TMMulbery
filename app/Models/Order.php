@@ -49,7 +49,7 @@ class Order extends Model
     }
 
     public function sellConfirmOrders(){
-        return $this->hasMany(ConfirmOrder::class, "sell_order_id");
+        return $this->hasMany(ConfirmOrder::class, "sell_order_id")->where('status','!=',"Closed");
 
     }
 

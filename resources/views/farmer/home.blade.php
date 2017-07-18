@@ -17,7 +17,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <farmer-view
-                        v-bind:load-url="'/api/farmer/{{$farmer->id}}'"
+                        load-url="'/api/farmer/"
+                        farmer-api-url="/api/farmer"
                         v-bind:farmer-edit-url="'/farmers/edit'"
                         v-bind:load-plant-url="'/api/farmer/plant'"
                         v-bind:plant-create-url="'/farmer/plant/create'"

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Farmer;
 
 use App\Http\Requests\FarmerRequest;
 use App\Http\Services\FarmerService;
+use App\Http\Services\OrderService;
 use App\Http\Services\UserService;
 use App\Models\Role;
 use App\Models\User;
@@ -33,7 +34,13 @@ class FarmerResourceController extends Controller
     public function getOrders()
     {
         $id = Auth::user()->id;
-        return UserService::getOrderListByUserId($id, true, "farmer");
+        $orders = OrderService::getOrderListByUserId($id, true, "farmer");
+
+        return $orders;
     }
 
+    public function closeSellOrder(Request $request, $id)
+    {
+        return OrderService::closeSellOrder($id);
+    }
 }

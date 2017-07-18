@@ -18,20 +18,6 @@ use Illuminate\Support\Facades\Hash;
 class UserService
 {
 
-    public static function getOrderListByUserId($id, $paginate = true, $role = null, $with = ['plant'])
-    {
-        $user = User::find($id);
 
-        $data = null;
-        if ($role == "farmer") {
-            $data = $user->sellOrders();
-        } elseif ($role == "buyer") {
-            $data = $user->orders();
-        }
-
-        $data->with($with);
-
-        return $paginate ? $data->paginate() : $data->get();
-    }
 
 }

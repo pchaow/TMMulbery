@@ -52,7 +52,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $userId = $user->id;
 
-        $user = FarmerService::getFarmerByIdWithPlantFullData($userId);
+        $user = FarmerService::getFarmerById($userId);
 
         return view('farmer.home')
             ->with('farmer', $user);

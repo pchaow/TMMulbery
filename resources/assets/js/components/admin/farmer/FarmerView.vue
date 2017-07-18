@@ -50,7 +50,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="plant in farmerData.plants">
+                                        <tr v-for="plant in plants.data">
 
                                             <td>{{plant.name}}</td>
                                             <td>{{numeral(plant.area_sqm).format("0,0.00")}}</td>
@@ -62,7 +62,8 @@
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
-                                                <button v-if="plantOpenSellOrderUrl" @click="OpenSellOrder(plant)"
+                                                <button v-if="plantOpenSellOrderUrl && plant.countOpenOrder == 0"
+                                                        @click="OpenSellOrder(plant)"
                                                         type="button" class="btn btn-warning">ประกาศขาย
                                                 </button>
                                                 <a class="btn btn-success"
@@ -109,6 +110,7 @@
                                             <th>แปลง</th>
                                             <th>สถานะ</th>
                                             <th>จำนวน (กก.)</th>
+                                            <th>ผู้ติดต่อซื้อ</th>
                                             <th>จัดการ</th>
                                         </tr>
                                         </thead>
@@ -120,6 +122,17 @@
                                             <td>{{order.status}}</td>
                                             <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                             <td>
+                                                <ul>
+                                                    <li v-for="cforder in order.sell_confirm_orders">
+                                                        {{cforder.buy_order.user.name}} - {{cforder.buy_order.user.contact_number}}
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <button v-if="order.status != 'Closed'" type="button"
+                                                        class="btn btn-danger" @click="closeOrder(order)">
+                                                    ยกเลิก
+                                                </button>
                                             </td>
 
                                         </tr>
@@ -159,6 +172,7 @@
     export default {
         props: {
             loadUrl: String,
+            farmerApiUrl: String,
             farmerEditUrl: String,
             farmerLoadUrl: String,
             plantCreateUrl: String,
@@ -169,6 +183,7 @@
             plantOpenSellOrderUrl: String,
             plantLoadOrderUrl: String,
             showSidePanel: true,
+            loadPlantUrl: String,
 
         },
         components: {
@@ -182,6 +197,7 @@
                     withLastHarvest: true,
                 },
                 sellOrders: [],
+                plants: [],
             }
         },
         methods: {
@@ -192,8 +208,25 @@
                 axios.get(this.plantLoadOrderUrl)
                     .then(response => {
                         this.sellOrders = response.data;
+                        this.sellOrders.data = _.orderBy(this.sellOrders.data, function (d) {
+                            if (d.status == "Closed") return 3;
+                            if (d.status == "Open") return 2;
+                            if (d.status == "Pending") return 1;
+
+                        })
                     })
 
+            },
+
+            closeOrder: function (order) {
+                axios.post(this.farmerApiUrl + "/order/" + order.id + "/close")
+                    .then(response => {
+                        console.log(response.data);
+                        this.loadOrders();
+                    })
+                    .catch(error => {
+
+                    })
             },
 
             OpenSellOrder: function (plant) {
@@ -204,6 +237,7 @@
                 axios.post(this.strFormat(this.plantOpenSellOrderUrl, {id: plant.id}), form)
                     .then(response => {
                         var data = response.data;
+                        this.reloadPlants();
                     })
                     .catch(error => {
                         var data = error.response.data;
@@ -224,14 +258,27 @@
                 }
             },
 
+            reloadPlants: function () {
+                axios.get(this.loadPlantUrl)
+                    .then(response => {
+                        this.plants = response.data;
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+
+                    })
+            },
+
+
         },
         created() {
             this.farmerData = this.farmer;
+
         },
         mounted() {
-
-            console.log(this.farmer)
-
+            console.log(this.farmer.plants);
+            this.reloadPlants();
+            //this.loadOrders();
         }
     }
 </script>

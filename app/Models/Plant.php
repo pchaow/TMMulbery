@@ -18,6 +18,8 @@ class Plant extends Model
         'map' => 'array',
     ];
 
+    protected $appends = ["countOpenOrder"];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -96,5 +98,10 @@ class Plant extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function getCountOpenOrderAttribute()
+    {
+        return $this->orders()->where('status', '!=', 'Closed')->count();
     }
 }

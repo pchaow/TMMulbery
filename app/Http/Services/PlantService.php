@@ -70,13 +70,21 @@ class PlantService
     {
 
         $query = self::createSearchQuery($keyword);
-        $query->with('user');
+
 
         if ($paginate) {
-            return $query->paginate();
+            $result = $query->paginate();
         } else {
-            return $query->get();
+            $result = $query->get();
         }
+
+        foreach ($result as $data) {
+            $data->remainingBalance = $data->remainingBalance();
+            $data->lastHarvestDate = $data->lastHarvestDate();
+            $data->hasTransaction = $data->transactions()->first() != null ? true : false;
+        }
+
+        return $result;
     }
 
 

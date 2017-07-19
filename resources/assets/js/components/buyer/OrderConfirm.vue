@@ -118,6 +118,7 @@
         props: {
             orderId: String,
             orderApi: String,
+            successUrl: String,
         },
         components: {},
         data() {
@@ -158,13 +159,16 @@
                     })
             },
             save: function () {
-                axios.post(this.orderApi + "/" + this.orderId + "/confirm", this.formInputs)
-                    .then(res => {
+                if (confirm("ยืนยันคำสั่งซื้อขายนี้ ?")) {
+                    axios.post(this.orderApi + "/" + this.orderId + "/confirm", this.formInputs)
+                        .then(res => {
+                            window.location.href = this.successUrl;
+                        })
+                        .catch(err => {
 
-                    })
-                    .catch(err => {
+                        })
+                }
 
-                    })
             }
 
         },

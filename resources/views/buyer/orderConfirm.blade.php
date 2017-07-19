@@ -16,6 +16,7 @@
                 <order-confirm
                         order-id="{{$orderId or 0}}"
                         order-api="/api/buyer/order"
+                        success-url="/home"
                 >
                 </order-confirm>
             </div>

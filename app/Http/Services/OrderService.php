@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Plant;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -228,9 +229,19 @@ class OrderService
 
             $confirmOrder->save();
 
-            if($sellOrder){
+            if ($sellOrder) {
                 $sellOrder->status = Order::$STATUS_CLOSE;
                 $sellOrder->save();
+
+                //do harvesting.
+                $form = [
+                    "amount" => $formData['remark']["unit"],
+                    "status" => "H",
+                    "transaction_date" => Carbon::now(),
+                    "type" => "-",
+                ];
+
+                PlantTransactionService::harvestFarm($sellOrder->plant_id, $form);
             }
 
             $buyOrder->status = Order::$STATUS_CLOSE;

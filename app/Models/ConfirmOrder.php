@@ -12,6 +12,8 @@ class ConfirmOrder extends Model
     public static $STATUS_OPEN = "Open";
     public static $STATUS_PENDING = "Pending";
     public static $STATUS_CLOSE = "Closed";
+    public static $STATUS_SUCCESS = "Success";
+
 
     protected $table = "confirm_orders";
 

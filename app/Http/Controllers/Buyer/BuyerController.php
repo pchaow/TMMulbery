@@ -9,7 +9,14 @@ class BuyerController extends Controller
 {
     //
 
-    public function sellList(){
+    public function sellList()
+    {
         return view('buyer.selllist');
+    }
+
+    public function confirm($buyId)
+    {
+        return view('buyer.orderConfirm')
+            ->with("orderId", $buyId);
     }
 }

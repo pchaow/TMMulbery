@@ -28,6 +28,8 @@ window.numeral = require('numeral');
 
 
 Vue.prototype.numeral = window.numeral;
+Vue.prototype.strFormat = window.strFormat;
+
 
 
 /**

@@ -51,6 +51,7 @@ class OrderService
     public static function getOrderById($id)
     {
         $query = Order::query();
+        $query->with(['buyConfirmOrders.buyOrder.plant', 'buyConfirmOrders.sellOrder.plant', 'buyConfirmOrders.buyOrder.user', 'buyConfirmOrders.sellOrder.user']);
         $query->where('id', '=', $id);
         return $query->first();
     }
@@ -212,5 +213,37 @@ class OrderService
         $data->with($with);
 
         return $paginate ? $data->paginate() : $data->get();
+    }
+
+    public static function confirmBuyOrder($buyOrderId, $formData)
+    {
+        DB::beginTransaction();
+        $buyOrder = Order::find($buyOrderId);
+        $confirmOrder = $buyOrder->buyConfirmOrders()->first();
+        $sellOrder = $confirmOrder->sellOrder()->first();
+        try {
+
+            $confirmOrder->remark = $formData['remark'];
+            $confirmOrder->status = ConfirmOrder::$STATUS_SUCCESS;
+
+            $confirmOrder->save();
+
+            if($sellOrder){
+                $sellOrder->status = Order::$STATUS_CLOSE;
+                $sellOrder->save();
+            }
+
+            $buyOrder->status = Order::$STATUS_CLOSE;
+            $buyOrder->save();
+
+        } catch (Exception $exception) {
+            DB::rollback();
+            throw $exception;
+        }
+
+
+        DB::commit();
+        return $confirmOrder;
+
     }
 }

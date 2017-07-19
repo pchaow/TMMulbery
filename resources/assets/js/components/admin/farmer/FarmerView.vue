@@ -119,8 +119,13 @@
 
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                             <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
-                                            <td>{{order.status}}</td>
-                                            <td>{{numeral(order.amount).format("0,0.00")}}</td>
+                                            <td>{{order.sell_confirm_orders.length > 0 ? order.sell_confirm_orders[0].status : order.status}}</td>
+                                            <td>
+                                                {{numeral(order.amount).format("0,0.00")}}
+                                                <template v-if="order.sell_confirm_orders.length > 0 && order.sell_confirm_orders[0].status == 'Success'">
+                                                    ({{order.sell_confirm_orders[0].remark.unit}})
+                                                </template>
+                                            </td>
                                             <td>
                                                 <template>
                                                     <template v-for="cforder in order.sell_confirm_orders">

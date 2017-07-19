@@ -53,7 +53,8 @@
 
 
                                             <td>
-                                                <button type="button" class="btn btn-default">ยืนยัน</button>
+                                                <a :href="strFormat(orderConfirmUrl,{id:order.id})"
+                                                   class="btn btn-default">ยืนยัน</a>
                                                 <button type="button" @click="closeOrder(order)" class="btn btn-danger">
                                                     ยกเลิก
                                                 </button>
@@ -98,7 +99,9 @@
                                         <tr v-for="order in buyHistoryOrders.data">
 
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
-                                            <td>{{order.buy_confirm_orders.status}}</td>
+                                            <td>
+                                                {{order.buy_confirm_orders[0] ? order.buy_confirm_orders[0].status : order.status}}
+                                            </td>
                                             <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                             <td>{{order.plant.name}}</td>
                                             <td>{{order.plant.user.name}}</td>
@@ -147,6 +150,7 @@
             buyerLoadOrderUrl: String,
             orderApiUrl: String,
             showSidePanel: true,
+            orderConfirmUrl: String,
         },
         components: {
             BuyerProfileColumn

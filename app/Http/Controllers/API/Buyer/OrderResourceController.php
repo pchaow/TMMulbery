@@ -64,4 +64,11 @@ class OrderResourceController extends Controller
     {
         return OrderService::closedBuyOrder($id);
     }
+
+    public function confirmBuyOrder(Request $request, $id)
+    {
+        $buyOrderId = $id;
+        $formData = $request->all();
+        return OrderService::confirmBuyOrder($buyOrderId, $formData);
+    }
 }

@@ -2,10 +2,10 @@
     <div class="row" v-if="buyer">
         <div class="col-md-12" v-show="showSidePanel">
 
-            <buyer-profile-column v-if="buyerData"
+          <!--  <buyer-profile-column v-if="buyerData"
                                   :buyer="buyerData"
                                   :edit-url="buyerEditUrl"
-            ></buyer-profile-column>
+            ></buyer-profile-column> -->
         </div>
 
         <slot>

@@ -17,6 +17,8 @@ Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
+
+
 Route::resource('thailand/province', "API\\ProvinceController");
 Route::resource('thailand/province.amphure', "API\\ProvinceAmphureController");
 Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphureDistrictController");
@@ -82,3 +84,5 @@ Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
     Route::post("/order/{id}/confirm", 'API\\Buyer\\OrderResourceController@confirmBuyOrder');
 
 });
+
+Route::resource('/profile', "API\\Profile\\ProfileResourceController");

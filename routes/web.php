@@ -21,7 +21,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-
+Route::get('/profile/{id}', 'ProfileController@index');
+Route::post('/profile/{id}', 'ProfileController@update');
 
 Route::group(["prefix" => "farmer"], function () {
 

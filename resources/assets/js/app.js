@@ -57,7 +57,7 @@ Vue.component('order-confirm', require('./components/buyer/OrderConfirm.vue'));
 //Dashboard Graph Item
 Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGraph.vue'));
 
-
+Vue.component('user-profile', require('./components/user/UserProfile.vue'));
 /*
  Farmer
  */

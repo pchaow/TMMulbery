@@ -43,7 +43,7 @@ class UserRequest extends FormRequest
 
                 return [
                     'email' => "required|email|max:255|unique:users,email,$user",
-                    'username' => "required|email|max:255|unique:users,username,$user",
+                    'username' => "required|max:255|unique:users,username,$user",
                     'password' => 'min:6|confirmed|nullable|same:password_confirmation',
                     'name' => 'required|max:255',
                 ];

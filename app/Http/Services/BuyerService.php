@@ -112,24 +112,6 @@ class BuyerService
         return $user;
     }
 
-    public static function createBuyOrderTransaction($userId, $plantId, $formData)
-    {
-        $user = User::find($userId);
-        $plant = Plant::find($plantId);
-
-        $order = new Order();
-
-        $order->fill($formData);
-        $order->type = Order::$ORDER_TYPE_BUY;
-        $order->status = Order::$STATUS_OPEN;
-
-        $order->user()->associate($user);
-        $order->plant()->associate($plant);
-
-        $order->save();
-
-        return $order;
-    }
 
 
 }

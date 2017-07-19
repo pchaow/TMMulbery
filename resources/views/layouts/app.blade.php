@@ -87,7 +87,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">ข้อมูลส่วนตัว</a>
+                                    <a href="/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">ข้อมูลส่วนตัว</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{ url('/logout') }}" class="btn btn-default btn-flat"
@@ -133,7 +133,7 @@
 
 
             <!-- Sidebar Menu -->
-        @include('layouts._sidebarmenu')
+       @include('layouts._sidebarmenu')
         <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

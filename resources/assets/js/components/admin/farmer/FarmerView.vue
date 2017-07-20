@@ -40,7 +40,7 @@
                                         <tr>
 
                                             <th>ชื่อแปลง</th>
-                                            <th>พื้นที่(ตรม.)</th>
+                                            <th>พื้นที่</th>
                                             <th>คงเหลือเก็บเกี่ยว</th>
                                             <th>เก็บเกี่ยวล่าสุด</th>
                                             <th>ตำบล</th>
@@ -53,7 +53,7 @@
                                         <tr v-for="plant in plants.data">
 
                                             <td>{{plant.name}}</td>
-                                            <td>{{numeral(plant.area_sqm).format("0,0.00")}}</td>
+                                            <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                             <td>{{numeral(plant.remainingBalance).format("0,0.00")}}</td>
                                             <td>
                                                 {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
@@ -259,6 +259,7 @@
                 if (confirm("Do you want to delete this plant?")) {
                     this.$http.delete(this.strFormat(this.plantDeleteUrl, {id: plant.id}), {}).then(function (r) {
                         this.loadFarmerData();
+                        window.location.href = "/home"
                     })
                 }
             },

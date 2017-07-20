@@ -27,7 +27,7 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($userId)
+    public function viewProfileByUserId($userId)
     {
         if (Auth::user()->id == $userId) {
             $user = UserService::getUserById($userId);

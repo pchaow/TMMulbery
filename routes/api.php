@@ -72,7 +72,7 @@ Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
 
 Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
 
-    Route::resource('/', 'API\\Buyer\\BuyerController');
+    Route::resource('/', 'API\\Buyer\\BuyerResourceController');
 
     Route::resource('/order', 'API\\Buyer\\OrderResourceController');
 

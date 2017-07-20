@@ -41,6 +41,7 @@
                                 <tr>
                                     <th>ชื่อแปลง</th>
                                     <th>เกษตรกร</th>
+                                    <th>พื้นที่</th>
                                     <th>คงเหลือเก็บเกี่ยว (กก.)</th>
                                     <th>เก็บเกี่ยวล่าสุด</th>
                                     <th>ตำบล</th>
@@ -53,6 +54,7 @@
                                 <tr v-for="plant in plants">
                                     <td>{{plant.name}}</td>
                                     <td>{{plant.user ? plant.user.name : '-' }}</td>
+                                    <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                     <td>{{plant.remainingBalance ? plant.remainingBalance.toFixed(2) : '-'}}</td>
                                     <td>
                                         {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}

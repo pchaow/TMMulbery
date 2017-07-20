@@ -138,7 +138,7 @@
         methods: {
             save: function () {
                 this.formErrors = [];
-                this.$http.post(this.saveUrl, this.formInputs)
+                this.$http.put(this.saveUrl, this.formInputs)
                     .then((response) => {
                         // success callback
                         // console.log(response);

@@ -16,10 +16,9 @@
     <section class="content">
 
         <user-profile
-                v-bind:save-url="'/profile/{{$userId}}'"
-                v-bind:load-url="'/api/profile/{{$userId}}/edit'"
-
-                v-bind:success-url="'/profile/{{$userId}}'"
+                v-bind:save-url="'/api/profile/{{$userId or 0}}'"
+                v-bind:load-url="'/api/profile/{{$userId or 0}}/edit'"
+                v-bind:success-url="'/profile/{{$userId or 0}}'"
                 v-bind:user-id="{{$userId or 0}}"
         >
         </user-profile>

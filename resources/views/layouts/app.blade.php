@@ -105,9 +105,9 @@
                         </ul>
                     </li>
                     <!-- Control Sidebar Toggle Button -->
-                    <li>
+                   <!-- <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </nav>
@@ -158,13 +158,13 @@
     </footer>
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
+    <!--<aside class="control-sidebar control-sidebar-dark"> -->
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
             <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
+            <!-- <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>-->
+         </ul>
+         <!-- Tab panes -->
         <div class="tab-content">
             <!-- Home tab content -->
             <div class="tab-pane active" id="control-sidebar-home-tab">

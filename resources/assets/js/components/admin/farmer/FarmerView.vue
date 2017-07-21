@@ -307,14 +307,16 @@
             },
 
             closeOrder: function (order) {
-                axios.post(this.farmerApiUrl + "/order/" + order.id + "/close")
-                    .then(response => {
-                        console.log(response.data);
-                        this.loadOrders();
-                    })
-                    .catch(error => {
+                if (confirm("ต้องการลบรายการขายนี้?")) {
+                    axios.post(this.farmerApiUrl + "/order/" + order.id + "/close")
+                        .then(response => {
+                            console.log(response.data);
+                            this.loadOrders();
+                        })
+                        .catch(error => {
 
-                    })
+                        })
+                }
             },
 
             OpenSellOrder: function (plant) {
@@ -339,7 +341,7 @@
                 )
             },
             deletePlant: function (plant) {
-                if (confirm("Do you want to delete this plant?")) {
+                if (confirm("ต้องการลบแปลงนี้?")) {
                     this.$http.delete(this.strFormat(this.plantDeleteUrl, {id: plant.id}), {}).then(function (r) {
                         this.loadFarmerData();
                         window.location.href = "/home"

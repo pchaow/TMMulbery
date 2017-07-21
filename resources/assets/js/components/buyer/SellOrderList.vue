@@ -84,7 +84,7 @@
                     })
             },
             openBuyOrder: function (order) {
-                if (confirm("คุณต้องการซื้อรายการนี้ใช่หรือไม่")) {
+                if (confirm("ต้องการซื้อรายการนี้?")) {
                     var form = {
                         plant_id: order.plant ? order.plant.id : null,
                         order_id: order.id

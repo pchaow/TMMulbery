@@ -293,7 +293,7 @@
             closeOrder: function (order) {
 
 
-                if (confirm("คุณต้องการยกเลิกคำสั่งซื้อนี้หรือไม่")) {
+                if (confirm("ต้องการยกเลิกคำสั่งซื้อนี้")) {
                     axios.post(this.orderApiUrl + "/" + order.id + "/closed")
                         .then(response => {
 //                            this.refreshOrder();

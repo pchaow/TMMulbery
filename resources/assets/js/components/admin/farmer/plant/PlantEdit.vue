@@ -180,8 +180,8 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary pull-right">บันทึก</button>
-                        <a v-bind:href="successUrl" class="btn btn-default">ยกเลิก</a>
+                        <button type="submit" class="btn btn-primary ">บันทึก</button>
+                        <a v-bind:href="successUrl" class="btn btn-default ">ยกเลิก</a>
                     </div>
                 </form>
             </div>

@@ -341,7 +341,7 @@
                 )
             },
             deletePlant: function (plant) {
-                if (confirm("ต้องการลบแปลงนี้?")) {
+                if (confirm("ต้องการลบแปลงหม่อนนี้?")) {
                     this.$http.delete(this.strFormat(this.plantDeleteUrl, {id: plant.id}), {}).then(function (r) {
                         this.loadFarmerData();
                         window.location.href = "/home"

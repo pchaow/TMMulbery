@@ -8,6 +8,56 @@
             ></farmer-profile-column>
         </div>
 
+        <div class="col-md-12" v-show="openFormStatus">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    ประกาศขาย
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="col-lg-12">
+                        <form class="form-horizontal" v-on:submit.prevent="saveOpenSellOrderForm">
+
+                            <div class="form-group"
+                                 v-bind:class="{ 'has-error': sellOrder.errors['transaction_date'] }">
+                                <label>Date:</label>
+
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input v-model="sellOrder.form['duedate']"
+                                           type="date"
+                                           class="form-control pull-right">
+                                </div>
+                                <span v-if="sellOrder.errors['transaction_date']"
+                                      class="help-block">{{ sellOrder.errors['transaction_date'] }}</span>
+                                <!-- /.input group -->
+                            </div>
+
+                            <div class="form-group">
+                                <label>น้ำหนัก (กก.):</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calculator"></i>
+                                    </div>
+                                    <input v-model="sellOrder.form.amount" type="number" step="0.01"
+                                           class="form-control pull-right">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <button @click="openFormStatus = false" class="btn btn-default">ยกเลิก</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -23,6 +73,10 @@
                                 รายการแปลงหม่อน
 
                                 <div class="pull-right">
+
+                                    <button @click="openSellOrderForm" class="btn btn-primary">
+                                        ประกาศขาย
+                                    </button>
 
                                     <a v-bind:href="plantCreateUrl" class="btn btn-default">
                                         เพิ่มแปลงหม่อน
@@ -118,11 +172,14 @@
                                         <tr v-for="order in sellOrders.data">
 
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
-                                            <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
-                                            <td>{{order.sell_confirm_orders.length > 0 ? order.sell_confirm_orders[0].status : order.status}}</td>
+                                            <td>{{order.plant ? order.plant.name : "-"}}</td>
+                                            <td>
+                                                {{order.sell_confirm_orders.length > 0 ? order.sell_confirm_orders[0].status : order.status}}
+                                            </td>
                                             <td>
                                                 {{numeral(order.amount).format("0,0.00")}}
-                                                <template v-if="order.sell_confirm_orders.length > 0 && order.sell_confirm_orders[0].status == 'Success'">
+                                                <template
+                                                        v-if="order.sell_confirm_orders.length > 0 && order.sell_confirm_orders[0].status == 'Success'">
                                                     ({{order.sell_confirm_orders[0].remark.unit}})
                                                 </template>
                                             </td>
@@ -203,11 +260,32 @@
                 },
                 sellOrders: [],
                 plants: [],
+
+                sellOrder: {
+                    form: {},
+                    errors: {},
+                },
+                openFormStatus: false,
             }
         },
         methods: {
             strFormat: window.strFormat,
+            openSellOrderForm: function () {
+                this.openFormStatus = true;
+            },
+            saveOpenSellOrderForm: function () {
+                console.log(this.sellOrder.form);
+                this.sellOrders.errors = {};
+                axios.post(this.plantLoadOrderUrl + "/sell/open", this.sellOrder.form)
+                    .then(res => {
+                        this.openFormStatus = false;
+                        this.sellOrders.form = {};
 
+                    })
+                    .catch(err => {
+                        this.sellOrders.errors = err.response.data;
+                    })
+            },
             loadOrders: function () {
 
                 axios.get(this.plantLoadOrderUrl)
@@ -220,7 +298,6 @@
 
                         })
                     })
-
             },
 
             closeOrder: function (order) {

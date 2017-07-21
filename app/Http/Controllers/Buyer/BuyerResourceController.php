@@ -14,9 +14,9 @@ class BuyerResourceController extends Controller
         return view('buyer.selllist');
     }
 
-    public function confirm($buyId)
+    public function confirm($confirmId)
     {
         return view('buyer.orderConfirm')
-            ->with("orderId", $buyId);
+            ->with("confirmOrderId", $confirmId);
     }
 }

@@ -33,7 +33,7 @@ Route::group(["prefix" => "farmer"], function () {
 
 
 Route::group(["prefix" => "buyer"], function () {
-    Route::get('/order/{buyId}/confirm', "Buyer\\BuyerController@confirm");
-    Route::get('/selllist', "Buyer\\BuyerController@sellList");
+    Route::get('/order/{buyId}/confirm', "Buyer\\BuyerResourceController@confirm");
+    Route::get('/selllist', "Buyer\\BuyerResourceController@sellList");
 
 });

@@ -6,6 +6,7 @@ use App\Http\Requests\FarmerRequest;
 use App\Http\Services\FarmerService;
 use App\Http\Services\OrderService;
 use App\Http\Services\UserService;
+use App\Models\Order;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,7 +29,13 @@ class FarmerResourceController extends Controller
     public function createSellOrder(Request $request, $plantId)
     {
         $userId = Auth::user()->id;
-        return FarmerService::createSellOrderTransaction($userId, $plantId, $request->all());
+        return OrderService::createSellOrderTransaction($userId, $plantId, $request->all());
+    }
+
+    public function openSellOrder(Request $request)
+    {
+        $userId = Auth::user()->id;
+        return OrderService::openSellOrderWithoutPlant($userId, $request->all());
     }
 
     public function getOrders()

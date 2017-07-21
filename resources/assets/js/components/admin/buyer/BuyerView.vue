@@ -2,10 +2,10 @@
     <div class="row" v-if="buyer">
         <div class="col-md-12" v-show="showSidePanel">
 
-          <!--  <buyer-profile-column v-if="buyerData"
-                                  :buyer="buyerData"
-                                  :edit-url="buyerEditUrl"
-            ></buyer-profile-column> -->
+            <!--  <buyer-profile-column v-if="buyerData"
+                                    :buyer="buyerData"
+                                    :edit-url="buyerEditUrl"
+              ></buyer-profile-column> -->
         </div>
 
         <slot>
@@ -42,25 +42,48 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="order in buyOrders.data">
+                                        <template v-for="order in buyOrders.data">
+                                            <tr>
 
-                                            <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
-                                            <td>{{order.status}}</td>
-                                            <td>{{numeral(order.amount).format("0,0.00")}}</td>
-                                            <td>{{order.plant.name}}</td>
-                                            <td>{{order.plant.user.name}}</td>
-                                            <td>{{order.plant.user.contact_number}}</td>
+                                                <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
+                                                <td>{{order.status}}</td>
+                                                <td>{{numeral(order.amount).format("0,0.00")}}</td>
+                                                <td>{{order.plant ? order.plant.name : "-"}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" @click="closeOrder(order)"
+                                                            class="btn btn-danger">
+                                                        ยกเลิก
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                            <tr v-for="sell in order.sell_paired_order">
+
+                                                <td class="text-right">
+                                                    Sell ID : {{sell.id}}
+                                                </td>
+                                                <td>{{sell.status}}</td>
+                                                <td>{{numeral(sell.amount).format("0,0.00")}}</td>
+                                                <td>{{sell.plant ? sell.plant.name : '-'}}</td>
+                                                <td>{{sell.user ? sell.user.name : '-'}}</td>
+                                                <td>{{sell.user ? sell.user.contact_number : '-'}}</td>
+
+                                                <td>
+                                                    <a :href="strFormat(orderConfirmUrl,{id:sell.pivot.id})"
+                                                       class="btn btn-default">ยืนยัน</a>
+                                                    <button type="button" @click="closeConfirmOrder(sell.pivot.id)"
+                                                            class="btn btn-danger">
+                                                        ยกเลิก
+                                                    </button>
+                                                </td>
+
+                                            </tr>
+
+                                        </template>
 
 
-                                            <td>
-                                                <a :href="strFormat(orderConfirmUrl,{id:order.id})"
-                                                   class="btn btn-default">ยืนยัน</a>
-                                                <button type="button" @click="closeOrder(order)" class="btn btn-danger">
-                                                    ยกเลิก
-                                                </button>
-                                            </td>
-
-                                        </tr>
                                         </tbody>
                                         <tfoot>
                                         <tr>
@@ -88,6 +111,7 @@
                                         <thead>
                                         <tr>
                                             <th>วันที่</th>
+                                            <th>ID</th>
                                             <th>สถานะ</th>
                                             <th>จำนวน(กก.)</th>
                                             <th>ชื่อแปลง</th>
@@ -96,17 +120,27 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="order in buyHistoryOrders.data">
+                                        <template v-for="order in buyHistoryOrders.data">
+                                            <tr>
+                                                <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
+                                                <td>{{order.id}}</td>
+                                                <td colspan="5">{{order.status}}</td>
+                                            </tr>
 
-                                            <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
-                                            <td>
-                                                {{order.buy_confirm_orders[0] ? order.buy_confirm_orders[0].status : order.status}}
-                                            </td>
-                                            <td>{{numeral(order.amount).format("0,0.00")}}</td>
-                                            <td>{{order.plant.name}}</td>
-                                            <td>{{order.plant.user.name}}</td>
-                                            <td>{{order.plant.user.contact_number}}</td>
-                                        </tr>
+                                            <tr v-for="sell in order.sell_paired_order">
+
+                                                <td colspan="2" class="text-right">
+                                                    Sell ID : {{sell.id}}
+                                                </td>
+                                                <td>{{sell.status}}</td>
+                                                <td>{{sell.pivot.remark.unit}}</td>
+                                                <td>{{sell.plant ? sell.plant.name : '-'}}</td>
+                                                <td>{{sell.user ? sell.user.name : '-'}}</td>
+                                                <td>{{sell.user ? sell.user.contact_number : '-'}}</td>
+
+
+                                            </tr>
+                                        </template>
                                         </tbody>
                                         <tfoot>
                                         <tr>
@@ -169,6 +203,8 @@
                 this.loadBuyOrders();
                 this.loadBuyHistoryOrders();
             },
+            closeConfirmOrder: function (order) {
+            },
             closeOrder: function (order) {
 
 
@@ -188,8 +224,15 @@
 
                 axios.post(this.orderApiUrl + "/loadBuyHistoryOrder")
                     .then(response => {
-                        this.buyHistoryOrders = response.data;
-                        console.log(this.buyOrders)
+                        var data = response.data;
+                        for (var i = 0; i < data.data.length; i++) {
+                            var order = data.data[i];
+                            for (var j = 0; j < order.sell_paired_order.length; j++) {
+                                var pairOrder = order.sell_paired_order[j];
+                                pairOrder.pivot.remark = JSON.parse(pairOrder.pivot.remark);
+                            }
+                        }
+                        this.buyHistoryOrders = data;
                     })
             },
             loadBuyOrders: function () {

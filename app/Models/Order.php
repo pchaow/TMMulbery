@@ -18,7 +18,7 @@ class Order extends Model
     protected $table = "orders";
 
     protected $fillable = [
-        'user_id', 'plant_id', 'status', 'amount', 'type'
+        'user_id', 'plant_id', 'duedate', 'status', 'amount', 'type'
     ];
 
 
@@ -48,10 +48,22 @@ class Order extends Model
         return $this->hasMany(ConfirmOrder::class, "buy_order_id");
     }
 
-    public function sellConfirmOrders(){
-        return $this->hasMany(ConfirmOrder::class, "sell_order_id")->where('status','!=',"Closed");
+    public function sellConfirmOrders()
+    {
+        return $this->hasMany(ConfirmOrder::class, "sell_order_id")->where('status', '!=', "Closed");
 
     }
+
+    public function buyPairedOrder()
+    {
+        return $this->belongsToMany(Order::class, "confirm_orders", 'sell_order_id', 'buy_order_id')->withPivot(['id','remark']);;
+    }
+
+    public function sellPairedOrder()
+    {
+        return $this->belongsToMany(Order::class, "confirm_orders", 'buy_order_id', 'sell_order_id')->withPivot(['id','remark']);
+    }
+
 
 }
 

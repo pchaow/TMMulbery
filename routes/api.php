@@ -18,7 +18,6 @@ Route::get('user', function (Request $request) {
 })->middleware('auth:api');
 
 
-
 Route::resource('thailand/province', "API\\ProvinceController");
 Route::resource('thailand/province.amphure', "API\\ProvinceAmphureController");
 Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphureDistrictController");
@@ -63,6 +62,7 @@ Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
     Route::post("/plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
 
     Route::get("/order", "API\\Farmer\\FarmerResourceController@getOrders");
+    Route::post("/order/sell/open", "API\\Farmer\\FarmerResourceController@openSellOrder");
     Route::post('/order/{id}/close', "API\\Farmer\\FarmerResourceController@closeSellOrder");
     Route::post("/plant/{plantId}/open/sell", "API\\Farmer\\FarmerResourceController@createSellOrder");
 
@@ -75,6 +75,8 @@ Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
     Route::resource('/', 'API\\Buyer\\BuyerResourceController');
 
     Route::resource('/order', 'API\\Buyer\\OrderResourceController');
+    Route::resource('/confirm-order', 'API\\Buyer\\ConfirmOrderResourceController');
+    Route::resource('/confirm-order/{id}/confirm', 'API\\Buyer\\ConfirmOrderResourceController@confirmConfirmOrder');
 
     Route::post('/order/loadSellOpenOrder', 'API\\Buyer\\OrderResourceController@loadSellOpenOrder');
     Route::post('/order/loadBuyHistoryOrder', 'API\\Buyer\\OrderResourceController@loadBuyHistoryOrder');

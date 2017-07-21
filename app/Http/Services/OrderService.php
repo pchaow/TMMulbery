@@ -38,7 +38,7 @@ class OrderService
     {
         $buyer = User::find($id);
 
-        $query = $buyer->orders();
+        $query = $buyer->orders()->with(["sellPairedOrder","sellPairedOrder.user","sellPairedOrder.plant"]);
         $query->where('type', '=', $type);
         $query->with(["plant", "plant.user"]);
         $query->where(function ($query) {
@@ -61,7 +61,7 @@ class OrderService
     {
         $query = Order::query();
         $query->where('type', '=', "sell");
-        $query->with(["plant", "plant.user"]);
+        $query->with(["plant", "plant.user", "user"]);
         $query->where('status', '=', 'Open');
 
         return $paginate ? $query->paginate() : $query->get();
@@ -87,7 +87,11 @@ class OrderService
         $order = new Order();
 
         $order->user()->associate(User::find($userId));
-        $order->plant()->associate($plant);
+        if ($plant) {
+            $order->plant()->associate($plant);
+        }else {
+            $order->duedate = $pairOrder->duedate;
+        }
 
         $order->amount = $pairOrder->amount;
         $order->type = Order::$ORDER_TYPE_BUY;
@@ -156,9 +160,9 @@ class OrderService
     {
         $buyer = User::find($id);
 
-        $query = $buyer->orders();
+        $query = $buyer->orders()->with(["sellPairedOrder","sellPairedOrder.user","sellPairedOrder.plant"]);
         $query->where('type', '=', $type);
-        $query->with(["plant", "plant.user", "buyConfirmOrders"]);
+        $query->with(["plant", "plant.user"]);
         $query->where('status', '=', 'Closed');
 
 
@@ -256,5 +260,41 @@ class OrderService
         DB::commit();
         return $confirmOrder;
 
+    }
+
+    public static function createSellOrderTransaction($userId, $plantId, $formData)
+    {
+        $user = User::find($userId);
+        $plant = Plant::find($plantId);
+
+        $order = new Order();
+
+        $order->fill($formData);
+        $order->type = Order::$ORDER_TYPE_SELL;
+        $order->status = Order::$STATUS_OPEN;
+
+        $order->user()->associate($user);
+        $order->plant()->associate($plant);
+
+        $order->save();
+
+        return $order;
+    }
+
+    public static function openSellOrderWithoutPlant($userId, $formData)
+    {
+        $user = User::find($userId);
+
+        $order = new Order();
+
+        $order->fill($formData);
+        $order->type = Order::$ORDER_TYPE_SELL;
+        $order->status = Order::$STATUS_OPEN;
+
+        $order->user()->associate($user);
+
+        $order->save();
+
+        return $order;
     }
 }

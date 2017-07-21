@@ -26,9 +26,9 @@
                                 <tr v-for="order in sellOrder.data">
 
                                     <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
-                                    <td>{{order.plant ? order.plant.name : "ERROR"}}</td>
-                                    <td>{{order.plant.user.name}}</td>
-                                    <td>{{order.plant.user.contact_number}}</td>
+                                    <td>{{order.plant ? order.plant.name : "-"}}</td>
+                                    <td>{{order.plant ? order.plant.user.name : order.user.name}}</td>
+                                    <td>{{order.plant ? order.plant.user.contact_number : order.user.contact_number}}</td>
                                     <td>{{order.status}}</td>
                                     <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                     <td>
@@ -86,16 +86,29 @@
             openBuyOrder: function (order) {
                 if (confirm("คุณต้องการซื้อรายการนี้ใช่หรือไม่")) {
                     var form = {
-                        plant_id: order.plant.id,
+                        plant_id: order.plant ? order.plant.id : null,
                         order_id: order.id
                     }
-                    axios.post(this.orderApi + "/openWithConfirm", form)
-                        .then(response => {
-                            window.location.href = "/home"
-                        })
-                        .catch(error => {
 
-                        })
+                    if (order.plant){
+                        axios.post(this.orderApi + "/openWithConfirm", form)
+                            .then(response => {
+                                window.location.href = "/home"
+                            })
+                            .catch(error => {
+
+                            })
+                    }else {
+                        axios.post(this.orderApi + "/openWithConfirm", form)
+                            .then(response => {
+                                window.location.href = "/home"
+                            })
+                            .catch(error => {
+
+                            })
+                    }
+
+
                 }
             },
         },

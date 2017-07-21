@@ -22,10 +22,10 @@
                                         <label>เบอร์โทรศัพท์</label> {{buyOrder.user.contact_number}}
                                     </p>
                                     <p>
-                                        <label>แปลง</label> {{buyOrder.plant.name}}
+                                        <label>แปลง</label> {{buyOrder.plant ? buyOrder.plant.name : '-'}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{buyOrder.amount}}
+                                        <label>จำนวน</label> {{numeral(buyOrder.amount).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 
@@ -48,10 +48,10 @@
                                         <label>เบอร์โทรศัพท์</label> {{sellOrder.user.contact_number}}
                                     </p>
                                     <p>
-                                        <label>แปลง</label> {{sellOrder.plant.name}}
+                                        <label>แปลง</label> {{sellOrder.plant ? sellOrder.plant.name : "-"}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{sellOrder.amount}}
+                                        <label>จำนวน</label> {{numeral(sellOrder.amount).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 
@@ -116,8 +116,8 @@
 
     export default {
         props: {
-            orderId: String,
-            orderApi: String,
+            confirmOrderId: String,
+            confirmOrderApi: String,
             successUrl: String,
         },
         components: {},
@@ -145,11 +145,11 @@
                 }
                 return 0;
             },
-            loadBuyOrder: function () {
-                axios.get(this.orderApi + "/" + this.orderId)
+            loadConfirmOrder: function () {
+                axios.get(this.confirmOrderApi + "/" + this.confirmOrderId)
                     .then(res => {
                         var data = res.data;
-                        this.buyConfirmOrder = data.buy_confirm_orders[0];
+                        this.buyConfirmOrder = data
                         this.buyOrder = this.buyConfirmOrder.buy_order;
                         this.sellOrder = this.buyConfirmOrder.sell_order;
 
@@ -160,7 +160,7 @@
             },
             save: function () {
                 if (confirm("ยืนยันคำสั่งซื้อขายนี้ ?")) {
-                    axios.post(this.orderApi + "/" + this.orderId + "/confirm", this.formInputs)
+                    axios.post(this.confirmOrderApi + "/" + this.confirmOrderId + "/confirm", this.formInputs)
                         .then(res => {
                             window.location.href = this.successUrl;
                         })
@@ -173,7 +173,7 @@
 
         },
         created() {
-            this.loadBuyOrder();
+            this.loadConfirmOrder();
         },
         mounted() {
         }

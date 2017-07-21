@@ -65,6 +65,9 @@ class OrderResourceController extends Controller
         return OrderService::closedBuyOrder($id);
     }
 
+    /*
+     * @deprecated
+     */
     public function confirmBuyOrder(Request $request, $id)
     {
         $buyOrderId = $id;

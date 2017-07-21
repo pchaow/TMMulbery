@@ -14,8 +14,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <order-confirm
-                        order-id="{{$orderId or 0}}"
-                        order-api="/api/buyer/order"
+                        confirm-order-id="{{$confirmOrderId or 0}}"
+                        confirm-order-api="/api/buyer/confirm-order"
                         success-url="/home"
                 >
                 </order-confirm>

@@ -119,6 +119,9 @@ class FarmerService
         return $user;
     }
 
+    /**
+     * @deprecated
+     */
     public static function createSellOrderTransaction($userId, $plantId, $formData)
     {
         $user = User::find($userId);

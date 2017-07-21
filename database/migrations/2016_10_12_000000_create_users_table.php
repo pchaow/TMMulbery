@@ -30,7 +30,6 @@ class CreateUsersTable extends Migration
 
             $table->json('profiles')->nullable();
             $table->rememberToken();
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('province_id')->references('id')->on('provinces')

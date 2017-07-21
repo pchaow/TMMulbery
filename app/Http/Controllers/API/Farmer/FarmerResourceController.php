@@ -50,4 +50,14 @@ class FarmerResourceController extends Controller
     {
         return OrderService::closeSellOrder($id);
     }
+
+    public function loadBuyOpenOrder(Request $request)
+    {
+        return OrderService::openBuyOrderList();
+    }
+
+    public function openWithConfirm(Request $request)
+    {
+        return OrderService::openSellOrderWithConfirm(Auth::user()->id,$request->all());
+    }
 }

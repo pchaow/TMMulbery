@@ -32,6 +32,14 @@
                         plant-load-order-url="/api/farmer/order"
 
                 >
+
+                    <div class="col-lg-12">
+                        <buy-order-list
+                                order-api="/api/farmer/order"
+                        >
+                        </buy-order-list>
+                    </div>
+
                 </farmer-view>
             </div>
         </div>

@@ -8,6 +8,10 @@
             ></farmer-profile-column>
         </div>
 
+
+        <slot>
+        </slot>
+
         <div class="col-md-12" v-show="openFormStatus">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -270,6 +274,8 @@
         },
         methods: {
             strFormat: window.strFormat,
+
+
             openSellOrderForm: function () {
                 this.openFormStatus = true;
             },

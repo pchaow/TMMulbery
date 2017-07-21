@@ -64,6 +64,8 @@ Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
     Route::get("/order", "API\\Farmer\\FarmerResourceController@getOrders");
     Route::post("/order/sell/open", "API\\Farmer\\FarmerResourceController@openSellOrder");
     Route::post('/order/{id}/close', "API\\Farmer\\FarmerResourceController@closeSellOrder");
+    Route::post('/order/loadBuyOpenOrder', 'API\\Farmer\\FarmerResourceController@loadBuyOpenOrder');
+    Route::post("/order/openWithConfirm", 'API\\Farmer\\FarmerResourceController@openWithConfirm');
     Route::post("/plant/{plantId}/open/sell", "API\\Farmer\\FarmerResourceController@createSellOrder");
 
 

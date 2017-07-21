@@ -38,6 +38,10 @@ class OrderResourceController extends Controller
         return OrderService::loadHistoryOrder($buyer->id, "buy", true);
     }
 
+    public function store(Request $request)
+    {
+        return OrderService::openBuyOrder(Auth::user()->id, $request->all());
+    }
 
     /**
      * Display the specified resource.

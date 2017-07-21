@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Http\Requests\UserRequest;
 use App\Models\ConfirmOrder;
 use App\Models\Order;
 use App\Models\Plant;
@@ -38,7 +39,7 @@ class OrderService
     {
         $buyer = User::find($id);
 
-        $query = $buyer->orders()->with(["sellPairedOrder","sellPairedOrder.user","sellPairedOrder.plant"]);
+        $query = $buyer->orders()->with(["sellPairedOrder", "sellPairedOrder.user", "sellPairedOrder.plant"]);
         $query->where('type', '=', $type);
         $query->with(["plant", "plant.user"]);
         $query->where(function ($query) {
@@ -55,6 +56,16 @@ class OrderService
         $query->with(['buyConfirmOrders.buyOrder.plant', 'buyConfirmOrders.sellOrder.plant', 'buyConfirmOrders.buyOrder.user', 'buyConfirmOrders.sellOrder.user']);
         $query->where('id', '=', $id);
         return $query->first();
+    }
+
+    public static function openBuyOrderList($paginate = true)
+    {
+        $query = Order::query();
+        $query->where('type', '=', "buy");
+        $query->with(["user"]);
+        $query->where('status', '=', 'Open');
+
+        return $paginate ? $query->paginate() : $query->get();
     }
 
     public static function openSellOrderList($paginate = true)
@@ -79,6 +90,21 @@ class OrderService
         return $confirmOrder;
     }
 
+    public static function openBuyOrder($userId, $formData)
+    {
+        $user = User::find($userId);
+        $order = new Order();
+        $order->user()->associate(User::find($userId));
+
+        $order->duedate = $formData['duedate'];
+        $order->amount = $formData['amount'];
+        $order->type = Order::$ORDER_TYPE_BUY;
+        $order->status = Order::$STATUS_OPEN;
+
+        $order->save();
+        return $order;
+    }
+
     public static function openBuyOrderWithConfirm($userId, $formData)
     {
         $pairOrder = Order::find($formData['order_id']);
@@ -89,7 +115,7 @@ class OrderService
         $order->user()->associate(User::find($userId));
         if ($plant) {
             $order->plant()->associate($plant);
-        }else {
+        } else {
             $order->duedate = $pairOrder->duedate;
         }
 
@@ -160,7 +186,7 @@ class OrderService
     {
         $buyer = User::find($id);
 
-        $query = $buyer->orders()->with(["sellPairedOrder","sellPairedOrder.user","sellPairedOrder.plant"]);
+        $query = $buyer->orders()->with(["sellPairedOrder", "sellPairedOrder.user", "sellPairedOrder.plant"]);
         $query->where('type', '=', $type);
         $query->with(["plant", "plant.user"]);
         $query->where('status', '=', 'Closed');
@@ -296,5 +322,25 @@ class OrderService
         $order->save();
 
         return $order;
+    }
+
+    public static function openSellOrderWithConfirm($userId, $formData)
+    {
+        $buyOrder = Order::find($formData['order_id']);
+        $buyOrder->status = Order::$STATUS_PENDING;
+        $buyOrder->save();
+        $sellOrder = new Order();
+
+        $sellOrder->amount = $buyOrder->amount;
+        $sellOrder->duedate = $buyOrder->duedate;
+        $sellOrder->type = Order::$ORDER_TYPE_SELL;
+        $sellOrder->status = Order::$STATUS_PENDING;
+        $sellOrder->user()->associate(User::find($userId));
+
+        $sellOrder->save();
+
+        $confirmOrder = self::openConfirmOrder($buyOrder, $sellOrder);
+
+        return [$sellOrder, $confirmOrder];
     }
 }

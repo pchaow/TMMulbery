@@ -11,6 +11,60 @@
         <slot>
         </slot>
 
+
+        <div class="col-md-12" v-if="showOrderForm">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    ประกาศรับซื้อ
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="col-lg-12">
+                        <form class="form-horizontal" v-on:submit.prevent="saveBuyOrder()">
+
+                            <div class="form-group"
+                                 v-bind:class="{ 'has-error': order.errors['duedate'] }">
+                                <label>Date:</label>
+
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input v-model="order.form['duedate']"
+                                           type="date"
+                                           class="form-control pull-right">
+                                </div>
+                                <span v-if="order.errors['duedate']"
+                                      class="help-block">{{ order.errors['duedate'] }}</span>
+                                <!-- /.input group -->
+                            </div>
+
+                            <div class="form-group">
+                                <label>น้ำหนัก (กก.):</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calculator"></i>
+                                    </div>
+                                    <input v-model="order.form.amount" type="number" step="0.01"
+                                           class="form-control pull-right">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <button @click="openOrderForm(false)" class="btn btn-default">ยกเลิก</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -19,11 +73,24 @@
 
                 </ul>
                 <div class="tab-content">
+
+
                     <div class="active tab-pane" id="activity">
+
+
                         <div class="row">
+
                             <div class="col-md-12">
                                 <i class="fa fa-money"></i>
                                 รายการคำขอซื้อ
+
+                                <div class="pull-right">
+
+                                    <button @click="openOrderForm(true)" class="btn btn-primary">
+                                        ประกาศซื้อ
+                                    </button>
+
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -194,11 +261,29 @@
                 buyerData: {},
                 buyOrders: [],
                 buyHistoryOrders: [],
+                showOrderForm: false,
+                order: {
+                    form: {},
+                    errors: {},
+                }
             }
         },
         methods: {
             strFormat: window.strFormat,
-
+            saveBuyOrder: function () {
+                this.order.errors = {};
+                axios.post(this.orderApiUrl, this.order.form)
+                    .then(res => {
+                        this.refreshOrder()
+                        this.openOrderForm(false)
+                    })
+                    .catch(err => {
+                        this.order.errors = err.response.data;
+                    })
+            },
+            openOrderForm: function (bool) {
+                this.showOrderForm = bool
+            },
             refreshOrder: function () {
                 this.loadBuyOrders();
                 this.loadBuyHistoryOrders();

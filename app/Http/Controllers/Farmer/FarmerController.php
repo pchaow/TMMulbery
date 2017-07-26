@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Farmer;
 
+use App\Http\Services\FarmerService;
 use App\Http\Services\PlantService;
 use App\Models\Plant;
 use Illuminate\Http\Request;
@@ -10,6 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class FarmerController extends Controller
 {
+
+    public function index()
+    {
+        $user = Auth::user();
+        $userId = $user->id;
+
+        $user = FarmerService::getFarmerById($userId);
+
+        return view('farmer.home')
+            ->with('farmer', $user);
+    }
+
     public function createPlant()
     {
         $user = Auth::user();
@@ -20,7 +33,7 @@ class FarmerController extends Controller
         return view("farmer.plant.create")->with('user', $user);;
     }
 
-    public function editPlant( $plantId)
+    public function editPlant($plantId)
     {
         $user = Auth::user();
         $user->plants;
@@ -39,7 +52,7 @@ class FarmerController extends Controller
             ->with('plant', $plant);
     }
 
-    public function viewPlant( $plantId)
+    public function viewPlant($plantId)
     {
         $plant = PlantService::getPlantById($plantId);
 
@@ -47,7 +60,7 @@ class FarmerController extends Controller
 
         return view('farmer.plant.view')
             ->with('farmer', $user)
-            ->with('plant',$plant);
+            ->with('plant', $plant);
 
     }
 }

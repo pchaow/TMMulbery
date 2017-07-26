@@ -249,8 +249,7 @@
                 var density = 1600 / (row_spacing * plant_spacing)
                 this.formInputs.density = Math.floor(density);
 
-
-                return density
+                return Math.floor(density)
             },
 
         },

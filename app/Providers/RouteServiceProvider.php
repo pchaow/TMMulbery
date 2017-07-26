@@ -65,6 +65,22 @@ class RouteServiceProvider extends ServiceProvider
         ], function ($router) {
             require base_path('routes/web_admin.php');
         });
+
+        Route::group([
+            'middleware' => 'web',
+            'prefix' => 'buyer',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/web_buyer.php');
+        });
+
+        Route::group([
+            'middleware' => 'web',
+            'prefix' => 'farmer',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/web_farmer.php');
+        });
     }
 
     /**

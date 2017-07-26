@@ -249,6 +249,7 @@
                 var row_spacing = this.formInputs.row_spacing
                 var plant_spacing = this.formInputs.plant_spacing
                 var density = 1600 / (row_spacing * plant_spacing)
+                density = Math.floor(density);
                 this.formInputs.density = Math.floor(density);
 
 
@@ -356,9 +357,12 @@
         },
         created() {
         },
-        mounted()
-        {
+        mounted() {
             this.formInputs = this.plant
+            if (this.formInputs.map.length > 0) {
+                this.map_default_position = this.formInputs.map[0].position;
+            }
+
             console.log(this.formInputs)
         },
     }

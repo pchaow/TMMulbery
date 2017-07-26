@@ -31,32 +31,17 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user->hasRole('administrator')) {
             return view('admin.home');
-        } elseif ($user->hasRole('farmer')) {
-            return $this->farmerHome();
-        } elseif ($user->hasRole('buyer')) {
-            return $this->buyerHome();
         }
-    }
 
-    private function buyerHome()
-    {
-        $buyerId = Auth::user()->id;
-        $buyer = BuyerService::getBuyerByIdWithFullData($buyerId);
+        if ($user->hasRole('buyer')) {
+            return redirect("/buyer");
+        }
 
-        return view("buyer.home")
-            ->with('buyer', $buyer);
-    }
-
-    private function farmerHome()
-    {
-        $user = Auth::user();
-        $userId = $user->id;
-
-        $user = FarmerService::getFarmerById($userId);
-
-        return view('farmer.home')
-            ->with('farmer', $user);
+        if ($user->hasRole('farmer')) {
+            return redirect('/farmer');
+        }
 
     }
+
 }
 

@@ -78,7 +78,7 @@
 
                                 <div class="pull-right">
 
-                                    <button @click="openSellOrderForm" class="btn btn-primary">
+                                    <button v-if="false" @click="openSellOrderForm" class="btn btn-primary">
                                         ประกาศขาย
                                     </button>
 
@@ -108,19 +108,20 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="plant in plants.data">
+                                        <tr v-for="plant in plants.data" v-bind:style="{ 'background-color' : calculateRGBA(plant) }" style="background-color: rgba(150,250,100,1);">
 
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                             <td>{{numeral(plant.remainingBalance).format("0,0.00")}}</td>
                                             <td>
-                                                {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
+                                                {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from",
+                                                "now")}}
                                             </td>
                                             <td>{{plant.district ? plant.district.name : '-'}}</td>
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
-                                                <button v-if="plantOpenSellOrderUrl && plant.countOpenOrder == 0"
+                                                <button v-if="false"
                                                         @click="OpenSellOrder(plant)"
                                                         type="button" class="btn btn-warning">ประกาศขาย
                                                 </button>
@@ -142,7 +143,8 @@
                                         <tr>
                                             <td colspan="5">
                                                 <div>
-                                                    จำนวนทั้งหมด {{farmerData.plants ? farmerData.plants.length : 0}} รายการ
+                                                    จำนวนทั้งหมด {{farmerData.plants ? farmerData.plants.length : 0}}
+                                                    รายการ
                                                 </div>
                                                 <ul class="pagination">
                                                     <li></li>
@@ -178,7 +180,8 @@
                                             <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                             <td>{{order.plant ? order.plant.name : "-"}}</td>
                                             <td>
-                                                {{order.sell_confirm_orders.length > 0 ? order.sell_confirm_orders[0].status : order.status}}
+                                                {{order.sell_confirm_orders.length > 0 ?
+                                                order.sell_confirm_orders[0].status : order.status}}
                                             </td>
                                             <td>
                                                 {{numeral(order.amount).format("0,0.00")}}
@@ -190,7 +193,8 @@
                                             <td>
                                                 <template>
                                                     <template v-for="cforder in order.sell_confirm_orders">
-                                                        {{cforder.buy_order.user.name}} - {{cforder.buy_order.user.contact_number}}
+                                                        {{cforder.buy_order.user.name}} -
+                                                        {{cforder.buy_order.user.contact_number}}
                                                     </template>
                                                 </template>
                                             </td>
@@ -275,6 +279,17 @@
         methods: {
             strFormat: window.strFormat,
 
+            calculateRGBA : function(plant){
+                var now = moment();
+                var lastdate = plant.lastHarvestDate
+
+                var c = now.diff(lastdate,"days");
+                c = Math.abs(c);
+
+                var alpha = c > 90 ? 1 : 1 - (90-c)/90;
+
+                return 'rgba(150,250,100,'+ alpha +')'
+            },
 
             openSellOrderForm: function () {
                 this.openFormStatus = true;
@@ -352,8 +367,11 @@
             reloadPlants: function () {
                 axios.get(this.loadPlantUrl)
                     .then(response => {
-                        this.plants = response.data;
-                        console.log(response.data);
+                        var data = response.data;
+                        var plants = data.data
+                        plants = _.orderBy(plants, ["lastHarvestDate"], ["asc"])
+                        data.data = plants;
+                        this.plants = data;
                     })
                     .catch(error => {
 

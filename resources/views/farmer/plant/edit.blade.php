@@ -16,12 +16,12 @@
     <!-- Main content -->
     <section class="content">
         <farmer-plant-edit
-                success-url="/home"
-                save-plant-url="/api/farmer/plant/{{$plant->id}}"
-                edit-farmer-url="/farmers/edit"
-                :farmer="{{json_encode($user)}}"
                 :plant="{{json_encode($plant)}}"
+                plant_id="{{$plant->id}}"
+                :show-side-panel="false"
 
+                save-plant-url="/api/farmer/plant/{{$plant->id}}"
+                role-type="farmer"
         ></farmer-plant-edit>
     </section>
     <!-- /.content -->

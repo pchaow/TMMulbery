@@ -58,16 +58,13 @@ class User extends Authenticatable
 
     public function sellOrders()
     {
-        if ($this->hasRole("farmer")) {
-            return $this->hasMany(Order::class);
-        }
+        return $this->hasMany(Order::class)->where('type','=','sell');
+
     }
 
     public function buyOrders()
     {
-        if ($this->hasRole("buyer")) {
-            return $this->hasMany(Order::class);
-        }
+        return $this->hasMany(Order::class)->where('type','=','buy');
     }
 
 }

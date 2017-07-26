@@ -46,7 +46,7 @@ class BuyerPlantController extends Controller
         $plant->amphure_name = $plant->amphure ? $plant->amphure->name : '';
         $plant->district_name = $plant->district ? $plant->district->name : '';
 
-        return view('farmer.plant.edit')
+        return view('buyer.plant.edit')
             ->with('user', $user)
             ->with('plant', $plant);
     }

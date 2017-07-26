@@ -1,11 +1,8 @@
 <template>
-    <div class="row" v-if="farmer">
+    <div class="row">
         <div class="col-md-3" v-show="showSidePanel">
 
-            <farmer-profile-column v-if="farmer"
-                                   :farmer="farmer"
-                                   :edit-url="editUrl"
-            ></farmer-profile-column>
+            <slot></slot>
 
         </div>
         <!-- /.col -->
@@ -194,29 +191,23 @@
 
 <script>
     import Province from '../../../shared/Province.vue'
-    import FarmerProfileColumn from '../FarmerProfileColumn.vue'
 
     Vue.component('google-marker', VueGoogleMaps.Marker);
 
 
     export default {
         props: {
-            loadUrl: String,  //load farmer
-            editUrl: String,
-            savePlantUrl: String,
-            plantCreateUrl: String,
-            successUrl: String,
-            farmer: Object,
+            roleType: String,
             plant: Object,
+            plant_id: String,
             showSidePanel: Boolean,
-
         },
         components: {
-            Province, FarmerProfileColumn
+            Province
         },
         data() {
             return {
-
+                successUrl: null,
                 formInputs: {
                     row_spacing: 2.5,
                     plant_spacing: 0.75,
@@ -227,7 +218,6 @@
                     lng: null,
                 },
                 textSearch: "",
-                plants: null,
                 formErrors: {},
                 map_default_position: {lat: 19.1399606, lng: 99.907986},
                 marker_toggle: false,
@@ -326,7 +316,7 @@
             },
             save: function () {
                 this.formErrors = {}
-                this.$http.put(this.savePlantUrl, this.formInputs)
+                this.$http.put(this.$routes.api[this.roleType].plant + "/" + this.plant_id, this.formInputs)
                     .then((response) => {
                         window.location.href = this.successUrl
                     }, (response) => {
@@ -356,6 +346,8 @@
             }
         },
         created() {
+            this.successUrl = this.roleType == "farmer" ? this.$routes.web.farmer.index : this.$routes.web[this.roleType].plant;
+
         },
         mounted() {
             this.formInputs = this.plant

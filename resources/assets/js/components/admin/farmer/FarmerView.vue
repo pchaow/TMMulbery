@@ -162,7 +162,6 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-
                                             <th>วันที่</th>
                                             <th>แปลง</th>
                                             <th>สถานะ</th>
@@ -371,11 +370,8 @@
                         this.plants = data;
                     })
                     .catch(error => {
-
                     })
             },
-
-
         },
         created() {
             this.loadFarmerData();

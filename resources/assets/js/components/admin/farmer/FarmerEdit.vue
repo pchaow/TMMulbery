@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" v-if="formInputs">
         <div class="col-md-12">
 
             <div class="panel panel-info">
@@ -121,15 +121,24 @@
     export default {
         props: {
             userId: Number,
-            saveUrl: String,
-            loadUrl: String,
-            successUrl: String,
+            roleType: String,
         },
         components: {
             Province
         },
         data() {
+            console.log(this.roleType);
+            var saveUrl = '';
+            var loadUrl = '';
+            var successUrl = '';
+            var saveUrl = this.$routes.api[this.roleType].farmer + "/" + this.userId;
+            var loadUrl = this.$routes.api[this.roleType].farmer + "/" + this.userId + "/edit";
+            var successUrl = this.$routes.web[this.roleType].farmer.index;
+
             return {
+                saveUrl: saveUrl,
+                loadUrl: loadUrl,
+                successUrl: successUrl,
                 roles: [],
                 formInputs: null,
                 formErrors: [],
@@ -138,7 +147,7 @@
         methods: {
             save: function () {
                 this.formErrors = [];
-                this.$http.put(this.saveUrl, this.formInputs)
+                axios.put(this.saveUrl, this.formInputs)
                     .then((response) => {
                         // success callback
                         // console.log(response);
@@ -152,10 +161,9 @@
             },
             load: function () {
 
-                this.$http.get(this.loadUrl)
+                axios.get(this.loadUrl)
                     .then((response) => {
                         // success callback
-                        // console.log(response);
                         this.formInputs = response.data;
                     }, (response) => {
                         // error callback
@@ -163,7 +171,7 @@
                     })
             },
         },
-        created(){
+        created() {
         },
         mounted() {
             console.log('ready to edit user.id =', this.userId)

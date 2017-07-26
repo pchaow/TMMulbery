@@ -13,12 +13,7 @@
 
     <!-- Main content -->
     <section class="content">
-
-        <farmer-create
-                v-bind:save-url="'/api/admin/farmer'"
-                v-bind:success-url="'/admin/farmers'">
-        </farmer-create>
-
+        <farmer-create role-type="buyer"></farmer-create>
     </section>
     <!-- /.content -->
 @endsection

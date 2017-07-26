@@ -119,43 +119,44 @@
 
     export default {
         props: {
-            saveUrl : String,
-            successUrl : String,
-
+            roleType : String,
         },
-        components : {
+        components: {
             Province
         },
         data() {
+
+            var saveUrl = this.$routes.api[this.roleType].farmer;
+            var successUrl = this.$routes.web[this.roleType].farmer.index;
+
             return {
-                formInputs: {
-                },
+                saveUrl: saveUrl,
+                successUrl: successUrl,
+                formInputs: {},
                 formErrors: {},
             }
         },
         methods: {
-            strFormat : window.strFormat,
+            strFormat: window.strFormat,
             save: function () {
                 console.log(this.formInputs);
                 this.formErrors = []
                 this.$http.post(this.saveUrl, this.formInputs)
-                        .then((response) => {
-                                    // success callback
-                                    console.log(response);
-                                    window.location.href = this.successUrl
-                                }, (response) => {
-                                    // error callback
-                                    this.formErrors = response.data;
-                                }
-                        );
+                    .then((response) => {
+                            // success callback
+                            console.log(response);
+                            window.location.href = this.successUrl
+                        }, (response) => {
+                            // error callback
+                            this.formErrors = response.data;
+                        }
+                    );
             },
         },
         mounted() {
             console.log('Component mounted.')
         },
     }
-
-
 
 
 </script>

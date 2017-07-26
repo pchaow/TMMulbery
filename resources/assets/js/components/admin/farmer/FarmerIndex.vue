@@ -104,8 +104,8 @@
 
             var editUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/edit";
             var viewUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/view";
-            var deleteUrl = this.$routes.api[this.roleType].farmer.index + "/{id}";
-            var loadFarmerUrl = this.$routes.api[this.roleType].farmer  ;
+            var deleteUrl = this.$routes.api[this.roleType].farmer + "/{id}";
+            var loadFarmerUrl = this.$routes.api[this.roleType].farmer;
 
             var createFarmerUrl = this.$routes.web[this.roleType].farmer.create;
 
@@ -142,9 +142,9 @@
                 this.load()
             },
             load: function () {
-                this.$http.get(this.loadFarmerUrl, {
+                axios.get(this.loadFarmerUrl, {
                     params: this.form
-                }).then(function (r) {
+                }).then(r => {
                     console.log(r.data)
                     this.farmersPage = r.data
                     this.farmers = this.farmersPage.data
@@ -152,9 +152,8 @@
             },
             deleteFarmer: function (farmer) {
                 if (confirm("ต้องการลบเกษตรกร?")) {
-                    this.$http.delete(this.strFormat(this.deleteUrl, {id: farmer.id}), {
-                        params: this.form
-                    }).then(function (r) {
+                    axios.delete(this.strFormat(this.deleteUrl, {id: farmer.id})).then(response => {
+                        console.log(response)
                         this.load()
                     })
                 }

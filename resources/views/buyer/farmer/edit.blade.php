@@ -16,11 +16,8 @@
     <section class="content">
 
         <farmer-edit
-                v-bind:save-url="'/api/admin/farmer/{{$userId or 0}}'"
-                v-bind:load-url="'/api/admin/farmer/{{$userId or 0}}/edit'"
-                v-bind:success-url="'/admin/farmers'"
-                v-bind:user-id="{{$userId or 0}}">
-        </farmer-edit>
+                :user-id="{{$userId or 0}}"
+                role-type="buyer"></farmer-edit>
 
     </section>
     <!-- /.content -->

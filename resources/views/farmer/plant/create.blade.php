@@ -14,13 +14,7 @@
     <!-- Main content -->
     <section class="content">
         <farmer-plant-create
-                v-bind:save-plant-url="'/api/farmer/plant'"
-                success-url="/home"
-                v-bind:load-url="'/api/farmer/'"
-                v-bind:edit-url="'/farmers/edit'"
-                v-bind:load-plant-url="'/api/farmer/plant'"
-                v-bind:plant-create-url="'/farmers/plant/create'"
-                v-bind:farmer="{{json_encode($user)}}"
+                role-type="farmer"
         ></farmer-plant-create>
     </section>
     <!-- /.content -->

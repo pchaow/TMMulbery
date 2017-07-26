@@ -1,17 +1,12 @@
 <template>
-    <div class="row" v-if="farmer">
-        <div class="col-md-3" v-show="showSidePanel">
-
-            <farmer-profile-column v-if="farmer"
-                                   :farmer="farmer"
-                                   :edit-url="editUrl"
-            ></farmer-profile-column>
-
+    <div class="row">
+        <div v-bind:class="{'col-md-3' : showSidePanel,'col-md-12' : showSidePanel}">
+            <slot></slot>
         </div>
         <!-- /.col -->
         <div v-bind:class="{'col-md-9' : showSidePanel,'col-md-12' : !showSidePanel}">
 
-        <!-- general form elements -->
+            <!-- general form elements -->
 
             <div class="box box-success">
 
@@ -194,27 +189,21 @@
 
 <script>
     import Province from '../../../shared/Province.vue'
-    import FarmerProfileColumn from '../FarmerProfileColumn.vue'
 
     Vue.component('google-marker', VueGoogleMaps.Marker);
 
-
     export default {
         props: {
-            loadUrl: String,  //load farmer
-            editUrl: String,
-            savePlantUrl: String,
-            plantCreateUrl: String,
-            successUrl: String,
-            farmer: Object,
             showSidePanel: Boolean,
+            roleType: String,
         },
         components: {
-            Province, FarmerProfileColumn
+            Province
         },
         data() {
             return {
-
+                savePlantUrl: this.$routes.api.farmer.plant,
+                successUrl: '',
                 formInputs: {
                     row_spacing: 2.5,
                     plant_spacing: 0.75,
@@ -225,7 +214,7 @@
                     lng: null,
                 },
                 textSearch: "",
-                plants: null,
+                plants: {},
                 formErrors: {},
                 map_default_position: {lat: 19.1399606, lng: 99.907986},
                 marker_toggle: false,
@@ -351,9 +340,11 @@
             }
         },
         created() {
+            this.successUrl = this.roleType == "farmer" ? this.$routes.web.farmer.index : this.$routes.web[this.roleType].plant;
+
         },
-        mounted()
-        {
+        mounted() {
+
         },
     }
 

@@ -29,7 +29,7 @@ class BuyerPlantController extends Controller
         $user->amphure;
         $user->district;
         $user->province;
-        return view("farmer.plant.create")->with('user', $user);;
+        return view("buyer.plant.create")->with('user', $user);;
     }
 
     public function editPlant($plantId)

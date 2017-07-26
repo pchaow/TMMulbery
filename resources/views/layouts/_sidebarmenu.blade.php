@@ -1,10 +1,10 @@
 <ul class="sidebar-menu">
     <!-- Optionally, you can add icons to the links -->
-    <li class="{{ Request::is('home') ? 'active' : '' }}"><a href="/home"><i class="fa fa-tachometer "></i>
-            <span>หน้าหลัก</span></a></li>
-
 
     @if(\Laratrust::hasRole('administrator'))
+        <li class="{{ Request::is('home') ? 'active' : '' }}"><a href="/home"><i class="fa fa-tachometer "></i>
+                <span>หน้าหลัก</span></a></li>
+
         <li class="treeview active">
             <a href="#"><i class="fa fa-link"></i> <span>ผู้ดูแลระบบ</span>
                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -47,6 +47,12 @@
     @endif
 
     @if(\Laratrust::hasRole('farmer'))
+        <li class="{{ Request::is('buyer') ? 'active' : '' }}"><a href="{{url("buyer")}}"><i class="fa fa-tachometer "></i>
+                <span>ผู้ซื้อ</span></a></li>
+        <li class="{{ Request::is('buyer/plant') ? 'active' : '' }}"><a href="{{url("buyer/plant")}}"><i class="fa fa-tachometer "></i>
+                <span>แปลง</span></a></li>
+        <li class="{{ Request::is('buyer/farmer') ? 'active' : '' }}"><a href="{{url("buyer/farmer")}}"><i class="fa fa-tachometer "></i>
+                <span>เกษตรกร</span></a></li>
     @endif
 
     @if(\Laratrust::hasRole('buyer'))

@@ -22,8 +22,6 @@
                         load-url="/api/buyer"
                         buyer-edit-url="/buyers/edit"
                         buyer-load-url="/api/buyer"
-                        buyer-load-order-url="/api/buyer/order/loadOpenPendingOrder"
-                        order-api-url="/api/buyer/order"
                         order-confirm-url="/buyer/order/{id}/confirm"
                 >
                     <div class="col-lg-12">

@@ -246,12 +246,11 @@
             loadUrl: String,
             buyerEditUrl: String,
             buyerLoadUrl: String,
-            buyer: Object,
             //plantOpenSellOrderUrl: String,
-            buyerLoadOrderUrl: String,
-            orderApiUrl: String,
-            showSidePanel: true,
             orderConfirmUrl: String,
+
+            showSidePanel: true,
+            buyer: Object,
         },
         components: {
             BuyerProfileColumn
@@ -269,10 +268,9 @@
             }
         },
         methods: {
-            strFormat: window.strFormat,
             saveBuyOrder: function () {
                 this.order.errors = {};
-                axios.post(this.orderApiUrl, this.order.form)
+                axios.post(this.$routes.api.buyer.order, this.order.form)
                     .then(res => {
                         this.refreshOrder()
                         this.openOrderForm(false)
@@ -294,7 +292,7 @@
 
 
                 if (confirm("ต้องการยกเลิกคำสั่งซื้อนี้")) {
-                    axios.post(this.orderApiUrl + "/" + order.id + "/closed")
+                    axios.post(this.$routes.api.buyer.order + "/" + order.id + "/closed")
                         .then(response => {
 //                            this.refreshOrder();
                             window.location.href = window.location.href;
@@ -307,7 +305,7 @@
             },
             loadBuyHistoryOrders: function () {
 
-                axios.post(this.orderApiUrl + "/loadBuyHistoryOrder")
+                axios.post(this.$routes.api.buyer.order + "/loadBuyHistoryOrder")
                     .then(response => {
                         var data = response.data;
                         for (var i = 0; i < data.data.length; i++) {
@@ -322,10 +320,10 @@
             },
             loadBuyOrders: function () {
 
-                axios.post(this.orderApiUrl + "/loadBuyOpenPendingOrder")
+                axios.post(this.$routes.api.buyer.order + "/loadBuyOpenPendingOrder")
                     .then(response => {
                         this.buyOrders = response.data;
-                        console.log(this.buyOrders)
+                        //console.log(this.buyOrders)
                     })
             },
 
@@ -339,10 +337,9 @@
         },
         created() {
             this.buyerData = this.buyer;
-            this.refreshOrder();
         },
         mounted() {
-            console.log(this.buyer)
+            this.refreshOrder();
         }
     }
 </script>

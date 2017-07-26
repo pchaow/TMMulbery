@@ -8,7 +8,6 @@ require('./bootstrap');
 
 Vue.use(require('vue-moment'));
 
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the body of the page. From here, you may begin adding components to
@@ -60,13 +59,6 @@ Vue.component('order-confirm', require('./components/buyer/OrderConfirm.vue'));
 Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGraph.vue'));
 
 Vue.component('user-profile', require('./components/user/UserProfile.vue'));
-/*
- Farmer
- */
-
-/*
- Buyer
- */
 
 Vue.use(VueGoogleMaps, {
     load: {

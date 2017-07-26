@@ -26,11 +26,13 @@ window.VueGoogleMaps = require('vue2-google-maps')
 window.moment = require('moment');
 window.numeral = require('numeral');
 
-
 Vue.prototype.numeral = window.numeral;
 Vue.prototype.strFormat = window.strFormat;
 
+import routes from "./routes";
 
+console.log(routes);
+Vue.prototype.$routes = routes;
 
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of

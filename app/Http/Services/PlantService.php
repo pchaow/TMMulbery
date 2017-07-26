@@ -71,6 +71,9 @@ class PlantService
 
         $query = self::createSearchQuery($keyword);
 
+        $query->whereHas("user", function ($query) use ($farmerId) {
+            $query->where('id', '=', $farmerId);
+        });
 
         if ($paginate) {
             $result = $query->paginate();

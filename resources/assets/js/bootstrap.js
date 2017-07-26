@@ -30,8 +30,6 @@ Vue.prototype.numeral = window.numeral;
 Vue.prototype.strFormat = window.strFormat;
 
 import routes from "./routes";
-
-console.log(routes);
 Vue.prototype.$routes = routes;
 
 /**

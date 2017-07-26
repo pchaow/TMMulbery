@@ -1,17 +1,6 @@
+<script src="../../../routes.js"></script>
 <template>
-    <div class="row" v-if="farmer">
-        <div class="col-md-12" v-show="showSidePanel">
-
-            <farmer-profile-column v-if="farmerData"
-                                   :farmer="farmerData"
-                                   :edit-url="farmerEditUrl"
-            ></farmer-profile-column>
-        </div>
-
-
-        <slot>
-        </slot>
-
+    <div class="row">
         <div class="col-md-12" v-show="openFormStatus">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -108,7 +97,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="plant in plants.data" v-bind:style="{ 'background-color' : calculateRGBA(plant) }" style="background-color: rgba(150,250,100,1);">
+                                        <tr v-for="plant in plants.data"
+                                            v-bind:style="{ 'background-color' : calculateRGBA(plant) }"
+                                            style="background-color: rgba(150,250,100,1);">
 
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
@@ -241,20 +232,8 @@
 
     export default {
         props: {
-            loadUrl: String,
-            farmerApiUrl: String,
-            farmerEditUrl: String,
-            farmerLoadUrl: String,
-            plantCreateUrl: String,
-            plantEditUrl: String,
-            plantDeleteUrl: String,
-            plantTransactionUrl: String,
-            farmer: Object,
-            plantOpenSellOrderUrl: String,
-            plantLoadOrderUrl: String,
+            roleType: String,
             showSidePanel: true,
-            loadPlantUrl: String,
-
         },
         components: {
             FarmerProfileColumn,
@@ -262,13 +241,20 @@
         },
         data() {
             return {
+                //url refactoring
+                plantCreateUrl: this.$routes.web[this.roleType].plant + '/create',
+                plantEditUrl: this.$routes.web[this.roleType].plant + '/{id}/edit',
+                plantTransactionUrl: this.$routes.web[this.roleType].plant + '/{id}/view',
+                plantDeleteApi: this.$routes.api[this.roleType].plant + '/{id}',
+                plantOpenSellOrderApi: this.$routes.api[this.roleType].plant + '/{id}/open/sell',
+                plantLoadOrderUrl: this.$routes.api.farmer.order,
+                //
                 farmerData: {
                     withbalance: true,
                     withLastHarvest: true,
                 },
                 sellOrders: [],
-                plants: [],
-
+                plants: {},
                 sellOrder: {
                     form: {},
                     errors: {},
@@ -279,16 +265,16 @@
         methods: {
             strFormat: window.strFormat,
 
-            calculateRGBA : function(plant){
+            calculateRGBA: function (plant) {
                 var now = moment();
                 var lastdate = plant.lastHarvestDate
 
-                var c = now.diff(lastdate,"days");
+                var c = now.diff(lastdate, "days");
                 c = Math.abs(c);
 
-                var alpha = c > 90 ? 1 : 1 - (90-c)/90;
+                var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
 
-                return 'rgba(150,250,100,'+ alpha +')'
+                return 'rgba(150,250,100,' + alpha + ')'
             },
 
             openSellOrderForm: function () {
@@ -323,7 +309,7 @@
 
             closeOrder: function (order) {
                 if (confirm("ต้องการลบรายการขายนี้?")) {
-                    axios.post(this.farmerApiUrl + "/order/" + order.id + "/close")
+                    axios.post(this.$routes.api[this.roleType] + "/order/" + order.id + "/close")
                         .then(response => {
                             console.log(response.data);
                             this.loadOrders();
@@ -339,7 +325,7 @@
                     "amount": plant.remainingBalance.toFixed(2)
                 }
 
-                axios.post(this.strFormat(this.plantOpenSellOrderUrl, {id: plant.id}), form)
+                axios.post(this.strFormat(this.plantOpenSellOrderApi, {id: plant.id}), form)
                     .then(response => {
                         var data = response.data;
                         this.reloadPlants();
@@ -349,28 +335,33 @@
                     })
             },
             loadFarmerData: function () {
-                this.$http.get(this.farmerLoadUrl).then(
-                    function (response) {
-                        this.farmerData = response.data
-                    }
-                )
+                axios.get(this.$routes.api[this.roleType].index)
+                    .then(response => {
+                            this.farmerData = response.data
+                        }
+                    )
             },
             deletePlant: function (plant) {
                 if (confirm("ต้องการลบแปลงหม่อนนี้?")) {
-                    this.$http.delete(this.strFormat(this.plantDeleteUrl, {id: plant.id}), {}).then(function (r) {
+                    this.$http.delete(this.strFormat(this.plantDeleteApi, {id: plant.id}), {}).then(function (r) {
                         this.loadFarmerData();
-                        window.location.href = "/home"
+                        if (this.roleType == 'farmer') {
+                            window.location.href = this.$routes.web[this.roleType].index;
+                        } else {
+                            window.location.href = this.$routes.web[this.roleType].plant;
+                        }
+
                     })
                 }
             },
 
             reloadPlants: function () {
-                axios.get(this.loadPlantUrl)
+                axios.get(this.$routes.api[this.roleType].plant)
                     .then(response => {
                         var data = response.data;
-                        var plants = data.data
-                        plants = _.orderBy(plants, ["lastHarvestDate"], ["asc"])
-                        data.data = plants;
+                        var d = data.data
+                        d = _.orderBy(d, ["lastHarvestDate"], ["asc"])
+                        data.data = d;
                         this.plants = data;
                     })
                     .catch(error => {
@@ -381,11 +372,9 @@
 
         },
         created() {
-            this.farmerData = this.farmer;
-
+            this.loadFarmerData();
         },
         mounted() {
-            console.log(this.farmer.plants);
             this.reloadPlants();
             //this.loadOrders();
         }

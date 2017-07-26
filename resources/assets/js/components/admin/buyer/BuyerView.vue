@@ -138,7 +138,7 @@
                                                 <td>{{sell.user ? sell.user.contact_number : '-'}}</td>
 
                                                 <td>
-                                                    <a :href="strFormat(orderConfirmUrl,{id:sell.pivot.id})"
+                                                    <a :href="routes.web[roleType].order +'/'+ sell.pivot.id + '/confirm'"
                                                        class="btn btn-default">ยืนยัน</a>
                                                     <button type="button" @click="closeConfirmOrder(sell.pivot.id)"
                                                             class="btn btn-danger">
@@ -244,13 +244,9 @@
     export default {
         props: {
             loadUrl: String,
-            buyerEditUrl: String,
-            buyerLoadUrl: String,
-            //plantOpenSellOrderUrl: String,
-            orderConfirmUrl: String,
-
             showSidePanel: true,
             buyer: Object,
+            roleType: String,
         },
         components: {
             BuyerProfileColumn
@@ -264,13 +260,16 @@
                 order: {
                     form: {},
                     errors: {},
-                }
+                },
+
+                buyerEditUrl: this.$routes.web[this.roleType] + "edit",
+
             }
         },
         methods: {
             saveBuyOrder: function () {
                 this.order.errors = {};
-                axios.post(this.$routes.api.buyer.order, this.order.form)
+                axios.post(this.$routes.api[this.roleType].order, this.order.form)
                     .then(res => {
                         this.refreshOrder()
                         this.openOrderForm(false)
@@ -292,7 +291,7 @@
 
 
                 if (confirm("ต้องการยกเลิกคำสั่งซื้อนี้")) {
-                    axios.post(this.$routes.api.buyer.order + "/" + order.id + "/closed")
+                    axios.post(this.$routes.api[this.roleType].order + "/" + order.id + "/closed")
                         .then(response => {
 //                            this.refreshOrder();
                             window.location.href = window.location.href;
@@ -305,7 +304,7 @@
             },
             loadBuyHistoryOrders: function () {
 
-                axios.post(this.$routes.api.buyer.order + "/loadBuyHistoryOrder")
+                axios.post(this.$routes.api[this.roleType].order + "/loadBuyHistoryOrder")
                     .then(response => {
                         var data = response.data;
                         for (var i = 0; i < data.data.length; i++) {
@@ -320,7 +319,7 @@
             },
             loadBuyOrders: function () {
 
-                axios.post(this.$routes.api.buyer.order + "/loadBuyOpenPendingOrder")
+                axios.post(this.$routes.api[this.roleType].order + "/loadBuyOpenPendingOrder")
                     .then(response => {
                         this.buyOrders = response.data;
                         //console.log(this.buyOrders)
@@ -328,7 +327,7 @@
             },
 
             loadBuyerData: function () {
-                this.$http.get(this.buyerLoadUrl).then(
+                this.$http.get(this.$routes.api[this.roleType].index).then(
                     function (response) {
                         this.buyerData = response.data
                     }
@@ -337,6 +336,7 @@
         },
         created() {
             this.buyerData = this.buyer;
+
         },
         mounted() {
             this.refreshOrder();

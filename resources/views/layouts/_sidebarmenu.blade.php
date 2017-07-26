@@ -46,7 +46,7 @@
         </li>
     @endif
 
-    @if(\Laratrust::hasRole('farmer'))
+    @if(\Laratrust::hasRole('buyer'))
         <li class="{{ Request::is('buyer') ? 'active' : '' }}"><a href="{{url("buyer")}}"><i class="fa fa-tachometer "></i>
                 <span>ผู้ซื้อ</span></a></li>
         <li class="{{ Request::is('buyer/plant') ? 'active' : '' }}"><a href="{{url("buyer/plant")}}"><i class="fa fa-tachometer "></i>
@@ -55,11 +55,6 @@
                 <span>เกษตรกร</span></a></li>
     @endif
 
-    @if(\Laratrust::hasRole('buyer'))
-       <!-- <li class="{{ Request::is('admin/plants') ? 'active' : '' }}">
-            <a href="/buyer/selllist">
-                <i class="fa fa-search"></i>รายการขาย
-            </a>
-        </li> -->
+    @if(\Laratrust::hasRole('farmer'))
     @endif
 </ul>

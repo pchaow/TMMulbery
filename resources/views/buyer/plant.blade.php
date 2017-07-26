@@ -15,18 +15,10 @@
     <section class="content">
         <div class="row">
             <div class="col-lg-12">
-                <buyer-view
-                        :buyer="{{json_encode($buyer)}}"
-                        :show-side-panel="true"
-                        buyer-load-url="/api/buyer"
+                <farmer-view
                         role-type="buyer"
-                >
-                    <div class="col-lg-12">
-                        <sell-order-list role-type="buyer">
-                        </sell-order-list>
-                    </div>
-
-                </buyer-view>
+                        :show-side-panel="false">
+                </farmer-view>
             </div>
         </div>
     </section>

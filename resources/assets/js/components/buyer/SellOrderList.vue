@@ -28,7 +28,8 @@
                                     <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
                                     <td>{{order.plant ? order.plant.name : "-"}}</td>
                                     <td>{{order.plant ? order.plant.user.name : order.user.name}}</td>
-                                    <td>{{order.plant ? order.plant.user.contact_number : order.user.contact_number}}</td>
+                                    <td>{{order.plant ? order.plant.user.contact_number : order.user.contact_number}}
+                                    </td>
                                     <td>{{order.status}}</td>
                                     <td>{{numeral(order.amount).format("0,0.00")}}</td>
                                     <td>
@@ -65,12 +66,13 @@
 
     export default {
         props: {
-            orderApi: String,
+            roleType: String,
         },
         components: {},
         data() {
             return {
                 sellOrder: null,
+                orderApi: this.$routes.api[this.roleType].order,
             }
         },
         methods: {
@@ -90,7 +92,7 @@
                         order_id: order.id
                     }
 
-                    if (order.plant){
+                    if (order.plant) {
                         axios.post(this.orderApi + "/openWithConfirm", form)
                             .then(response => {
                                 window.location.href = "/home"
@@ -98,7 +100,7 @@
                             .catch(error => {
 
                             })
-                    }else {
+                    } else {
                         axios.post(this.orderApi + "/openWithConfirm", form)
                             .then(response => {
                                 window.location.href = "/home"

@@ -21,11 +21,6 @@
                         buyer-load-url="/api/buyer"
                         role-type="buyer"
                 >
-                    <div class="col-lg-12">
-                        <sell-order-list role-type="buyer">
-                        </sell-order-list>
-                    </div>
-
                 </buyer-view>
             </div>
         </div>

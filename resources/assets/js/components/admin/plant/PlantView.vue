@@ -58,7 +58,7 @@
 
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">save</button>
-                                    <button class="btn btn-default" @click="changeState(0)">ยกเลิก</button>
+                                    <button class="btn btn-default" type="button" @click="changeState(0)">ยกเลิก</button>
                                 </div>
                             </form>
                         </div>
@@ -179,12 +179,23 @@
 
     export default {
         props: {
-            plantTransactionApiUrl: String,
-            plantApiUrl: String,
-            plantPage: String,
+            roleType: String,
+            plantId: String,
         },
         data() {
+            var plantPage;
+            if (this.roleType == 'farmer') {
+                plantPage = this.$routes.web[this.roleType].index;
+            } else {
+                plantPage = this.$routes.web[this.roleType].plant;
+            }
+
+            var plantTransactionApiUrl = this.$routes.api[this.roleType].plant + '/' + this.plantId + '/transaction';
+
             return {
+                plantPage: plantPage,
+                plantTransactionApiUrl: plantTransactionApiUrl,
+                plantApiUrl: this.$routes.api[this.roleType].plant + "/" + this.plantId,
                 states: ["none", "new", "harvest"],
                 currentState: "none",
 
@@ -344,7 +355,7 @@
             },
 
         },
-        created(){
+        created() {
         },
         mounted() {
             var self = this;

@@ -60,13 +60,8 @@
                                     <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
                                     <td>{{farmer.province ? farmer.province.name : '-'}}</td>
                                     <td>
-
-                                        <a v-bind:href="strFormat(viewUrl,{id : farmer.id})"
-                                           class="btn btn-success">รายละเอียด</a>
                                         <a v-bind:href="strFormat(editUrl,{id : farmer.id})"
                                            class="btn btn-primary">แก้ไข</a>
-
-
 
                                         <button type="button" class="btn btn-danger" v-on:click="deleteFarmer(farmer)">
                                             ลบ
@@ -103,14 +98,25 @@
 <script>
     export default {
         props: {
-            editUrl: String,
-            viewUrl: String,
-            loadFarmerUrl: String,
-            deleteUrl: String,
-            createFarmerUrl: String
+            roleType: String,
         },
         data() {
+
+            var editUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/edit";
+            var viewUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/view";
+            var deleteUrl = this.$routes.api[this.roleType].farmer.index + "/{id}";
+            var loadFarmerUrl = this.$routes.api[this.roleType].farmer  ;
+
+            var createFarmerUrl = this.$routes.web[this.roleType].farmer.create;
+
+            console.log(loadFarmerUrl);
             return {
+                editUrl: editUrl,
+                viewUrl: viewUrl,
+                deleteUrl: deleteUrl,
+                loadFarmerUrl: loadFarmerUrl,
+                createFarmerUrl: createFarmerUrl,
+
                 farmers: [],
                 farmersPage: {},
                 form: {

@@ -60,7 +60,9 @@ class FarmerRequest extends FormRequest
                     //'district_id' => 'required',
                 ];
                 if ($this->request->has('email')) {
-                    $validator['email'] = "required|email|max:255|unique:users,email,$user";
+                    if($this->request->get('email')!=null){
+                        $validator['email'] = "required|email|max:255|unique:users,email,$user";
+                    }
                 }
                 if ($this->request->has('username')) {
                     $validator['username'] = "required|max:255|unique:users,username,$user";

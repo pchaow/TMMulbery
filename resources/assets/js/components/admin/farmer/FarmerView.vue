@@ -1,4 +1,3 @@
-<script src="../../../routes.js"></script>
 <template>
     <div class="row">
         <div class="col-md-12" v-show="openFormStatus">
@@ -103,11 +102,18 @@
 
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
-                                            <td>{{numeral(plant.remainingBalance).format("0,0.00")}}</td>
-                                            <td>
-                                                {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from",
-                                                "now")}}
+                                            <td>{{plant.remainingBalance ?
+                                                numeral(plant.remainingBalance).format("0,0.00") : '-'}}
                                             </td>
+                                            <td>
+                                                <template v-if="plant.lastHarvestDate">
+                                                    {{plant.lastHarvestDate | moment("from","now")}}
+                                                </template>
+                                                <template v-else>
+                                                    -
+                                                </template>
+                                            </td>
+
                                             <td>{{plant.district ? plant.district.name : '-'}}</td>
                                             <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
                                             <td>{{plant.province ? plant.province.name : '-'}}</td>

@@ -57,7 +57,7 @@ class BuyerPlantController extends Controller
 
         $user = $plant->user()->with(['amphure', 'district', 'province'])->first();
 
-        return view('farmer.plant.view')
+        return view('buyer.plant.view')
             ->with('farmer', $user)
             ->with('plant', $plant);
 

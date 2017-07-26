@@ -76,6 +76,10 @@ Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
 
     Route::resource('/', 'API\\Buyer\\BuyerResourceController');
     Route::resource('/plant', "API\\Farmer\\FarmerPlantResourceController");
+    Route::resource('/plant.transaction', "API\\Admin\\PlantTransactionController");
+    Route::post("/plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
+    Route::post("/plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
+
 
     Route::resource('/order', 'API\\Buyer\\OrderResourceController');
     Route::resource('/confirm-order', 'API\\Buyer\\ConfirmOrderResourceController');

@@ -17,6 +17,7 @@ class ProvinceAmphureController extends Controller
 
     public function index($provinceId)
     {
+        if ($provinceId == 0) return [];
         /* @var Province $province */
         $province = Province::find($provinceId);
         $amphurs = $province->amphures()->get();
@@ -35,6 +36,7 @@ class ProvinceAmphureController extends Controller
 
     public function show($provinceId, $id)
     {
+        if ($provinceId == 0) return [];
         $province = Province::find($provinceId);
         $amphur = $province->amphurs()->where('AMPHUR_ID', '=', $id)->first();
         return $amphur;

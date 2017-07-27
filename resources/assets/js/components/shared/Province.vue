@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    export default{
+    export default {
         props: {
             province: {
                 type: [Number, String],
@@ -57,7 +57,7 @@
                 }
             }
         },
-        data(){
+        data() {
             return {
                 provinceId: 0,
                 provinces: [],
@@ -124,17 +124,29 @@
                 }
             },
         },
+        created: function () {
+            this.provinceId = this.province
+            this.amphureId = this.amphure
+            this.districtId = this.district
+
+        },
         mounted: function () {
+
+            var bkProvinceId = this.provinceId;
+            var bkAmphureId = this.amphureId;
+            var bkDistrictId = this.districtId
+
             this.loadProvince().then(function (r) {
-                if (this.province) {
-                    this.provinceId = this.province
+                this.provinceId = bkProvinceId
+
+                if (this.provinceId) {
                     this.loadAmphure(this.provinceId).then(function (r) {
-                        if (this.amphure) {
-                            this.amphureId = this.amphure
+                        this.amphureId = bkAmphureId
+
+                        if (this.amphureId) {
+                            console.log("load amphure",this.amphureId);
                             this.loadDistrict(this.provinceId, this.amphureId).then(function (r) {
-                                if (this.district) {
-                                    this.districtId = this.district
-                                }
+                                this.districtId = bkDistrictId
                             })
                         }
                     })

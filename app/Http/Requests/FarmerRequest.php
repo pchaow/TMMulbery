@@ -65,7 +65,9 @@ class FarmerRequest extends FormRequest
                     }
                 }
                 if ($this->request->has('username')) {
-                    $validator['username'] = "required|max:255|unique:users,username,$user";
+                    if($this->request->get('username')!=null){
+                        $validator['username'] = "required|max:255|unique:users,username,$user";
+                    }
                 }
                 if ($this->request->has('password')) {
                     $validator['password'] = 'required|min:6|confirmed';

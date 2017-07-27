@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" v-if="isLoaded">
         <div class="col-md-3" v-show="showSidePanel">
 
             <slot></slot>
@@ -102,13 +102,14 @@
                         <strong><i class="fa fa-map-signs margin-r-5"></i> ข้อมูลพิกัดแปลงหม่อน</strong>
 
                         <province v-bind:province="formInputs.province_id"
-                                  v-on:province_update="provinceUpdate(arguments[0],arguments[1])"
+                                  v-on:province_update="formInputs.province_id = arguments[0]"
                                   v-bind:amphure="formInputs.amphure_id"
-                                  v-on:amphure_update="amphureUpdate(arguments[0],arguments[1])"
+                                  v-on:amphure_update="formInputs.amphure_id = arguments[0]"
                                   v-bind:district="formInputs.district_id"
-                                  v-on:district_update="districtUpdate(arguments[0],arguments[1])"
+                                  v-on:district_update="formInputs.district_id = arguments[0]"
                                   v-bind:formErrors="formErrors"
                         ></province>
+
                         <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
 
                         <div class="">
@@ -208,6 +209,7 @@
         data() {
             return {
                 successUrl: null,
+                isLoaded: false,
                 formInputs: {
                     row_spacing: 2.5,
                     plant_spacing: 0.75,
@@ -343,19 +345,25 @@
             calculateAddress: function () {
                 var text = this.formInputs.district_name + " " + this.formInputs.amphure_name + " " + this.formInputs.province_name;
                 this.textSearch = text;
+            },
+
+            loadPlant: function () {
+                this.isLoaded = false;
+                axios.get(this.$routes.api[this.roleType].plant + "/" + this.plant_id)
+                    .then(res => {
+                        this.formInputs = res.data;
+                        console.log('loadPlant', this.formInputs);
+                        this.isLoaded = true;
+                    })
             }
         },
         created() {
+            this.loadPlant();
             this.successUrl = this.roleType == "farmer" ? this.$routes.web.farmer.index : this.$routes.web[this.roleType].plant;
 
         },
         mounted() {
-            this.formInputs = this.plant
-            if (this.formInputs.map.length > 0) {
-                this.map_default_position = this.formInputs.map[0].position;
-            }
 
-            console.log(this.formInputs)
         },
     }
 

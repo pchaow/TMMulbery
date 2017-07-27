@@ -135,6 +135,11 @@ class PlantService
         $plant = Plant::find($plantId);
         if ($farmer && $plant) {
             $plant->fill($form);
+
+            if($form["province_id"] == 0) $plant->province_id = null;
+            if($form["amphure_id"] == 0) $plant->amphure_id = null;
+            if($form["district_id"] == 0) $plant->district_id = null;
+
             $plant->save();
             return $plant;
         } else {

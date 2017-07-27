@@ -59,6 +59,7 @@
         },
         data() {
             return {
+                backup: {},
                 provinceId: 0,
                 provinces: [],
 
@@ -67,13 +68,15 @@
 
                 districtId: 0,
                 districts: [],
+
+                isLocked: false,
             }
         },
         methods: {
+
             loadProvince: function () {
                 return this.$http.get('/api/thailand/province')
                     .then((response) => {
-                        //console.log(response);
                         this.provinces = response.data
                     }, (response) => {
 
@@ -83,7 +86,6 @@
 
                 return this.$http.get('/api/thailand/province/' + id + '/amphure')
                     .then((response) => {
-                        //console.log(response);
                         this.amphures = response.data
                     }, (response) => {
 
@@ -92,66 +94,75 @@
             loadDistrict: function (pid, aid) {
                 return this.$http.get(window.strFormat("/api/thailand/province/{0}/amphure/{1}/district", pid, aid))
                     .then((response) => {
-                        //console.log(response);
                         this.districts = response.data
                     }, (response) => {
 
                     });
             },
             updateProvince: function (value, elem) {
-                this.provinceId = value
-                this.loadAmphure(this.provinceId)
-                this.amphureId = 0
-                this.districtId = 0
-                this.$emit('province_update', this.provinceId, elem.options[elem.selectedIndex].text)
-                this.$emit('amphure_update', this.amphureId, "")
-                this.$emit('district_update', this.districtId, "")
+                console.log("update province", this.isLocked)
+                if (!this.isLocked) {
+                    this.isLocked = true;
+                    this.$emit("province_update", value)
+                    this.provinceId = value;
+
+                    this.$emit("amphure_update", 0)
+                    this.$emit("district_update", 0)
+
+                    this.loadAmphure(this.provinceId)
+                    this.amphureId = 0;
+                    this.districtId = 0;
+                    this.districts = [];
+
+                    this.isLocked = false;
+                }
+
             },
             updateAmphure: function (value, elem) {
-
-                if (value) {
+                console.log("update amphure", this.isLocked)
+                if (!this.isLocked) {
+                    this.isLocked = true;
+                    this.$emit("amphure_update", value)
                     this.amphureId = value
-                    this.districtId = 0
+                    this.$emit("district_update", 0)
                     this.loadDistrict(this.provinceId, this.amphureId)
-                    this.$emit('amphure_update', this.amphureId, elem.options[elem.selectedIndex].text)
-                    this.$emit('district_update', this.districtId, "")
+                    this.districtId = 0;
+                    this.isLocked = false;
                 }
             },
             updateDistrict: function (value, elem) {
-                if (value) {
-                    this.districtId = value
-                    this.$emit('district_update', this.districtId, elem.options[elem.selectedIndex].text)
+
+                if (!this.isLocked) {
+                    console.log('district not lock', value)
+                    this.$emit("district_update", value)
+                    this.districtId = value;
                 }
             },
+
         },
         created: function () {
-            this.provinceId = this.province
-            this.amphureId = this.amphure
-            this.districtId = this.district
+            this.isLocked = true;
+            this.loadProvince().then(() => {
+                this.provinceId = this.province ? this.province : 0;
 
+                this.loadAmphure(this.province)
+                    .then(() => {
+                        this.amphureId = this.amphure ? this.amphure : 0;
+
+                        this.loadDistrict(this.province, this.amphure)
+                            .then(() => {
+                                console.log(this.district);
+                                this.districtId = this.district ? this.district : 0;
+                                console.log(this.districtId);
+                                this.isLocked = false;
+
+                            })
+                    })
+            })
         },
         mounted: function () {
 
-            var bkProvinceId = this.provinceId;
-            var bkAmphureId = this.amphureId;
-            var bkDistrictId = this.districtId
 
-            this.loadProvince().then(function (r) {
-                this.provinceId = bkProvinceId
-
-                if (this.provinceId) {
-                    this.loadAmphure(this.provinceId).then(function (r) {
-                        this.amphureId = bkAmphureId
-
-                        if (this.amphureId) {
-                            console.log("load amphure",this.amphureId);
-                            this.loadDistrict(this.provinceId, this.amphureId).then(function (r) {
-                                this.districtId = bkDistrictId
-                            })
-                        }
-                    })
-                }
-            });
         }
     }
 </script>

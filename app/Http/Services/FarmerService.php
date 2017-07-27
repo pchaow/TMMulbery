@@ -42,8 +42,6 @@ class FarmerService
         } else {
             return $query->get();
         }
-
-
     }
 
     public static function getFarmerById($id, $with = ['plants', 'plants.province', 'plants.amphure', 'plants.district'])
@@ -80,6 +78,9 @@ class FarmerService
 
     public static function storeFarmer($formData)
     {
+        $creator = Auth::user();
+
+
         $form = $formData;
         $user = new User();
         $user->fill($form);
@@ -90,6 +91,8 @@ class FarmerService
         if ($user->province_id == 0) $user->province_id = null;
         if ($user->amphure_id == 0) $user->amphure_id = null;
         if ($user->district_id == 0) $user->district_id = null;
+
+        if ($creator) $user->parent()->associate($creator);
 
         $user->save();
 
@@ -139,6 +142,36 @@ class FarmerService
         $order->save();
 
         return $order;
+    }
+
+    public static function getFarmersListByParentId($parentId, $keyword, $paginate)
+    {
+        $query = User::query();
+        $query->with(["province", 'district', 'amphure']);
+
+        if ($keyword != null) {
+            $query->where(function ($q) use ($keyword) {
+                $q->orWhere('email', 'LIKE', "%$keyword%");
+                $q->orWhere('username', 'LIKE', "%$keyword%");
+                $q->orWhere('name', 'LIKE', "%$keyword%");
+            });
+
+        }
+
+        $query->whereHas('parent', function ($q) use ($parentId) {
+            $q->where('id', $parentId);
+        });
+
+        $query->whereHas('roles', function ($q) {
+            $q->where('name', 'farmer');
+        });
+
+        if ($paginate) {
+            return $query->paginate();
+        } else {
+            return $query->get();
+        }
+
     }
 
 

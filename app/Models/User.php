@@ -58,13 +58,23 @@ class User extends Authenticatable
 
     public function sellOrders()
     {
-        return $this->hasMany(Order::class)->where('type','=','sell');
+        return $this->hasMany(Order::class)->where('type', '=', 'sell');
 
     }
 
     public function buyOrders()
     {
-        return $this->hasMany(Order::class)->where('type','=','buy');
+        return $this->hasMany(Order::class)->where('type', '=', 'buy');
     }
 
+
+    public function children()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
 }

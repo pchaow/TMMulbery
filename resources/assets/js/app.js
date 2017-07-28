@@ -49,6 +49,7 @@ Vue.component('buyer-index', require('./components/admin/buyer/BuyerIndex.vue'))
 Vue.component('buyer-create', require('./components/admin/buyer/BuyerCreate.vue'));
 Vue.component('buyer-view', require('./components/admin/buyer/BuyerView.vue'));
 Vue.component('buyer-edit', require('./components/admin/buyer/BuyerEdit.vue'));
+Vue.component('buyer-plan', require('./components/buyer/BuyerPlan.vue'));
 
 Vue.component('sell-order-list', require('./components/buyer/SellOrderList.vue'));
 Vue.component('buy-order-list', require('./components/farmer/BuyOrderList.vue'));
@@ -59,6 +60,7 @@ Vue.component('order-confirm', require('./components/buyer/OrderConfirm.vue'));
 Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGraph.vue'));
 
 Vue.component('user-profile', require('./components/user/UserProfile.vue'));
+
 
 Vue.use(VueGoogleMaps, {
     load: {

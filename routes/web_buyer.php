@@ -15,3 +15,5 @@ Route::get("/plant/{id}/view", "Buyer\\BuyerPlantController@viewPlant");
 
 Route::get('/order/{buyId}/confirm', "Buyer\\BuyerResourceController@confirm");
 Route::get('/selllist', "Buyer\\BuyerResourceController@sellList");
+
+Route::get('/plan',"Buyer\\BuyerController@plan");

@@ -18,4 +18,14 @@ class BuyerController extends Controller
             ->with('buyer', $buyer);
     }
 
+    public function plan(){
+
+        $buyerId = Auth::user()->id;
+        $buyer = BuyerService
+            ::getBuyerByIdWithFullData($buyerId);
+
+        return view("buyer.plan")
+            ->with('buyer',$buyer);
+    }
+
 }

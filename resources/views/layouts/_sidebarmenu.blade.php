@@ -48,10 +48,12 @@
 
     @if(\Laratrust::hasRole('buyer'))
         <li class="{{ Request::is('buyer') ? 'active' : '' }}"><a href="{{url("buyer")}}"><i class="fa fa-tachometer "></i>
-                <span>ผู้ซื้อ</span></a></li>
-        <li class="{{ Request::is('buyer/plant') ? 'active' : '' }}"><a href="{{url("buyer/plant")}}"><i class="fa fa-tachometer "></i>
+                <span>สถานะคำสั่งซื้อ</span></a></li>
+        <li class="{{ Request::is('buyer/plan') ? 'active' : '' }}"><a href="{{url("buyer/plan")}}"><i class="fa fa-tachometer "></i>
+                <span>แผนการปลูก</span></a></li>
+        <li class="{{ Request::is('buyer/plant') || Request::is('buyer/plant/*') ? 'active' : '' }}"><a href="{{url("buyer/plant")}}"><i class="fa fa-tachometer "></i>
                 <span>แปลง</span></a></li>
-        <li class="{{ Request::is('buyer/farmer') ? 'active' : '' }}"><a href="{{url("buyer/farmer")}}"><i class="fa fa-tachometer "></i>
+        <li class="{{ Request::is('buyer/farmer') || Request::is('buyer/farmer/*') ? 'active' : '' }}"><a href="{{url("buyer/farmer")}}"><i class="fa fa-tachometer "></i>
                 <span>เกษตรกร</span></a></li>
     @endif
 

@@ -6,7 +6,7 @@
             จัดการผู้รับซื้อ
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/buyers"><i class="fa fa-user-circle-o"></i> จัดการผู้รับซื้อ</a></li>
+            <li><a href=""><i class="fa fa-user-circle-o"></i> จัดการผู้รับซื้อ</a></li>
             <li>รายการผู้รับซื้อ</li>
         </ol>
     </section>

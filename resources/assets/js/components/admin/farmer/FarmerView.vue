@@ -70,7 +70,7 @@
                                         ประกาศขาย
                                     </button>
 
-                                    <a v-bind:href="plantCreateUrl" class="btn btn-default">
+                                    <a v-bind:href="plantCreateUrl" class="btn btn-success">
                                         เพิ่มแปลงหม่อน
                                     </a>
 

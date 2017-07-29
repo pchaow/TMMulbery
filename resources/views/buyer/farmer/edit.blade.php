@@ -6,9 +6,9 @@
             Farmer Management
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/farmers"><i class="fa fa-user"></i> Farmer Management</a></li>
-            <li><a href="/admin/farmers/{{$userId}}/edit"><i class="fa fa-plus"></i> Edit Farmer</a></li>
-            <li>Farmers ID : {{$userId}}</li>
+            <li><a href="/buyer/farmer"><i class="fa fa-user"></i>จัดการเกษตรกร</a></li>
+            <li><a href=""><i class="fa fa-plus"></i> แก้ไขข้อมูลเกษตรกร</a></li>
+            <li>รหัสเกษตรกร : {{$userId}}</li>
         </ol>
     </section>
 

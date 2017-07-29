@@ -30,7 +30,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="btn-group btn-group-sm pull-right">
-                        <a v-bind:href="createFarmerUrl" class="btn btn-default">ลงทะเบียนเกษตรกร</a>
+                        <a v-bind:href="createFarmerUrl" class="btn btn-success">ลงทะเบียนเกษตรกร</a>
                     </div>
                     รายการเกษตรกร
                 </div>

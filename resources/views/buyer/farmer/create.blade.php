@@ -6,8 +6,8 @@
             ลงทะเบียนเกษตรกร
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/farmers"><i class="fa fa-user"></i> จัดการเกษตรกร</a></li>
-            <li><a href="/admin/farmers/create"><i class="fa fa-plus"></i> ลงทะเบียนเกษตรกร</a></li>
+            <li><a href="/buyer/farmer"><i class="fa fa-user"></i> จัดการเกษตรกร</a></li>
+            <li><a href=""><i class="fa fa-plus"></i> ลงทะเบียนเกษตรกร</a></li>
         </ol>
     </section>
 

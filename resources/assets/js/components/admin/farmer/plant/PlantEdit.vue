@@ -221,7 +221,7 @@
                 },
                 textSearch: "",
                 formErrors: {},
-                map_default_position: {lat: 19.1399606, lng: 99.907986},
+                map_default_position: {lat: this.plant.map[0].position.lat, lng: this.plant.map[0].position.lng},
                 marker_toggle: false,
                 mapObject: {},
             }

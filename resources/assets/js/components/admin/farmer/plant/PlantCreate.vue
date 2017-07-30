@@ -216,7 +216,7 @@
                 textSearch: "",
                 plants: {},
                 formErrors: {},
-                map_default_position: {lat: 19.1399606, lng: 99.907986},
+                map_default_position: {lat: 18.776118, lng: 99.057052},
                 marker_toggle: false,
                 mapObject: {},
             }

@@ -6,8 +6,7 @@
             จัดการแปลงหม่อน
         </h1>
         <ol class="breadcrumb">
-            <li><a href=""><i class="fa fa-user"></i>จัดการเกษตรกร</a></li>
-            <li><a href=""><i class="fa fa-search"></i>ดูข้อมูลเกษตรกร</a></li>
+            <li><a href="/buyer/plant"><i class="fa fa-tree"></i>จัดการเเปลงหม่อน</a></li>
             <li>รหัสเกษตรกร : {{$user->id}}</li>
             <li><a href="/"><i class="fa fa-pencil"></i> แก้ไขแปลงหม่อน ID : {{$plant->id}}</a></li>
         </ol>

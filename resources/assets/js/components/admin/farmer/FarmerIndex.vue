@@ -45,6 +45,7 @@
                                     <th>ชื่อ-ชื่อสกุล</th>
                                     <th>ชื่อบัญชีผู้ใช้</th>
                                     <th>อีเมล</th>
+                                    <th>เบอร์โทรติดต่อ</th>
                                     <th>ตำบล</th>
                                     <th>อำเภอ</th>
                                     <th>จังหวัด</th>
@@ -56,6 +57,7 @@
                                     <td>{{farmer.name}}</td>
                                     <td>{{farmer.username}}</td>
                                     <td>{{farmer.email}}</td>
+                                    <td>{{farmer.contact_number ? farmer.contact_number : '-'}}</td>
                                     <td>{{farmer.district ? farmer.district.name : '-'}}</td>
                                     <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
                                     <td>{{farmer.province ? farmer.province.name : '-'}}</td>

@@ -3,11 +3,11 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Dashboard
+            วางแผนเก็บเกี่ยว
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Here</li>
+            <li class="active">วางแผนเก็บเกี่ยว</li>
         </ol>
     </section>
 

@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    การวางแผน
+                    วางแผนเก็บเกี่ยว
                 </div>
 
                 <div class="panel-body">

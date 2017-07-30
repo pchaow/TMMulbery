@@ -87,7 +87,7 @@
 
                                             <th>ชื่อแปลง</th>
                                             <th>พื้นที่</th>
-                                            <th>คงเหลือเก็บเกี่ยว (กก.)</th>
+                                            <th>คงเหลือเก็บเกี่ยว</th>
                                             <th>เก็บเกี่ยวล่าสุด</th>
                                             <th>ตำบล</th>
                                             <th>อำเภอ</th>
@@ -140,7 +140,7 @@
                                         <tr>
                                             <td colspan="5">
                                                 <div>
-                                                    จำนวนทั้งหมด {{farmerData.plants ? farmerData.plants.length : 0}}
+                                                    จำนวนทั้งหมด {{plants.data ? plants.data.length : 0}}
                                                     รายการ
                                                 </div>
                                                 <ul class="pagination">

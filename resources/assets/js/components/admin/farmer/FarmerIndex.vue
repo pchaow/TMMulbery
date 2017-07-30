@@ -30,7 +30,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="btn-group btn-group-sm pull-right">
-                        <a v-bind:href="createFarmerUrl" class="btn btn-success">ลงทะเบียนเกษตรกร</a>
+                        <a v-bind:href="createFarmerUrl" class="btn btn-warning">ลงทะเบียนเกษตรกร</a>
                     </div>
                     รายการเกษตรกร
                 </div>
@@ -151,7 +151,7 @@
                 })
             },
             deleteFarmer: function (farmer) {
-                if (confirm("ต้องการลบเกษตรกร?")) {
+                if (confirm("ต้องการลบเกษตรกรรายนี้?")) {
                     axios.delete(this.strFormat(this.deleteUrl, {id: farmer.id})).then(response => {
                         console.log(response)
                         this.load()

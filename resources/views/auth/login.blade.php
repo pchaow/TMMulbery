@@ -16,7 +16,7 @@
 
                     <input id="email" placeholder="บัญชีผู้ใช้ หรือ อีเมล" type="text" class="form-control" name="email"
                            value="{{ old('email') }}" required autofocus>
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <span class="fa fa-user form-control-feedback"></span>
 
                     @if ($errors->has('email'))
                         <span class="help-block">
@@ -40,7 +40,7 @@
 
                 <div class="row">
                     <!-- /.col -->
-                    <div class="col-xs-12">
+                    <div class="col-md-12">
                         <button type="submit" class="btn btn-success btn-block btn-flat">เข้าสู่ระบบ</button>
                     </div>
                     <!-- /.col -->

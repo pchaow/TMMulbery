@@ -4,7 +4,7 @@
 
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    Edit User
+                    แก้ไขข้อมูลเกษตรกร
                 </div>
 
                 <div class="panel-body">
@@ -103,8 +103,8 @@
 
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <a v-bind:href="successUrl" class="btn btn-default">ยกเลิก</a>
                             </div>
                         </form>
                     </div>

@@ -31,7 +31,7 @@
                         <div class="col-lg-12">
                             <form @submit.prevent="saveInitialForm()">
                                 <div class="form-group">
-                                    <label>Date:</label>
+                                    <label>วันที่ปลูก:</label>
 
                                     <div class="input-group date">
                                         <div class="input-group-addon">
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">save</button>
+                                    <button class="btn btn-primary" type="submit">บันทึก</button>
                                     <button class="btn btn-default" type="button" @click="changeState(0)">ยกเลิก</button>
                                 </div>
                             </form>
@@ -74,14 +74,12 @@
 
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-12">
-                            เก็บเกี่ยว
-                        </div>
+
                         <div class="col-lg-12">
                             <form @submit.prevent="saveHarvestForm()">
                                 <div class="form-group"
                                      v-bind:class="{ 'has-error': harvestErrorForm['transaction_date'] }">
-                                    <label>Date:</label>
+                                    <label>วันที่เก็บเกี่ยว:</label>
 
                                     <div class="input-group date">
                                         <div class="input-group-addon">
@@ -97,7 +95,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>น้ำหนัก (เก็บเกี่ยว):</label>
+                                    <label>น้ำหนักเก็บเกี่ยว (กิโลกรัม):</label>
 
                                     <div class="input-group">
                                         <div class="input-group-addon">
@@ -110,7 +108,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">save</button>
+                                    <button class="btn btn-primary" type="submit">บันทึก</button>
                                     <button class="btn btn-default" type="button" @click="changeState(0)">ยกเลิก
                                     </button>
                                 </div>
@@ -130,11 +128,11 @@
                         <table class="table table-condensed">
                             <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                <th>Balance (กิโลกรัม)</th>
-                                <th>Status</th>
+                                <th>วันที่</th>
+                                <th>ประเภท</th>
+                                <th>จำนวน </th>
+                                <th>น้ำหนัก (กิโลกรัม)</th>
+                                <th>สถานะ</th>
                                 <th>การจัดการ</th>
                             </tr>
                             </thead>

@@ -6,7 +6,7 @@
             จัดการแปลงหม่อน
         </h1>
         <ol class="breadcrumb">
-            <li><a href=""><i class="fa fa-dashboard"></i> จัดการแปลงหม่อน</a></li>
+            <li><a href=""><i class="fa fa-tree"></i> จัดการแปลงหม่อน</a></li>
             <li class="active">รายการแปลงหม่อน</li>
         </ol>
     </section>

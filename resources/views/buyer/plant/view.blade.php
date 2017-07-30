@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            แปลงหม่อน {{$plant->name}} - {{$farmer->name}}
+            <a href="/buyer/plant" class="fa fa-arrow-left"> แปลงหม่อน {{$plant->name}} - {{$farmer->name}} </a>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/buyer/plant"><i class="fa fa-user"></i> จัดการแปลงหม่อน</a></li>

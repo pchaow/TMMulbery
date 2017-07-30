@@ -87,7 +87,7 @@
 
                                             <th>ชื่อแปลง</th>
                                             <th>พื้นที่</th>
-                                            <th>คงเหลือเก็บเกี่ยว</th>
+                                            <th>คงเหลือเก็บเกี่ยว (กก.)</th>
                                             <th>เก็บเกี่ยวล่าสุด</th>
                                             <th>ตำบล</th>
                                             <th>อำเภอ</th>
@@ -103,7 +103,7 @@
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                             <td>{{plant.remainingBalance ?
-                                                numeral(plant.remainingBalance).format("0,0.00") : '-'}}
+                                                numeral(plant.remainingBalance).format("0,0.00") : '-'}} กก.
                                             </td>
                                             <td>
                                                 <template v-if="plant.lastHarvestDate">

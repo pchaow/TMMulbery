@@ -77,7 +77,7 @@
                                 </div>
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['username'] }">
-                                    <label class="control-label">บัญชีผู้ใช้ : </label>
+                                    <label class="control-label">ชื่อบัญชีผู้ใช้ : </label>
                                     <input readonly type="text" class="form-control" placeholder="Username"
                                            v-model="formInputs.username"/>
                                     <span v-if="formErrors['username']"

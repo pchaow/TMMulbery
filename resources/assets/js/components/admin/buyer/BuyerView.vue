@@ -86,9 +86,9 @@
 
                                 <div class="pull-right">
 
-                                    <button @click="openOrderForm(true)" class="btn btn-primary">
+                                    <!--<button @click="openOrderForm(true)" class="btn btn-primary">
                                         ประกาศซื้อ
-                                    </button>
+                                    </button> -->
 
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                             <th>Order ID</th>
                                             <th>วันนัดซื้อขาย</th>
                                             <th>สถานะ</th>
-                                            <th>จำนวน(ไร่)</th>
+                                            <th>พื้นที่(ไร่)</th>
                                             <th>ปริมาณ(กก.)</th>
                                             <th>ชื่อแปลง</th>
                                             <th>ชื่อเกษตรกร</th>
@@ -186,7 +186,7 @@
                                             <th>วันที่</th>
                                             <th>ID</th>
                                             <th>สถานะ</th>
-                                            <th>จำนวน(ไร่)</th>
+                                            <th>พื้นที่(ไร่)</th>
                                             <th>ปริมาณ(กก.)</th>
                                             <th>ชื่อแปลง</th>
                                             <th>ชื่อเกษตรกร</th>

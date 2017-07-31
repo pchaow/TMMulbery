@@ -10,7 +10,7 @@
                     <div class="col-md-6">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                คำสั่งซื้อ ที่ {{buyOrder.id}} - {{buyOrder.duedate}}
+                                รหัสคำสั่งซื้อที่ {{buyOrder.id}} - วันที่นัดซื้อขาย {{buyOrder.duedate}}
                             </div>
 
                             <div class="panel-body">
@@ -39,7 +39,7 @@
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                คำสั่งขาย ที่ {{sellOrder.id}} - {{sellOrder.duedate}}
+                                รหัสคำสั่งขายที่ {{sellOrder.id}} - วันที่นัดซื้อขาย {{sellOrder.duedate}}
                             </div>
 
                             <div class="panel-body">
@@ -86,7 +86,7 @@
 
                                         <div class="form-group"
                                              v-bind:class="{ 'has-error': formErrors['remark.unit'] }">
-                                            <label class="control-label">จำนวน (กก.) : </label>
+                                            <label class="control-label">ปริมาณ (กก.) : </label>
                                             <input type="number" class="form-control" placeholder="จำนวน (กก.)"
                                                    v-model="formInputs.remark.unit"/>
                                             <span v-if="formErrors['remark.unit']"
@@ -100,8 +100,8 @@
 
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                            <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
+                                            <button type="submit" class="btn btn-primary">ยืนยัน</button>
+                                            <a v-bind:href="successUrl" class="btn btn-default">ยกเลิก</a>
                                         </div>
                                     </form>
                                 </div>

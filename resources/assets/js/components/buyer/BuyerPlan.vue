@@ -57,12 +57,14 @@
                                 <td>{{plant.user.name}}</td>
                                 <td>{{plant.user.contact_number}}</td>
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
-                                <td>{{plant.planningBalance}}</td>
+                                <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
                                 <td>{{plant.planningHarvestDate}}</td>
-                                <td>ตำบล {{plant.district ? plant.district.name : '-'}} อำเภอ {{plant.amphure ? plant.amphure.name : '-'}} จังหวัด {{plant.province ? plant.province.name : '-'}} </td>
+                                <td>ตำบล {{plant.district ? plant.district.name : '-'}} อำเภอ {{plant.amphure ?
+                                    plant.amphure.name : '-'}} จังหวัด {{plant.province ? plant.province.name : '-'}}
+                                </td>
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn btn-default">
+                                    <button type="button" class="btn btn-default" @click="buyPlant(plant)">
                                         ซื้อ
                                     </button>
                                 </td>
@@ -72,6 +74,43 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="panel panel-info" v-if="state == 'buy'">
+                <div class="panel-heading">
+                    ซื้อ {{buyForm.plant.name}}
+                </div>
+
+                <div class="panel-body">
+                    <form role="form" @submit.prevent="createBuyOrder">
+                        <div class="form-group" v-bind:class="{ 'has-error': buyFormError['date'] }">
+                            <label>วันที่ซื้อ</label>
+                            <input type="date" v-model="buyForm.date" class="form-control">
+                            <span v-if="buyFormError['date']"
+                                  class="help-block">{{ buyFormError['date'] }}</span>
+
+                        </div>
+
+                        <div class="form-group" v-bind:class="{ 'has-error': buyFormError['amount_rai'] }">
+                            <label>ปริมาณ (ไร่)</label>
+                            <input type="number" v-model="buyForm.amount_rai" class="form-control">
+                            <span v-if="buyFormError['amount_rai']"
+                                  class="help-block">{{ buyFormError['amount_rai'] }}</span>
+                        </div>
+
+                        <div class="form-group" v-bind:class="{ 'has-error': buyFormError['amount_kg'] }">
+                            <label>ปริมาณ คาดการณ์ (กก.)</label>
+                            <input type="number" v-model="buyForm.amount_kg" class="form-control">
+                            <span v-if="buyFormError['amount_kg']"
+                                  class="help-block">{{ buyFormError['amount_kg'] }}</span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">สั่งซื้อ</button>
+                        <button type="button" @click="cancelBuy" class="btn btn-default">ยกเลิก</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -96,11 +135,38 @@
                 },
                 planningData: null,
 
+                state: 'default',
+                buyForm: {},
+                buyFormError: {},
+
             }
         },
         methods: {
-            planSubmit: function () {
+            createBuyOrder: function () {
+                if (confirm("ยืนยันคำสั่งซื้อ")) {
+                    axios.post(this.$routes.api.buyer.openBuySellOrder, this.buyForm)
+                        .then(r => {
+                            console.log(r.data);
+                            window.location.href = this.$routes.web.buyer.index;
+                        })
+                }
+
+            },
+            resetState: function () {
                 this.planningData = null;
+                this.state = 'default';
+                this.buyForm = {}
+                this.buyFormError = {}
+            },
+            cancelBuy: function () {
+                this.state = 'default';
+                this.buyForm = {}
+                this.buyFormError = {}
+            },
+            planSubmit: function () {
+
+                this.resetState();
+
                 this.planningFormError = {
                     date: null,
                     rai: null,
@@ -112,7 +178,23 @@
                     .catch(err => {
                         this.planningFormError = err.response.data;
                     })
+            },
+            buyPlant: function (plant) {
+                this.state = "buy"
+                this.buyForm.date = this.planningForm.date
+                this.buyForm.amount_rai = this.planningForm.rai
+                var expectedValue = 0
+                if (plant.area_sqm / 1600 <= this.buyForm.rai) {
+                    expectedValue = Math.floor(plant.planningBalance);
+                    this.buyForm.amount_rai = Math.floor(plant.area_sqm / 1600);
+                } else {
+                    expectedValue = Math.floor(plant.planningBalance / plant.area_sqm * 1600 * this.planningForm.rai);
+                }
+                this.buyForm.amount_kg = expectedValue;
+
+                this.buyForm.plant = plant;
             }
+
         },
         created() {
         },

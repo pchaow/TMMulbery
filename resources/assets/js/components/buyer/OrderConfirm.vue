@@ -3,14 +3,14 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    รายการขายจากเกษตรกร
+                    ตรวจสอบคำสั่งซื้อขาย
                 </div>
 
                 <div class="panel-body" v-if="buyConfirmOrder">
                     <div class="col-md-6">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                คำสั่งซื้อ
+                                คำสั่งซื้อ ที่ {{buyOrder.id}} - {{buyOrder.duedate}}
                             </div>
 
                             <div class="panel-body">
@@ -25,7 +25,10 @@
                                         <label>แปลง</label> {{buyOrder.plant ? buyOrder.plant.name : '-'}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{numeral(buyOrder.amount).format("0,0.00")}} กก.
+                                        <label>จำนวน</label> {{numeral(buyOrder.amount_rai).format("0,0.00")}} ไร่
+                                    </p>
+                                    <p>
+                                        <label>ปริมาณ</label> {{numeral(buyOrder.amount_kg).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 
@@ -36,7 +39,7 @@
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                คำสั่งขาย
+                                คำสั่งขาย ที่ {{sellOrder.id}} - {{sellOrder.duedate}}
                             </div>
 
                             <div class="panel-body">
@@ -51,7 +54,10 @@
                                         <label>แปลง</label> {{sellOrder.plant ? sellOrder.plant.name : "-"}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{numeral(sellOrder.amount).format("0,0.00")}} กก.
+                                        <label>จำนวน</label> {{numeral(sellOrder.amount_rai).format("0,0.00")}} ไร่
+                                    </p>
+                                    <p>
+                                        <label>ปริมาณ</label> {{numeral(sellOrder.amount_kg).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 

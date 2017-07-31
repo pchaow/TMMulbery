@@ -99,9 +99,11 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <th>วันที่</th>
+                                            <th>Order ID</th>
+                                            <th>วันนัดซื้อขาย</th>
                                             <th>สถานะ</th>
-                                            <th>จำนวน(กก.)</th>
+                                            <th>จำนวน(ไร่)</th>
+                                            <th>ปริมาณ(กก.)</th>
                                             <th>ชื่อแปลง</th>
                                             <th>ชื่อเกษตรกร</th>
                                             <th>เบอร์โทรติดต่อ</th>
@@ -110,11 +112,12 @@
                                         </thead>
                                         <tbody>
                                         <template v-for="order in buyOrders.data">
-                                            <tr>
+                                            <!--tr>
 
-                                                <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
+                                                <td>{{order.duedate | moment("DD-MMM-YYYY")}}</td>
                                                 <td>{{order.status}}</td>
-                                                <td>{{numeral(order.amount).format("0,0.00")}}</td>
+                                                <td>{{numeral(order.amount_rai).format("0,0.00")}}</td>
+                                                <td>{{numeral(order.amount_kg).format("0,0.00")}}</td>
                                                 <td>{{order.plant ? order.plant.name : "-"}}</td>
                                                 <td></td>
                                                 <td></td>
@@ -124,23 +127,26 @@
                                                         ยกเลิก
                                                     </button>
                                                 </td>
-                                            </tr>
+                                            </--tr-->
 
                                             <tr v-for="sell in order.sell_paired_order">
-
-                                                <td class="text-right">
-                                                    Sell ID : {{sell.id}}
+                                                <td>
+                                                    {{order.id}}-{{sell.id}}
+                                                </td>
+                                                <td>
+                                                    {{order.duedate | moment("DD-MMM-YYYY")}}
                                                 </td>
                                                 <td>{{sell.status}}</td>
-                                                <td>{{numeral(sell.amount).format("0,0.00")}}</td>
+                                                <td>{{numeral(sell.amount_rai).format("0,0.00")}}</td>
+                                                <td>{{numeral(sell.amount_kg).format("0,0.00")}}</td>
                                                 <td>{{sell.plant ? sell.plant.name : '-'}}</td>
                                                 <td>{{sell.user ? sell.user.name : '-'}}</td>
                                                 <td>{{sell.user ? sell.user.contact_number : '-'}}</td>
 
                                                 <td>
-                                                    <a :href="routes.web[roleType].order +'/'+ sell.pivot.id + '/confirm'"
+                                                    <a :href="$routes.web[roleType].order +'/'+ sell.pivot.id + '/confirm'"
                                                        class="btn btn-default">ยืนยัน</a>
-                                                    <button type="button" @click="closeConfirmOrder(sell.pivot.id)"
+                                                    <button type="button" @click="closeOrder(order)"
                                                             class="btn btn-danger">
                                                         ยกเลิก
                                                     </button>
@@ -180,7 +186,8 @@
                                             <th>วันที่</th>
                                             <th>ID</th>
                                             <th>สถานะ</th>
-                                            <th>จำนวน(กก.)</th>
+                                            <th>จำนวน(ไร่)</th>
+                                            <th>ปริมาณ(กก.)</th>
                                             <th>ชื่อแปลง</th>
                                             <th>ชื่อเกษตรกร</th>
                                             <th>เบอร์โทรติดต่อ</th>

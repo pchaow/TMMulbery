@@ -147,6 +147,7 @@ class BuyerService
         foreach ($plants as $plant) {
             $plant->planningBalance = $plant->planningBalance($date);
             $plant->planningHarvestDate = $plant->planningHarvestDate($date);
+            $plant->amount = $plant->amount();
         }
 
         $currentUser = Auth::user();
@@ -162,6 +163,7 @@ class BuyerService
         foreach ($plants2 as $plant) {
             $plant->planningBalance = $plant->planningBalance($date);
             $plant->planningHarvestDate = $plant->planningHarvestDate($date);
+            $plant->amount = $plant->amount();
         }
 
         $p1 = Collection::make($plants);

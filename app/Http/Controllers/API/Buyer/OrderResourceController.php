@@ -61,7 +61,7 @@ class OrderResourceController extends Controller
 
     public function openBuyOrderWithConfirm(Request $request)
     {
-        return OrderService::openBuyOrderWithConfirm(Auth::user()->id, $request->all());
+        return OrderService::openBuySellOrderWithConfirm(Auth::user()->id, $request->all());
     }
 
     public function closedBuyOrder($id)

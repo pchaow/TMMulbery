@@ -97,10 +97,10 @@ class Plant extends Model
 
         if ($lastHarvest) {
             $lastDate = Carbon::parse($lastHarvest->transaction_date);
-            return $date->diffInDays($lastDate);
+            return $lastDate->diffInDays($date,false);
         } else if ($firstInit = $this->transactions()->where('status_id', '=', $initStatus->id)->orderBy('transaction_date', 'desc')->first()) {
             $lastDate = Carbon::parse($firstInit->transaction_date);
-            return $date->diffInDays($lastDate);
+            return $lastDate->diffInDays($date,false);
 
         } else {
             return null;
@@ -128,14 +128,38 @@ class Plant extends Model
 
     private function calculateRemainingBalance($lastDate, $currentDate, $amount, $balance)
     {
-        $currentBalance = ($currentDate->diffInDays($lastDate) * $amount * 0.008) + $balance;
+        $lastDate->hour = 0;
+        $lastDate->minute = 0;
+        $lastDate->second = 0;
+
+        $currentDate->hour = 0;
+        $currentDate->minute = 0;
+        $currentDate->second = 0;
+
+        $currentBalance = ($currentDate->diffInDays($lastDate) * $amount * 0.0095) + $balance;
         return $currentBalance;
+    }
+
+    public function amount(){
+        $initStatus = PlantTransactionStatus::where('name', '=', 'N')->first();
+        $lastTransaction = $this->transactions()->orderBy('transaction_date', 'desc')->first();
+        $firstTransaction = $this->transactions()
+            ->where('status_id', '=', $initStatus->id)
+            ->orderBy('transaction_date', 'desc')->first();
+        if ($firstTransaction != null) {
+            $amount = $firstTransaction->amount ;
+            return $amount;
+        } else {
+            return 0;
+        }
     }
 
     public function hasTransaction()
     {
         return $this->transactions()->first() != null ? true : false;
     }
+
+
 
     public function orders()
     {

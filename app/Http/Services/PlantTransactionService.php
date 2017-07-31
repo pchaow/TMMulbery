@@ -65,7 +65,7 @@ class PlantTransactionService
 
         /** @var Plant $plant */
         $plant = Plant::find($plantId);
-        $lsatTransaction = $plant->transactions()->orderBy('created_at', 'desc')->first();
+        $lastTransaction = $plant->transactions()->orderBy('created_at', 'desc')->first();
         $form = $formData;
 
         $status = PlantTransactionStatus::where('name', '=', 'U')->first();
@@ -74,9 +74,11 @@ class PlantTransactionService
 
         $transactionDateTime = Carbon::parse($form['transaction_date']);
         $transaction->transaction_date = $transactionDateTime;
-        $transaction->amount = round($plant->remainingBalance(), 2) - round($lsatTransaction->balance, 2);
+        $transaction->amount = round($plant->planningBalance($transactionDateTime), 2) - round($lastTransaction->balance, 2);
+
         if ($transaction->amount == 0) return null;
-        $transaction->balance = round($plant->remainingBalance(), 2);
+        $transaction->balance =  round($lastTransaction->balance, 2) + $transaction->amount;
+
         $transaction->type = "+";
         $transaction->status()->associate($status);
 
@@ -102,7 +104,7 @@ class PlantTransactionService
             $transaction->transaction_date = $transactionDateTime;
             $roundAmount = round($form  ['amount'], 2);
             $transaction->amount = $roundAmount;
-            $transaction->balance = round(round($plant->remainingBalance(), 2) - $roundAmount, 2);
+            $transaction->balance = round(round($plant->planningBalance($transactionDateTime), 2) - $roundAmount, 2);
             $transaction->type = '-';
             $transaction->status()->associate($status);
             $plant->transactions()->save($transaction);

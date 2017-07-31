@@ -268,7 +268,7 @@
                     var lastBalance = this.transactions[this.transactions.length - 1].balance;
                     var lastTransaction = moment(this.transactions[this.transactions.length - 1].transaction_date)
                     var daydiff = lastTransaction.diff(transaction_date, 'days') * -1
-                    var nextbalance = lastBalance + (0.008 * daydiff * amount);
+                    var nextbalance = lastBalance + (0.0095 * daydiff * amount);
                     this.harvestForm.amount = nextbalance.toFixed(2)
                     console.log(nextbalance, daydiff, lastTransaction, transaction_date)
                 } else {
@@ -311,7 +311,7 @@
                     var lastBalance = this.transactions[this.transactions.length - 1].balance;
                     var lastTransaction = moment(this.transactions[this.transactions.length - 1].transaction_date)
                     var daydiff = Math.abs(lastTransaction.diff(transaction_date, 'days'))
-                    var nextbalance = lastBalance + (0.008 * daydiff * amount);
+                    var nextbalance = lastBalance + (0.0095 * daydiff * amount);
                     this.harvestForm.amount = nextbalance.toFixed(2)
 //                    console.log(nextbalance, daydiff, lastTransaction, transaction_date)
                 } else {

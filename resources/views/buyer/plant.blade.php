@@ -21,6 +21,9 @@
                 </farmer-view>
             </div>
         </div>
+
+        <buyer-children-plants role-type="buyer">
+        </buyer-children-plants>
     </section>
     <!-- /.content -->
 @endsection

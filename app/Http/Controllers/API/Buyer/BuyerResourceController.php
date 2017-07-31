@@ -47,4 +47,9 @@ class BuyerResourceController extends Controller
     {
         return BuyerService::planning(Auth::user()->id, $request->all());
     }
+
+    public function childrenPlant()
+    {
+        return BuyerService::getChildrenPlant(Auth::user()->id);
+    }
 }

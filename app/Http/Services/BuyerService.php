@@ -114,19 +114,21 @@ class BuyerService
         return $user;
     }
 
-    public static function getChildrenPlant($userId)
-    {
-        $currentUser = User::find($userId);
+    public static function getChildrenPlant($userId){
+        $currentUser = Auth::user();
         $users = $currentUser->children()->get();
         $user_ids = array_pluck($users, 'id');
 
         $query2 = Plant::query();
         $query2->with(['user']);
         $query2->whereIn('user_id', $user_ids);
-
         $plants2 = $query2->get();
 
 
+        foreach ($plants2 as $data) {
+            $data->remainingBalance = $data->remainingBalance();
+            $data->lastHarvestDate = $data->lastHarvestDate();
+        }
         return $plants2;
     }
 
@@ -147,7 +149,7 @@ class BuyerService
             $plant->planningHarvestDate = $plant->planningHarvestDate($date);
         }
 
-        $currentUser = User::find($userId);
+        $currentUser = Auth::user();
         $users = $currentUser->children()->get();
         $user_ids = array_pluck($users, 'id');
 

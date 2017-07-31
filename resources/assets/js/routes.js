@@ -23,6 +23,7 @@ export default {
             confirmOrder: api_buyer_index + 'confirm-order',
             plant: api_buyer_index + "/plant",
             farmer: api_buyer_index + "/farmer",
+            farmerPlant: api_buyer_index + "/farmer/plant",
             plan: api_buyer_index + "/plan",
 
         },

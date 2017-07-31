@@ -50,6 +50,7 @@ Vue.component('buyer-create', require('./components/admin/buyer/BuyerCreate.vue'
 Vue.component('buyer-view', require('./components/admin/buyer/BuyerView.vue'));
 Vue.component('buyer-edit', require('./components/admin/buyer/BuyerEdit.vue'));
 Vue.component('buyer-plan', require('./components/buyer/BuyerPlan.vue'));
+Vue.component('buyer-children-plants', require('./components/buyer/ChildrenPlants.vue'));
 
 Vue.component('sell-order-list', require('./components/buyer/SellOrderList.vue'));
 Vue.component('buy-order-list', require('./components/farmer/BuyOrderList.vue'));

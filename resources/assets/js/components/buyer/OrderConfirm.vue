@@ -25,7 +25,7 @@
                                         <label>แปลง</label> {{buyOrder.plant ? buyOrder.plant.name : '-'}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{numeral(buyOrder.amount_rai).format("0,0.00")}} ไร่
+                                        <label>พื้นที่จำนวน</label> {{numeral(buyOrder.amount_rai).format("0,0.00")}} ไร่
                                     </p>
                                     <p>
                                         <label>ปริมาณ</label> {{numeral(buyOrder.amount_kg).format("0,0.00")}} กก.
@@ -54,7 +54,7 @@
                                         <label>แปลง</label> {{sellOrder.plant ? sellOrder.plant.name : "-"}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{numeral(sellOrder.amount_rai).format("0,0.00")}} ไร่
+                                        <label>พื้นที่จำนวน</label> {{numeral(sellOrder.amount_rai).format("0,0.00")}} ไร่
                                     </p>
                                     <p>
                                         <label>ปริมาณ</label> {{numeral(sellOrder.amount_kg).format("0,0.00")}} กก.
@@ -77,7 +77,7 @@
                                     <form class="form-horizontal" v-on:submit.prevent="save">
                                         <div class="form-group"
                                              v-bind:class="{ 'has-error': formErrors['remark.unitprice'] }">
-                                            <label class="control-label">ราคาต่อหน่วย : </label>
+                                            <label class="control-label">ราคาต่อหน่วย(บาท/กก.) : </label>
                                             <input type="number" class="form-control" placeholder="ราคาต่อหน่วย"
                                                    v-model="formInputs.remark.unitprice"/>
                                             <span v-if="formErrors['remark.unitprice']"

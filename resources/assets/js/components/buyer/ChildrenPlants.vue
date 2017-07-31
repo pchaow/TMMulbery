@@ -13,15 +13,15 @@
 
                             <thead>
                             <tr>
-                                <th>name</th>
-                                <th>farmer name</th>
-                                <th>tel</th>
-                                <th>area</th>
-                                <th>remaining balance</th>
-                                <th>last plan harvest date</th>
-                                <th>address</th>
-                                <th>length</th>
-                                <th>action</th>
+                                <th>ชื่อแปลง</th>
+                                <th>ชื่อเกษตรกร</th>
+                                <th>เบอร์โทรติดต่อ</th>
+                                <th>พื้นที่จำนวน</th>
+                                <th>คงเหลือเก็บเกี่ยว (กก.)</th>
+                                <th>ระยะเวลาจากวันเก็บเกี่ยวล่าสุด (วัน)</th>
+                                <th>ที่อยู่</th>
+                                <th>ระยะทาง</th>
+                                <th>จัดการ</th>
                             </tr>
                             </thead>
                             <tbody>

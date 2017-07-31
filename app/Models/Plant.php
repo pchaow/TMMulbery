@@ -65,6 +65,48 @@ class Plant extends Model
         }
     }
 
+    public function planningBalance($date)
+    {
+        $initStatus = PlantTransactionStatus::where('name', '=', 'N')->first();
+        $lastTransaction = $this->transactions()->orderBy('transaction_date', 'desc')->first();
+        $firstTransaction = $this->transactions()
+            ->where('status_id', '=', $initStatus->id)
+            ->orderBy('transaction_date', 'desc')->first();
+        if ($firstTransaction != null) {
+            $amount = $firstTransaction->amount;
+            $lastDate = $lastTransaction->transaction_date;
+            $lastBalance = $lastTransaction->balance;
+            $lastDate = Carbon::parse(Carbon::parse($lastDate));
+            $now = Carbon::now();
+
+            return $this->calculateRemainingBalance($lastDate, $date, $amount, $lastBalance);
+        } else {
+            return 0;
+        }
+    }
+
+    public function planningHarvestDate(Carbon $date)
+    {
+        $harvestStatus = PlantTransactionStatus::where('name', '=', 'H')->first();
+        $initStatus = PlantTransactionStatus::where('name', '=', 'N')->first();
+
+        $lastHarvest = $this->transactions()
+            ->where('status_id', '=', $harvestStatus->id)
+            ->orderBy('transaction_date', 'desc')->first();
+
+
+        if ($lastHarvest) {
+            $lastDate = Carbon::parse($lastHarvest->transaction_date);
+            return $date->diffInDays($lastDate);
+        } else if ($firstInit = $this->transactions()->where('status_id', '=', $initStatus->id)->orderBy('transaction_date', 'desc')->first()) {
+            $lastDate = Carbon::parse($firstInit->transaction_date);
+            return $date->diffInDays($lastDate);
+
+        } else {
+            return null;
+        }
+    }
+
     public function lastHarvestDate()
     {
         $harvestStatus = PlantTransactionStatus::where('name', '=', 'H')->first();

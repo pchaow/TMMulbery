@@ -207,6 +207,13 @@
             Province
         },
         data() {
+
+            var default_position = {lat: 18.779465, lng: 99.046323}
+
+            if (this.plant.map[0]) {
+                default_position = {lat: this.plant.map[0].position.lat, lng: this.plant.map[0].position.lng}
+            }
+
             return {
                 successUrl: null,
                 isLoaded: false,
@@ -221,7 +228,7 @@
                 },
                 textSearch: "",
                 formErrors: {},
-                map_default_position: {lat: this.plant.map[0].position.lat, lng: this.plant.map[0].position.lng},
+                map_default_position: default_position,
                 marker_toggle: false,
                 mapObject: {},
             }

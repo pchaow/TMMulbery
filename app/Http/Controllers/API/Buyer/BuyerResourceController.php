@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Buyer;
 
+use App\Http\Requests\PlanningRequest;
 use App\Http\Services\UserService;
 use App\Models\User;
 use App\Http\Services\BuyerService;
@@ -19,6 +20,7 @@ class BuyerResourceController extends Controller
         return $buyer;
 
     }
+
     public function edit($id)
     {
         $user = User::find($id);
@@ -38,5 +40,11 @@ class BuyerResourceController extends Controller
         return UserService::updateProfile($id, $request->all());
 
 
+    }
+
+
+    public function plan(PlanningRequest $request)
+    {
+        return BuyerService::planning(Auth::user()->id, $request->all());
     }
 }

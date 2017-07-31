@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\Plant;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -66,7 +68,7 @@ class BuyerService
 
     public static function getBuyerByIdWithFullData($id)
     {
-        $buyer = BuyerService::getBuyerById($id, ['buyOrders','buyOrders.plant','buyOrders.plant.user']);
+        $buyer = BuyerService::getBuyerById($id, ['buyOrders', 'buyOrders.plant', 'buyOrders.plant.user']);
         return $buyer;
 
     }
@@ -112,6 +114,59 @@ class BuyerService
         return $user;
     }
 
+    public static function getChildrenPlant($userId)
+    {
+        $currentUser = User::find($userId);
+        $users = $currentUser->children()->get();
+        $user_ids = array_pluck($users, 'id');
 
+        $query2 = Plant::query();
+        $query2->with(['user']);
+        $query2->whereIn('user_id', $user_ids);
+
+        $plants2 = $query2->get();
+
+
+        return $plants2;
+    }
+
+
+    public static function planning($userId, $formData)
+    {
+
+        $dateStr = $formData['date'];
+        $date = Carbon::parse($dateStr);
+
+        $query = Plant::query();
+        $query->with(['user']);
+        $query->where('user_id', $userId);
+        $plants = $query->get();
+
+        foreach ($plants as $plant) {
+            $plant->planningBalance = $plant->planningBalance($date);
+            $plant->planningHarvestDate = $plant->planningHarvestDate($date);
+        }
+
+        $currentUser = User::find($userId);
+        $users = $currentUser->children()->get();
+        $user_ids = array_pluck($users, 'id');
+
+        $query2 = Plant::query();
+        $query2->with(['user']);
+        $query2->whereIn('user_id', $user_ids);
+
+        $plants2 = $query2->get();
+
+        foreach ($plants2 as $plant) {
+            $plant->planningBalance = $plant->planningBalance($date);
+            $plant->planningHarvestDate = $plant->planningHarvestDate($date);
+        }
+
+        $p1 = Collection::make($plants);
+        $p2 = Collection::make($plants2);
+
+
+        return $p1->merge($p2);
+    }
 
 }

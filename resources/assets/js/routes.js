@@ -23,6 +23,7 @@ export default {
             openBuySellOrder: api_buyer_index + "/order/openWithConfirm",
             confirmOrder: api_buyer_index + 'confirm-order',
             plant: api_buyer_index + "/plant",
+            plant_rating: api_buyer_index + "/plant/rating",
             farmer: api_buyer_index + "/farmer",
             farmerPlant: api_buyer_index + "/farmer/plant",
             plan: api_buyer_index + "/plan",
@@ -45,7 +46,7 @@ export default {
             index: buyer_index,
             order: buyer_index + "/order",
             plant: buyer_index + "/plant",
-            plan : buyer_index + "/plan",
+            plan: buyer_index + "/plan",
             farmer: {
                 index: buyer_index + "/farmer",
                 create: buyer_index + "/farmer/create",

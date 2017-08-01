@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Buyer;
 
 use App\Http\Requests\PlanningRequest;
+use App\Http\Services\PlantService;
 use App\Http\Services\UserService;
 use App\Models\User;
 use App\Http\Services\BuyerService;
@@ -51,5 +52,13 @@ class BuyerResourceController extends Controller
     public function childrenPlant()
     {
         return BuyerService::getChildrenPlant(Auth::user()->id);
+    }
+
+    public function updateRating(Request $request)
+    {
+        $plantId = $request->get('plant_id');
+        $rating = $request->get('rating');
+
+        return PlantService::updateRating($plantId, $rating);
     }
 }

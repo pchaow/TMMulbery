@@ -62,7 +62,6 @@ Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGr
 
 Vue.component('user-profile', require('./components/user/UserProfile.vue'));
 
-
 Vue.use(VueGoogleMaps, {
     load: {
         key: 'AIzaSyAQhqp6RRe4zDyB2I1IeAiVsyQsVRJbHCA',

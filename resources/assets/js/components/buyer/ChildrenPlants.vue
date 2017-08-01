@@ -21,7 +21,7 @@
                                 <th>ระยะเวลาจากวันเก็บเกี่ยวล่าสุด (วัน)</th>
                                 <th>ที่อยู่</th>
                                 <th>ระยะทาง</th>
-                                <th>จัดการ</th>
+                                <th>คุณภาพ</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -35,7 +35,7 @@
                                     <template v-if="plant.lastHarvestDate">
                                         {{plant.lastHarvestDate | moment("from",'now') }}
                                     </template>
-                                    <template v-else >
+                                    <template v-else>
                                         -
                                     </template>
                                 </td>
@@ -44,9 +44,9 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn btn-default">
-                                        ซื้อ
-                                    </button>
+                                    <star-rating v-model="plant.rating" :star-size="20"
+                                                 @rating-selected="setRating($event,plant)"
+                                                 :show-rating="false"></star-rating>
                                 </td>
                             </tr>
                             </tbody>
@@ -60,12 +60,16 @@
 
 <script>
 
+    import StarRating from 'vue-star-rating'
+
 
     export default {
         props: {
             roleType: String,
         },
-        components: {},
+        components: {
+            StarRating,
+        },
         data() {
             return {
                 plants: [],
@@ -73,6 +77,16 @@
             }
         },
         methods: {
+            setRating: function ($event, plant) {
+                axios.post(this.$routes.api.buyer.plant_rating, {
+                    'plant_id': plant.id,
+                    'rating': $event,
+                })
+                    .then(r => {
+                        plant.rating = $event;
+                        console.log(r);
+                    })
+            },
             loadPlants: function () {
                 axios.post(this.$routes.api.buyer.farmerPlant)
                     .then(res => {

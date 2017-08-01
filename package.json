@@ -23,6 +23,7 @@
     "moment": "^2.18.1",
     "numeral": "^2.0.6",
     "vue-moment": "^2.0.2",
+    "vue-star-rating": "^1.4.0",
     "vue2-google-maps": "^0.7.2",
     "vue2-highcharts": "^1.0.3"
   }

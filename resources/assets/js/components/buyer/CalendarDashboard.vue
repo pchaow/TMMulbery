@@ -46,6 +46,18 @@
 
                 $('#calendar').fullCalendar({
                     height: 650,
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'listWeek,month'
+                    },
+
+                    // customize the button names,
+                    // otherwise they'd all just say "list"
+                    views: {
+                        listWeek: {buttonText: 'list week'}
+                    },
+
                     events: function (start, end, timezone, callback) {
                         axios.post(self.$routes.api.buyer.event, {
                             start: start.unix(),
@@ -56,9 +68,14 @@
 
                                 for (var i = 0; i < self.fcEvents.length; i++) {
                                     if (self.fcEvents[i].type == "order") {
+                                        if (self.fcEvents[i].status == "Pending") {
+                                            self.fcEvents[i].backgroundColor = "#d61b1b"
 
+                                        } else if (self.fcEvents[i].status == "Success") {
+
+                                        }
                                     } else {
-                                        self.fcEvents[i].backgroundColor = "green"
+                                        self.fcEvents[i].backgroundColor = "#92c340"
                                     }
                                     self.fcEvents[i].allDay = true;
                                 }

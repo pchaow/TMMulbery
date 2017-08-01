@@ -188,7 +188,7 @@ class BuyerService
             $query->whereBetween('duedate', [$startDate, $endDate]);
 
         });
-        $query->where("status", ConfirmOrder::$STATUS_PENDING);
+        $query->where("status",'!=', ConfirmOrder::$STATUS_CLOSE);
         $confirmOrders = $query->get();
 
         //plant transaction
@@ -216,9 +216,10 @@ class BuyerService
             $e = [];
             $buyOrder = $order->buyOrder()->first();
             $e['type'] = "order";
-            $e['title'] = "[ID : $buyOrder->id] : Confirm Buy Order ";
+            $e['title'] = "[$order->status] "."ID : $buyOrder->id : Confirm Buy Order ";
             $e['start'] = $buyOrder->duedate;
             $e['end'] = $buyOrder->duedate;
+            $e['status'] = $order->status;
             $events[] = $e;
         }
 

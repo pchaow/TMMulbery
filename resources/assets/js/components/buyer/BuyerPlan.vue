@@ -45,8 +45,8 @@
                                 <th>เบอร์โทรติดต่อ</th>
                                 <th>พื้นที่</th>
                                 <th>คงเหลือเก็บเกี่ยว</th>
-                                <th>ระยะเวลาจากวันเก็บเกี่ยวล่าสุด(วัน)</th>
-                                <th>ที่อยู่</th>
+                                <th>#วันจากการเก็บเกี่ยวล่าสุด</th>
+                                <th>จำนวนคำสั่งซื้อที่ยังไม่ได้ปิด</th>
                                 <th>ระยะทาง</th>
                                 <th>จัดการ</th>
                             </tr>
@@ -59,9 +59,7 @@
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                 <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
                                 <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }" >{{plant.planningHarvestDate}}</td>
-                                <td>ตำบล {{plant.district ? plant.district.name : '-'}} อำเภอ {{plant.amphure ?
-                                    plant.amphure.name : '-'}} จังหวัด {{plant.province ? plant.province.name : '-'}}
-                                </td>
+                                <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
                                         {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กิโลเมตร
@@ -84,9 +82,7 @@
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                 <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
                                 <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">{{plant.planningHarvestDate}}</td>
-                                <td>ตำบล {{plant.district ? plant.district.name : '-'}} อำเภอ {{plant.amphure ?
-                                    plant.amphure.name : '-'}} จังหวัด {{plant.province ? plant.province.name : '-'}}
-                                </td>
+                                <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
                                         {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กิโลเมตร
@@ -204,7 +200,7 @@
                 this.buyFormError = {}
             },
             orderPlant: function (plants) {
-                return _.orderBy(plants, ["planningHarvestDate"], ["desc"])
+                return _.orderBy(plants, ["planningHarvestDate","distanceFromPiankusol"], ["desc","asc"])
             },
             planSubmit: function () {
 

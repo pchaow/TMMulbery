@@ -239,4 +239,39 @@ class BuyerService
 
     }
 
+    public static function getPlantLists($userId)
+    {
+
+       // $dateStr = $formData['date'];
+       // $date = Carbon::parse($dateStr);
+
+        $query = Plant::query();
+        $query->with(['user']);
+        $query->where('user_id', $userId);
+        $plants = $query->get();
+
+        $currentUser = Auth::user();
+        $users = $currentUser->children()->get();
+        $user_ids = array_pluck($users, 'id');
+
+        $query2 = Plant::query();
+        $query2->with(['user']);
+        $query2->whereIn('user_id', $user_ids);
+
+        $plants2 = $query2->get();
+
+       // foreach ($plants2 as $plant) {
+      //      $plant->planningBalance = $plant->planningBalance($date);
+      //      $plant->planningHarvestDate = $plant->planningHarvestDate($date);
+     //       $plant->amount = $plant->amount();
+     //       $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
+     //   }
+
+        $p1 = Collection::make($plants);
+        $p2 = Collection::make($plants2);
+
+        return [$p1, $p2];
+    }
+
+
 }

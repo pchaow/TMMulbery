@@ -28,4 +28,11 @@ class BuyerController extends Controller
             ->with('buyer',$buyer);
     }
 
+    public function plantMap(){
+
+        return view("buyer.plantmap");
+    }
+
+
+
 }

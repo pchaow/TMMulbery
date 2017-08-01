@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            จัดการแปลงหม่อน
+            จัดการแปลงหม่อน  <a href="/buyer/plantmap" class="btn btn-primary">แผนที่</a>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>

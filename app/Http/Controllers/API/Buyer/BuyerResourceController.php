@@ -50,6 +50,12 @@ class BuyerResourceController extends Controller
         return BuyerService::planning(Auth::user()->id, $request->all());
     }
 
+    public function plantMap()
+    {
+        return BuyerService::getPlantLists(Auth::user()->id);
+    }
+
+
     public function childrenPlant()
     {
         return BuyerService::getChildrenPlant(Auth::user()->id);

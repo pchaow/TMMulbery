@@ -28,6 +28,7 @@ export default {
             event: api_buyer_index + "/event",
             farmerPlant: api_buyer_index + "/farmer/plant",
             plan: api_buyer_index + "/plan",
+            plantMap: api_buyer_index + "/plantmap",
 
         },
     },

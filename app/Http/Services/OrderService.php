@@ -172,7 +172,7 @@ class OrderService
                     if ($confirmOrder) $confirmOrder->status = ConfirmOrder::$STATUS_CLOSE;
                     $pairOrder = $confirmOrder->sellOrder()->first();
                     if ($pairOrder) {
-                        $pairOrder->status = Order::$STATUS_OPEN;
+                        $pairOrder->status = Order::$STATUS_CLOSE;
                         $pairOrder->save();
                     }
                     $confirmOrder->save();

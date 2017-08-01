@@ -98,7 +98,7 @@
                                 </td>
                                 <td>
 
-                                    <button type="button" class="btn btn-default" @click="buyPlant(plant)" v-if="plant.planningHarvestDate >= 90">
+                                    <button type="button" class="btn btn-default" @click="buyPlant(plant)" >
                                         ซื้อ
                                     </button>
                                 </td>

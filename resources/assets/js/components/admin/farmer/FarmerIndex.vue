@@ -62,6 +62,9 @@
                                     <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
                                     <td>{{farmer.province ? farmer.province.name : '-'}}</td>
                                     <td>
+                                        <a v-bind:href="strFormat(viewProfileUrl,{id : farmer.id})"
+                                           class="btn btn-info">ดูข้อมูล</a>
+
                                         <a v-bind:href="strFormat(editUrl,{id : farmer.id})"
                                            class="btn btn-primary">แก้ไข</a>
 
@@ -103,7 +106,7 @@
             roleType: String,
         },
         data() {
-
+            var viewProfileUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/profile";
             var editUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/edit";
             var viewUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/view";
             var deleteUrl = this.$routes.api[this.roleType].farmer + "/{id}";
@@ -113,6 +116,7 @@
 
             console.log(loadFarmerUrl);
             return {
+                viewProfileUrl: viewProfileUrl,
                 editUrl: editUrl,
                 viewUrl: viewUrl,
                 deleteUrl: deleteUrl,

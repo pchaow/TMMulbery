@@ -25,7 +25,7 @@
                                         <label>แปลง</label> {{buyOrder.plant ? buyOrder.plant.name : '-'}}
                                     </p>
                                     <p>
-                                        <label>พื้นที่จำนวน</label> {{numeral(buyOrder.amount_rai).format("0,0.00")}} ไร่
+                                        <label>พื้นที่</label> {{numeral(buyOrder.amount_rai).format("0,0.00")}} ไร่
                                     </p>
                                     <p>
                                         <label>ปริมาณ</label> {{numeral(buyOrder.amount_kg).format("0,0.00")}} กก.
@@ -54,7 +54,7 @@
                                         <label>แปลง</label> {{sellOrder.plant ? sellOrder.plant.name : "-"}}
                                     </p>
                                     <p>
-                                        <label>พื้นที่จำนวน</label> {{numeral(sellOrder.amount_rai).format("0,0.00")}} ไร่
+                                        <label>พื้นที่</label> {{numeral(sellOrder.amount_rai).format("0,0.00")}} ไร่
                                     </p>
                                     <p>
                                         <label>ปริมาณ</label> {{numeral(sellOrder.amount_kg).format("0,0.00")}} กก.

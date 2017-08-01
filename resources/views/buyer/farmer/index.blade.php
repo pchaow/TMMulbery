@@ -6,8 +6,8 @@
             จัดการเกษตรกร
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/buyer/farmer"><i class="fa fa-users"></i> จัดการเกษตรกร</a></li>
-            <li>รายการเกษตรกร</li>
+            <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active">จัดการเกษตรกร</li>
         </ol>
     </section>
 

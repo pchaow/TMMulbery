@@ -22,13 +22,6 @@
 
                 <buyer-calendar-dashboard></buyer-calendar-dashboard>
 
-                <buyer-view
-                        :buyer="{{json_encode($buyer)}}"
-                        :show-side-panel="true"
-                        buyer-load-url="/api/buyer"
-                        role-type="buyer"
-                >
-                </buyer-view>
             </div>
         </div>
     </section>

@@ -41,9 +41,11 @@ Vue.component('plant-view', require('./components/admin/plant/PlantView.vue'));
 Vue.component('farmer-index', require('./components/admin/farmer/FarmerIndex.vue'));
 Vue.component('farmer-create', require('./components/admin/farmer/FarmerCreate.vue'));
 Vue.component('farmer-edit', require('./components/admin/farmer/FarmerEdit.vue'));
+Vue.component('farmer-profile', require('./components/admin/farmer/FarmerProfile.vue'));
 Vue.component('farmer-view', require('./components/admin/farmer/FarmerView.vue'));
 Vue.component('farmer-plant-create', require('./components/admin/farmer/plant/PlantCreate.vue'));
 Vue.component('farmer-plant-edit', require('./components/admin/farmer/plant/PlantEdit.vue'));
+Vue.component('farmer-plant-profile', require('./components/admin/farmer/plant/PlantProfile.vue'));
 
 Vue.component('buyer-index', require('./components/admin/buyer/BuyerIndex.vue'));
 Vue.component('buyer-create', require('./components/admin/buyer/BuyerCreate.vue'));

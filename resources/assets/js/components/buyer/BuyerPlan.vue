@@ -46,7 +46,7 @@
                                 <th>พื้นที่</th>
                                 <th>คงเหลือเก็บเกี่ยว</th>
                                 <th>#วันจากการเก็บเกี่ยวล่าสุด</th>
-                                <th>จำนวนคำสั่งซื้อที่ยังไม่ได้ปิด</th>
+                                <th>จำนวนคำสั่งซื้อที่ยังไม่ยืนยัน</th>
                                 <th>ระยะทาง</th>
                                 <th>จัดการ</th>
                             </tr>
@@ -62,7 +62,7 @@
                                 <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
-                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กิโลเมตร
+                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กม.
                                     </template>
                                     <template v-else>
                                         -

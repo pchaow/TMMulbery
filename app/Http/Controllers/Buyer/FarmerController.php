@@ -34,5 +34,17 @@ class FarmerController extends Controller
             ->with('userId', $userId);
 
     }
+    public function viewProfileFarmer($userId)
+    {
+        $user = FarmerService::getFarmerById($userId);
+
+        if ($user == null) {
+            return redirect("/buyer/farmers");
+        }
+
+        return view('buyer.farmer.profile')
+            ->with('userId', $userId);
+
+    }
 
 }

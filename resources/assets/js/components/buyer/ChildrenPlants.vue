@@ -16,12 +16,12 @@
                                 <th>ชื่อแปลง</th>
                                 <th>ชื่อเกษตรกร</th>
                                 <th>เบอร์โทรติดต่อ</th>
-                                <th>พื้นที่จำนวน</th>
+                                <th>พื้นที่</th>
                                 <th>คงเหลือเก็บเกี่ยว (กก.)</th>
-                                <th>ระยะเวลาจากวันเก็บเกี่ยวล่าสุด (วัน)</th>
-                                <th>ที่อยู่</th>
+                                <th>#วันจากการเก็บเกี่ยวล่าสุด</th>
                                 <th>ระยะทาง</th>
                                 <th>คุณภาพ</th>
+                                <th>จัดการ</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,14 +39,15 @@
                                         -
                                     </template>
                                 </td>
-                                <td>ตำบล {{plant.district ? plant.district.name : '-'}} อำเภอ {{plant.amphure ?
-                                    plant.amphure.name : '-'}} จังหวัด {{plant.province ? plant.province.name : '-'}}
-                                </td>
+
                                 <td></td>
                                 <td>
                                     <star-rating v-model="plant.rating" :star-size="20"
                                                  @rating-selected="setRating($event,plant)"
                                                  :show-rating="false"></star-rating>
+                                </td>
+                                <td> <a v-bind:href="strFormat(viewProfilePlantUrl,{id : plant.id})"
+                                        class="btn btn-info">ดูข้อมูล</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -71,8 +72,11 @@
             StarRating,
         },
         data() {
+            var viewProfilePlantUrl = this.$routes.web[this.roleType].plant + "/{id}/profile";
+
             return {
                 plants: [],
+                viewProfilePlantUrl: viewProfilePlantUrl,
 
             }
         },

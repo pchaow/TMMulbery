@@ -2,8 +2,11 @@
 
 namespace App\Http\Services;
 
+use App\Models\ConfirmOrder;
 use App\Models\Order;
 use App\Models\Plant;
+use App\Models\PlantTransaction;
+use App\Models\PlantTransactionStatus;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -173,6 +176,64 @@ class BuyerService
         $p2 = Collection::make($plants2);
 
         return [$p1, $p2];
+    }
+
+
+    public static function loadEvents($userId, $startDate = null, $endDate = null)
+    {
+        //confirm orders
+        $query = ConfirmOrder::query();
+        $query->whereHas("buyOrder", function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        });
+        $query->where("status", ConfirmOrder::$STATUS_PENDING);
+        $confirmOrders = $query->get();
+
+        //plant transaction
+
+        $query = PlantTransaction::query();
+
+        $updateStatus = PlantTransactionStatus::where('name', 'U')->first();
+
+        $query->whereHas('plant', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        });
+
+        $query->whereHas('status', function ($q) use ($updateStatus) {
+            $q->where('name', '!=', $updateStatus->name);
+        });
+
+
+        $plantTransactions = $query->get();
+
+
+        $events = [];
+
+        foreach ($confirmOrders as $order) {
+            $e = [];
+            $buyOrder = $order->buyOrder()->first();
+            $e['title'] = "[ID : $buyOrder->id] : Confirm Buy Order ";
+            $e['start'] = $buyOrder->duedate;
+            $e['end'] = $buyOrder->duedate;
+
+            $events[] = $e;
+        }
+
+        foreach ($plantTransactions as $transaction) {
+            $e = [];
+
+            $status = $transaction->status;
+
+            $e['title'] = $transaction->plant->name . " : " . $status->display_name;
+            $e['start'] = $transaction->transaction_date;
+            $e['end'] = $transaction->transaction_date;
+
+            $events[] = $e;
+        }
+
+
+        return $events;
+
     }
 
 }

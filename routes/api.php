@@ -99,6 +99,7 @@ Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
     Route::post("/order/{id}/confirm", 'API\\Buyer\\OrderResourceController@confirmBuyOrder');
 
     Route::post("/plan", "API\\Buyer\\BuyerResourceController@plan");
+    Route::post("/event", "API\\Buyer\\BuyerResourceController@loadEvents");
 
 
 });

@@ -16,5 +16,10 @@ class PlantTransaction extends Model
         return $this->belongsTo(PlantTransactionStatus::class, 'status_id');
     }
 
+    public function plant()
+    {
+        return $this->belongsTo(Plant::class);
+    }
+
 
 }

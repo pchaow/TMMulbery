@@ -61,4 +61,9 @@ class BuyerResourceController extends Controller
 
         return PlantService::updateRating($plantId, $rating);
     }
+
+    public function loadEvents()
+    {
+        return BuyerService::loadEvents(Auth::user()->id);
+    }
 }

@@ -25,6 +25,7 @@ export default {
             plant: api_buyer_index + "/plant",
             plant_rating: api_buyer_index + "/plant/rating",
             farmer: api_buyer_index + "/farmer",
+            event: api_buyer_index + "/event",
             farmerPlant: api_buyer_index + "/farmer/plant",
             plan: api_buyer_index + "/plan",
 

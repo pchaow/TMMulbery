@@ -183,8 +183,10 @@ class BuyerService
     {
         //confirm orders
         $query = ConfirmOrder::query();
-        $query->whereHas("buyOrder", function ($query) use ($userId) {
+        $query->whereHas("buyOrder", function ($query) use ($userId, $startDate, $endDate) {
             $query->where('user_id', $userId);
+            $query->whereBetween('duedate', [$startDate, $endDate]);
+
         });
         $query->where("status", ConfirmOrder::$STATUS_PENDING);
         $confirmOrders = $query->get();
@@ -202,6 +204,7 @@ class BuyerService
         $query->whereHas('status', function ($q) use ($updateStatus) {
             $q->where('name', '!=', $updateStatus->name);
         });
+        $query->whereBetween('transaction_date', [$startDate, $endDate]);
 
 
         $plantTransactions = $query->get();
@@ -212,10 +215,10 @@ class BuyerService
         foreach ($confirmOrders as $order) {
             $e = [];
             $buyOrder = $order->buyOrder()->first();
+            $e['type'] = "order";
             $e['title'] = "[ID : $buyOrder->id] : Confirm Buy Order ";
             $e['start'] = $buyOrder->duedate;
             $e['end'] = $buyOrder->duedate;
-
             $events[] = $e;
         }
 
@@ -223,11 +226,10 @@ class BuyerService
             $e = [];
 
             $status = $transaction->status;
-
-            $e['title'] = $transaction->plant->name . " : " . $status->display_name;
+            $e['type'] = "plantTransaction";
+            $e['title'] = "[" . $transaction->plant->name . "] : $status->display_name";
             $e['start'] = $transaction->transaction_date;
             $e['end'] = $transaction->transaction_date;
-
             $events[] = $e;
         }
 

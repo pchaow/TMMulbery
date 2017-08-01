@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+    <link rel='stylesheet' href='/css/fullcalendar.min.css' />
+@endsection
+
 @section('content')
     <section class="content-header">
         <h1>

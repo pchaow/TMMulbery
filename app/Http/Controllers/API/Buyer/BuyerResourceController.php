@@ -7,6 +7,7 @@ use App\Http\Services\PlantService;
 use App\Http\Services\UserService;
 use App\Models\User;
 use App\Http\Services\BuyerService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -62,8 +63,12 @@ class BuyerResourceController extends Controller
         return PlantService::updateRating($plantId, $rating);
     }
 
-    public function loadEvents()
+    public function loadEvents(Request $request)
     {
-        return BuyerService::loadEvents(Auth::user()->id);
+        $start = Carbon::createFromTimestamp($request->get('start'));
+        $end = Carbon::createFromTimestamp($request->get('end'));
+
+//        return [$start, $end];
+        return BuyerService::loadEvents(Auth::user()->id, $start, $end);
     }
 }

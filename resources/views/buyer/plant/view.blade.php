@@ -3,7 +3,11 @@
 @section('content')
     <section class="content-header">
         <h1>
-            <a href="/buyer/plant" class="fa fa-arrow-left"> แปลงหม่อน {{$plant->name}} - {{$farmer->name}} </a>
+            @if(Request::has('previous'))
+                <a href="{{Request::get('previous')}}" class="fa fa-arrow-left"> แปลงหม่อน {{$plant->name}} - {{$farmer->name}} </a>
+            @else
+                <a href="/buyer/plant" class="fa fa-arrow-left"> แปลงหม่อน {{$plant->name}} - {{$farmer->name}} </a>
+            @endif
         </h1>
         <ol class="breadcrumb">
             <li><a href="/buyer/plant"><i class="fa fa-user"></i> จัดการแปลงหม่อน</a></li>

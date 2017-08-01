@@ -114,7 +114,8 @@ class BuyerService
         return $user;
     }
 
-    public static function getChildrenPlant($userId){
+    public static function getChildrenPlant($userId)
+    {
         $currentUser = Auth::user();
         $users = $currentUser->children()->get();
         $user_ids = array_pluck($users, 'id');
@@ -148,6 +149,7 @@ class BuyerService
             $plant->planningBalance = $plant->planningBalance($date);
             $plant->planningHarvestDate = $plant->planningHarvestDate($date);
             $plant->amount = $plant->amount();
+            $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
         }
 
         $currentUser = Auth::user();
@@ -164,13 +166,13 @@ class BuyerService
             $plant->planningBalance = $plant->planningBalance($date);
             $plant->planningHarvestDate = $plant->planningHarvestDate($date);
             $plant->amount = $plant->amount();
+            $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
         }
 
         $p1 = Collection::make($plants);
         $p2 = Collection::make($plants2);
 
-
-        return $p1->merge($p2);
+        return [$p1, $p2];
     }
 
 }

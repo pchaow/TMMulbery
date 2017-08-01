@@ -97,10 +97,10 @@ class Plant extends Model
 
         if ($lastHarvest) {
             $lastDate = Carbon::parse($lastHarvest->transaction_date);
-            return $lastDate->diffInDays($date,false);
+            return $lastDate->diffInDays($date, false);
         } else if ($firstInit = $this->transactions()->where('status_id', '=', $initStatus->id)->orderBy('transaction_date', 'desc')->first()) {
             $lastDate = Carbon::parse($firstInit->transaction_date);
-            return $lastDate->diffInDays($date,false);
+            return $lastDate->diffInDays($date, false);
 
         } else {
             return null;
@@ -140,14 +140,15 @@ class Plant extends Model
         return $currentBalance;
     }
 
-    public function amount(){
+    public function amount()
+    {
         $initStatus = PlantTransactionStatus::where('name', '=', 'N')->first();
         $lastTransaction = $this->transactions()->orderBy('transaction_date', 'desc')->first();
         $firstTransaction = $this->transactions()
             ->where('status_id', '=', $initStatus->id)
             ->orderBy('transaction_date', 'desc')->first();
         if ($firstTransaction != null) {
-            $amount = $firstTransaction->amount ;
+            $amount = $firstTransaction->amount;
             return $amount;
         } else {
             return 0;
@@ -160,7 +161,6 @@ class Plant extends Model
     }
 
 
-
     public function orders()
     {
         return $this->hasMany(Order::class);
@@ -170,4 +170,39 @@ class Plant extends Model
     {
         return $this->orders()->where('status', '!=', 'Closed')->count();
     }
+
+    public function distanceFromPiankusol()
+    {
+        if ($this->map) {
+            $lat0 = $this->map[0]['position']['lat'];
+            $lng0 = $this->map[0]['position']['lng'];
+
+            $lat1 = 18.779465;
+            $lng1 = 99.046323;
+
+            return $this->distance($lat0, $lng0, $lat1, $lng1,"K");
+        } else {
+            return null;
+        }
+    }
+
+    private function distance($lat1, $lon1, $lat2, $lon2, $unit)
+    {
+
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $unit = strtoupper($unit);
+
+        if ($unit == "K") {
+            return ($miles * 1.609344);
+        } else if ($unit == "N") {
+            return ($miles * 0.8684);
+        } else {
+            return $miles;
+        }
+    }
+
 }

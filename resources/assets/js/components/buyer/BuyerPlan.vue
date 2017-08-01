@@ -52,19 +52,53 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="plant in planningData">
+                            <tr v-for="plant in planningData[0]" style="background-color: #fffadd">
                                 <td>{{plant.name}}</td>
                                 <td>{{plant.user.name}}</td>
                                 <td>{{plant.user.contact_number}}</td>
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                 <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
-                                <td>{{plant.planningHarvestDate}}</td>
+                                <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }" >{{plant.planningHarvestDate}}</td>
                                 <td>ตำบล {{plant.district ? plant.district.name : '-'}} อำเภอ {{plant.amphure ?
                                     plant.amphure.name : '-'}} จังหวัด {{plant.province ? plant.province.name : '-'}}
                                 </td>
-                                <td></td>
                                 <td>
-                                    <button type="button" class="btn btn-default" @click="buyPlant(plant)">
+                                    <template v-if="plant.distanceFromPiankusol">
+                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กิโลเมตร
+                                    </template>
+                                    <template v-else>
+                                        -
+                                    </template>
+
+                                </td>
+                                <td>
+                                    <a :href="$routes.web.buyer.plant + '/' + plant.id + '/view?previous='+$routes.web.buyer.plan "
+                                       class="btn btn-success">การปลูก</a>
+                                </td>
+                            </tr>
+
+                            <tr v-for="plant in planningData[1]">
+                                <td>{{plant.name}}</td>
+                                <td>{{plant.user.name}}</td>
+                                <td>{{plant.user.contact_number}}</td>
+                                <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
+                                <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
+                                <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">{{plant.planningHarvestDate}}</td>
+                                <td>ตำบล {{plant.district ? plant.district.name : '-'}} อำเภอ {{plant.amphure ?
+                                    plant.amphure.name : '-'}} จังหวัด {{plant.province ? plant.province.name : '-'}}
+                                </td>
+                                <td>
+                                    <template v-if="plant.distanceFromPiankusol">
+                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กิโลเมตร
+                                    </template>
+                                    <template v-else>
+                                        -
+                                    </template>
+
+                                </td>
+                                <td>
+
+                                    <button type="button" class="btn btn-default" @click="buyPlant(plant)" v-if="plant.planningHarvestDate >= 90">
                                         ซื้อ
                                     </button>
                                 </td>
@@ -142,6 +176,12 @@
             }
         },
         methods: {
+            calculateRGBA: function (plant) {
+                var c = plant.planningHarvestDate
+                c = Math.abs(c);
+                var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                return 'rgba(150,250,100,' + alpha + ')'
+            },
             createBuyOrder: function () {
                 if (confirm("ยืนยันคำสั่งซื้อ")) {
                     axios.post(this.$routes.api.buyer.openBuySellOrder, this.buyForm)
@@ -163,6 +203,9 @@
                 this.buyForm = {}
                 this.buyFormError = {}
             },
+            orderPlant: function (plants) {
+                return _.orderBy(plants, ["planningHarvestDate"], ["desc"])
+            },
             planSubmit: function () {
 
                 this.resetState();
@@ -174,6 +217,12 @@
                 axios.post(this.$routes.api.buyer.plan, this.planningForm)
                     .then(res => {
                         this.planningData = res.data;
+
+                        //do order here
+                        this.planningData[0] = this.orderPlant(this.planningData[0])
+                        this.planningData[1] = this.orderPlant(this.planningData[1])
+
+
                     })
                     .catch(err => {
                         this.planningFormError = err.response.data;

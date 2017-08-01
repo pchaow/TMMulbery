@@ -45,7 +45,7 @@ export default {
             index: buyer_index,
             order: buyer_index + "/order",
             plant: buyer_index + "/plant",
-
+            plan : buyer_index + "/plan",
             farmer: {
                 index: buyer_index + "/farmer",
                 create: buyer_index + "/farmer/create",

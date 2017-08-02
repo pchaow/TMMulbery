@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group" v-bind:class="{ 'has-error': formErrors['area_sqm'] }">
                             <label for="row_spacing">ขนาดพื้นที่แปลงหม่อนโดยประมาณ(ตารางเมตร)</label>
-                            <input  readonly type="text" class="form-control" id="area_sqm"
+                            <input readonly type="text" class="form-control" id="area_sqm"
                                    v-bind:value="calculateAreaSqm"
                                    placeholder="ขนาดพื้นที่แปลงหม่อนโดยประมาณ(ตารางเมตร)">
                             <span v-if="formErrors['area_sqm']"
@@ -108,6 +108,7 @@
                                   v-bind:district="formInputs.district_id"
                                   v-on:district_update="formInputs.district_id = arguments[0]"
                                   v-bind:formErrors="formErrors"
+                                  :disabled="true"
                         ></province>
 
                         <label><i class="fa  fa-map"></i> บริเวณพื้นที่แปลงหม่อน</label>
@@ -140,7 +141,7 @@
                                     style="width: 100%; height: 100%; position: absolute; left:0; top:0"
                                     :center="map_default_position"
                                     :zoom="15"
-                                    >
+                            >
                                 <google-marker v-for="m in formInputs.map" :position="m.position"></google-marker>
 
                             </gmap-map>

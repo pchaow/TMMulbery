@@ -2,7 +2,7 @@
     <div>
         <div class="form-group" v-bind:class="{ 'has-error': formErrors['province_id'] }">
             <label class="control-label">จังหวัด : </label>
-            <select class="form-control" v-model="provinceId"
+            <select class="form-control" v-model="provinceId" v-bind:disabled="disabled"
                     v-on:change="updateProvince($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="province in provinces" v-bind:value="province.id">{{province.name}}</option>
@@ -13,7 +13,7 @@
 
         <div class="form-group" v-bind:class="{ 'has-error': formErrors['amphure_id'] }">
             <label class="control-label">อำเภอ : </label>
-            <select class="form-control" v-model="amphureId"
+            <select class="form-control" v-model="amphureId" v-bind:disabled="disabled"
                     v-on:change="updateAmphure($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="amphure in amphures" v-bind:value="amphure.id">{{amphure.name}}</option>
@@ -24,7 +24,7 @@
 
         <div class="form-group" v-bind:class="{ 'has-error': formErrors['district_id'] }">
             <label class="control-label">ตำบล : </label>
-            <select class="form-control" v-model="districtId"
+            <select class="form-control" v-model="districtId" v-bind:disabled="disabled"
                     v-on:change="updateDistrict($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="district in districts" v-bind:value="district.id">{{district.name}}</option>
@@ -54,6 +54,12 @@
                 type: [Object, Array],
                 default: function () {
                     return {};
+                }
+            },
+            disabled: {
+                type: [Boolean],
+                default: function () {
+                    return false;
                 }
             }
         },
@@ -138,27 +144,33 @@
                     this.districtId = value;
                 }
             },
+            initialData: function () {
+                this.isLocked = true;
+                this.loadProvince().then(() => {
+                    this.provinceId = this.province ? this.province : 0;
 
+                    this.loadAmphure(this.province)
+                        .then(() => {
+                            this.amphureId = this.amphure ? this.amphure : 0;
+
+                            if(this.province && this.amphures){
+
+                                this.loadDistrict(this.province, this.amphure)
+                                    .then(() => {
+                                        console.log(this.district);
+                                        this.districtId = this.district ? this.district : 0;
+                                        console.log(this.districtId);
+                                        this.isLocked = false;
+
+                                    })
+                            }
+                        })
+                })
+            }
         },
         created: function () {
-            this.isLocked = true;
-            this.loadProvince().then(() => {
-                this.provinceId = this.province ? this.province : 0;
 
-                this.loadAmphure(this.province)
-                    .then(() => {
-                        this.amphureId = this.amphure ? this.amphure : 0;
-
-                        this.loadDistrict(this.province, this.amphure)
-                            .then(() => {
-                                console.log(this.district);
-                                this.districtId = this.district ? this.district : 0;
-                                console.log(this.districtId);
-                                this.isLocked = false;
-
-                            })
-                    })
-            })
+            this.initialData();
         },
         mounted: function () {
 

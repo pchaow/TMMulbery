@@ -42,7 +42,8 @@
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['address'] }">
                                     <label class="control-label">ที่อยู่ : </label>
-                                    <input readonly class="form-control" placeholder="ที่อยู่" v-model="formInputs.address"/>
+                                    <input readonly class="form-control" placeholder="ที่อยู่"
+                                           v-model="formInputs.address"/>
                                     <span v-if="formErrors['address']"
                                           class="help-block">{{ formErrors['address'] }}</span>
                                 </div>
@@ -54,6 +55,7 @@
                                           v-bind:district="formInputs.district_id"
                                           v-on:district_update="formInputs.district_id = arguments[0]"
                                           v-bind:formErrors="formErrors"
+                                          :disabled="true"
                                 ></province>
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['postal_code'] }">
@@ -72,7 +74,8 @@
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['email'] }">
                                     <label class="control-label">E-mail : </label>
-                                    <input readonly class="form-control" placeholder="E-mail" v-model="formInputs.email"/>
+                                    <input readonly class="form-control" placeholder="E-mail"
+                                           v-model="formInputs.email"/>
                                     <span v-if="formErrors['email']" class="help-block">{{ formErrors['email'] }}</span>
                                 </div>
 

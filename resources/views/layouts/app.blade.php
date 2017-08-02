@@ -1,7 +1,7 @@
 <?php
-    $avatarUrl = "/dist/img/basicAvatar.jpg"
+$avatarUrl = "/dist/img/basicAvatar.jpg"
 ?>
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -16,9 +16,9 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
 
-    @yield('css')
+@yield('css')
 
-    <!-- Scripts -->
+<!-- Scripts -->
     <script>
         window.Laravel = {
             "csrfToken": document.getElementById('csrf_token').attributes['content'].value,
@@ -107,9 +107,9 @@
                         </ul>
                     </li>
                     <!-- Control Sidebar Toggle Button -->
-                   <!-- <li>
-                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                    </li> -->
+                    <!-- <li>
+                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                     </li> -->
                 </ul>
             </div>
         </nav>
@@ -133,9 +133,8 @@
             </div>
 
 
-
             <!-- Sidebar Menu -->
-       @include('layouts._sidebarmenu')
+        @include('layouts._sidebarmenu')
         <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -151,19 +150,24 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Talent Mobility 2016
+
+        <img src="/images/logo1.png" style="height: 30px;"/>
+        <img src="/images/logo2.png" style="height: 30px;"/>
+        <img src="/images/logo3.png" style="height: 30px;"/>
+        <img src="/images/logo4.png" style="height: 30px;"/>
+
+        <div class="pull-right">
+            <strong>Copyright &copy; 2016 <a href="#">Piankusol Co.,Ltd</a>, University of Phayao, et al. </strong> All rights reserved.
         </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+
+
     </footer>
 
     <!-- Control Sidebar -->
     <!--<aside class="control-sidebar control-sidebar-dark"> -->
-        <!-- Create the tabs -->
+    <!-- Create the tabs -->
 
-         <!-- Tab panes -->
+    <!-- Tab panes -->
 
 
     <!-- /.control-sidebar -->

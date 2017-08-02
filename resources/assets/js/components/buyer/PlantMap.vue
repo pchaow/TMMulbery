@@ -62,7 +62,7 @@
 
             return {
                 farm_icon: farm,
-                farm_icon2 : farm2,
+                farm_icon2: farm2,
                 office_icon: office,
                 map_default_position: default_position,
                 planningData: null,
@@ -77,7 +77,7 @@
             }
         },
         methods: {
-            markPosition: function (maps,lat, lng, plantName, farmerName) {
+            markPosition: function (maps, lat, lng, plantName, farmerName) {
                 if (lat && lng) {
                     console.log(lat, lng)
                     maps.push({
@@ -126,10 +126,12 @@
                         this.planningData = res.data;
                         console.log(this.planningData)
                         for (var i = 0; i < this.planningData[0].length; i++) {
-                            this.markPosition(this.maps1,this.planningData[0][i].map[0].position.lat, this.planningData[0][i].map[0].position.lng, this.planningData[0][i].name, this.planningData[0][i].user.name)
+                            if (this.planningData[0][i].map.length != 0)
+                                this.markPosition(this.maps1, this.planningData[0][i].map[0].position.lat, this.planningData[0][i].map[0].position.lng, this.planningData[0][i].name, this.planningData[0][i].user.name)
                         }
                         for (var i = 0; i < this.planningData[1].length; i++) {
-                            this.markPosition(this.maps2,this.planningData[1][i].map[0].position.lat, this.planningData[1][i].map[0].position.lng, this.planningData[1][i].name, this.planningData[1][i].user.name)
+                            if (this.planningData[1][i].map.length != 0)
+                                this.markPosition(this.maps2, this.planningData[1][i].map[0].position.lat, this.planningData[1][i].map[0].position.lng, this.planningData[1][i].name, this.planningData[1][i].user.name)
                         }
 
                     })

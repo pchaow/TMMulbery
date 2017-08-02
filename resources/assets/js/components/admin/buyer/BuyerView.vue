@@ -195,18 +195,13 @@
                                         </thead>
                                         <tbody>
                                         <template v-for="order in buyHistoryOrders.data">
-                                            <tr>
-                                                <td>{{order.created_at | moment("DD-MMM-YYYY")}}</td>
-                                                <td>{{order.id}}</td>
-                                                <td colspan="5">{{order.status}}</td>
-                                            </tr>
-
                                             <tr v-for="sell in order.sell_paired_order">
-
-                                                <td colspan="2" class="text-right">
-                                                    Sell ID : {{sell.id}}
+                                                <td>{{sell.duedate | moment("DD-MMM-YYYY") }}</td>
+                                                <td>
+                                                    {{order.id}}-{{sell.id}}
                                                 </td>
                                                 <td>{{sell.status}}</td>
+                                                <td>{{order.amount_rai}}</td>
                                                 <td>{{sell.pivot.remark.unit}}</td>
                                                 <td>{{sell.plant ? sell.plant.name : '-'}}</td>
                                                 <td>{{sell.user ? sell.user.name : '-'}}</td>

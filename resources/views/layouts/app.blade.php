@@ -174,7 +174,7 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-<script src="/js/app.js"></script>
+<script src="/js/app.js?{{rand(1000, 9999)}}"></script>
 
 <!-- Scripts -->
 

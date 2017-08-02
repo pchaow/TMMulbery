@@ -180,11 +180,12 @@
                                                 order.sell_confirm_orders[0].status : order.status}}
                                             </td>
                                             <td>
-                                                {{numeral(order.amount).format("0,0.00")}}
+
                                                 <template
                                                         v-if="order.sell_confirm_orders.length > 0 && order.sell_confirm_orders[0].status == 'Success'">
-                                                    ({{order.sell_confirm_orders[0].remark.unit}})
+                                                    {{order.sell_confirm_orders[0].remark.unit}}
                                                 </template>
+                                                ({{numeral(order.amount_kg).format("0,0.00")}})
                                             </td>
                                             <td>
                                                 <template>

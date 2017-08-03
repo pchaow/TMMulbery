@@ -136,7 +136,7 @@ class Plant extends Model
         $currentDate->minute = 0;
         $currentDate->second = 0;
 
-        $currentBalance = ($currentDate->diffInDays($lastDate) * $amount * 0.0095) + $balance;
+        $currentBalance = ($lastDate->diffInDays($currentDate,false) * $amount * 0.0095) + $balance;
         return $currentBalance;
     }
 

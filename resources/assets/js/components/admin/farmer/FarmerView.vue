@@ -276,11 +276,16 @@
                 var lastdate = plant.lastHarvestDate
 
                 var c = now.diff(lastdate, "days");
-                c = Math.abs(c);
+                console.log(c);
+                if (c < 0) {
+                    c = Math.abs(c);
+                    var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
 
-                var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
-
-                return 'rgba(150,250,100,' + alpha + ')'
+                    return 'rgba(255,255,0,' + alpha + ')'
+                } else {
+                    var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                    return 'rgba(150,250,100,' + alpha + ')'
+                }
             },
 
             openSellOrderForm: function () {

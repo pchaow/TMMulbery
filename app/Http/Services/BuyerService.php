@@ -129,9 +129,11 @@ class BuyerService
         $plants2 = $query2->get();
 
 
-        foreach ($plants2 as $data) {
-            $data->remainingBalance = $data->remainingBalance();
-            $data->lastHarvestDate = $data->lastHarvestDate();
+        foreach ($plants2 as $plant) {
+            $plant->remainingBalance = $plant->remainingBalance();
+            $plant->lastHarvestDate = $plant->lastHarvestDate();
+            $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
+
         }
         return $plants2;
     }

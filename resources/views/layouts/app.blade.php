@@ -157,7 +157,7 @@ $avatarUrl = "/dist/img/basicAvatar.jpg"
         <img src="/images/logo4.png" style="height: 30px;"/>
 
         <div class="pull-right">
-            <strong>Copyright &copy; 2016 <a href="#">Piankusol Co.,Ltd</a>, University of Phayao, et al. </strong> All rights reserved.
+            <strong>Copyright &copy; 2016 <a href="http://www.piankusolsilk.com/">Piankusol Co.,Ltd.</a>, <a href="http://www.up.ac.th/">University of Phayao</a>, et al. </strong> All rights reserved.
         </div>
 
 

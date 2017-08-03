@@ -19,7 +19,7 @@
                                 <th>พื้นที่</th>
                                 <th>คงเหลือเก็บเกี่ยว (กก.)</th>
                                 <th>#วันจากการเก็บเกี่ยวล่าสุด</th>
-                                <th>ระยะทาง</th>
+                                <th>ระยะทาง (กม.)</th>
                                 <th>คุณภาพ</th>
                                 <th>จัดการ</th>
                             </tr>
@@ -40,7 +40,7 @@
                                     </template>
                                 </td>
 
-                                <td></td>
+                                <td>{{numeral(plant.distanceFromPiankusol).format("0,0.00")}}</td>
                                 <td>
                                     <star-rating v-model="plant.rating" :star-size="20"
                                                  @rating-selected="setRating($event,plant)"

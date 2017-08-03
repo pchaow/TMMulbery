@@ -25,7 +25,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="plant in plants">
+                            <tr v-for="plant in plants"
+                                v-bind:style="{ 'background-color' : calculateRGBA(plant) }"
+                                style="background-color: rgba(150,250,100,1);">
                                 <td>{{plant.name}}</td>
                                 <td>{{plant.user.name}}</td>
                                 <td>{{plant.user.contact_number}}</td>
@@ -81,6 +83,18 @@
             }
         },
         methods: {
+            calculateRGBA: function (plant) {
+                var now = moment();
+                var lastdate = plant.lastHarvestDate
+
+                var c = now.diff(lastdate, "days");
+                c = Math.abs(c);
+
+                var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+
+                return 'rgba(150,250,100,' + alpha + ')'
+            },
+
             setRating: function ($event, plant) {
                 axios.post(this.$routes.api.buyer.plant_rating, {
                     'plant_id': plant.id,
@@ -94,7 +108,15 @@
             loadPlants: function () {
                 axios.post(this.$routes.api.buyer.farmerPlant)
                     .then(res => {
-                        this.plants = res.data;
+
+                        var data = res.data;
+                        var d = data
+                      //  console.log(d);
+                        d = _.orderBy(d, ["lastHarvestDate"], ["asc"])
+
+                        //console.log(d);
+                        data.data = d;
+                        this.plants = data.data;
                     })
             }
         },

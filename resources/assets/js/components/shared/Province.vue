@@ -75,7 +75,13 @@
                 districtId: 0,
                 districts: [],
 
-                isLocked: false,
+                lockStep: 0,
+            }
+        },
+        computed: {
+            isLocked: function () {
+                if (this.lockStep == 0) return false;
+                return true;
             }
         },
         methods: {
@@ -108,7 +114,7 @@
             updateProvince: function (value, elem) {
                 console.log("update province", this.isLocked)
                 if (!this.isLocked) {
-                    this.isLocked = true;
+                    this.lockStep += 1;
                     this.$emit("province_update", value)
                     this.provinceId = value;
 
@@ -120,20 +126,20 @@
                     this.districtId = 0;
                     this.districts = [];
 
-                    this.isLocked = false;
+                    this.lockStep -= 1;
                 }
 
             },
             updateAmphure: function (value, elem) {
                 console.log("update amphure", this.isLocked)
                 if (!this.isLocked) {
-                    this.isLocked = true;
+                    this.lockStep += 1;
                     this.$emit("amphure_update", value)
                     this.amphureId = value
                     this.$emit("district_update", 0)
                     this.loadDistrict(this.provinceId, this.amphureId)
                     this.districtId = 0;
-                    this.isLocked = false;
+                    this.lockStep -= 1;
                 }
             },
             updateDistrict: function (value, elem) {
@@ -145,31 +151,40 @@
                 }
             },
             initialData: function () {
-                this.isLocked = true;
+                this.lockStep += 1;
                 this.loadProvince().then(() => {
                     this.provinceId = this.province ? this.province : 0;
-
+                    if (this.provinceId == 0) this.locked = false;
+                    this.lockStep += 1;
                     this.loadAmphure(this.province)
                         .then(() => {
                             this.amphureId = this.amphure ? this.amphure : 0;
-
-                            if(this.province && this.amphures){
-
+                            if (this.amphureId == 0) this.locked = false;
+                            if (this.province && this.amphures) {
+                                this.lockStep += 1;
                                 this.loadDistrict(this.province, this.amphure)
                                     .then(() => {
                                         console.log(this.district);
                                         this.districtId = this.district ? this.district : 0;
                                         console.log(this.districtId);
-                                        this.isLocked = false;
 
+                                    })
+                                    .finally( () => {
+                                        this.lockStep -= 1;
                                     })
                             }
                         })
+                        .finally(() => {
+                            this.lockStep -= 1;
+                        })
+
+                }).finally(() => {
+                    this.lockStep -= 1;
+                    console.log("finally", this.isLocked);
                 })
             }
         },
         created: function () {
-
             this.initialData();
         },
         mounted: function () {

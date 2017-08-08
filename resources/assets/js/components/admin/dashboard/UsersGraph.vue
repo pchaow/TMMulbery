@@ -20,7 +20,7 @@
         components: {
             VueHighcharts
         },
-        data(){
+        data() {
             return {
                 apiData: null,
                 options: {
@@ -60,22 +60,23 @@
         methods: {
             loadData: function () {
                 let columnCharts = this.$refs.columnCharts;
+
                 let charts = columnCharts.chart
+
                 console.log(columnCharts);
+
                 columnCharts.delegateMethod('showLoading', 'Loading...');
-                this.$http.get('/api/admin/dashboard/sum_users_by_type')
+
+                axios.get('/api/admin/dashboard/sum_users_by_type')
                     .then(
-                        function (response) {
+                        response => {
 
                             this.apiData = response.data;
                             console.log(this.apiData);
                             charts.xAxis[0].setCategories(this.apiData.labels, true);
                             columnCharts.addSeries(this.apiData.series);
                             columnCharts.hideLoading();
-                        },
-                        function (response) {
-                        }
-                    )
+                        })
             }
         },
         created() {

@@ -299,7 +299,11 @@
             updatePositionFromAddress: function () {
                 let map = this.$refs.map.$mapObject
 
-                if (!(this.formInputs.province_name && this.formInputs.amphure_name && this.formInputs.district_name )) {
+                if (this.formInputs.map.length > 0) {
+                    map.setCenter(this.formInputs.map[0].position)
+                }
+
+                else if (!(this.formInputs.province_name && this.formInputs.amphure_name && this.formInputs.district_name )) {
                     alert('กรุณาเลือก จังหวัด อำเภอ ตำบล')
                 } else {
                     let addressStr = "จังหวัด" + this.formInputs.province_name

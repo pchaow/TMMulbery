@@ -136,7 +136,7 @@ class Plant extends Model
         $currentDate->minute = 0;
         $currentDate->second = 0;
 
-        $currentBalance = ($lastDate->diffInDays($currentDate,false) * $amount * 0.0095) + $balance;
+        $currentBalance = ($lastDate->diffInDays($currentDate, false) * $amount * 0.0095) + $balance;
         return $currentBalance;
     }
 
@@ -171,22 +171,75 @@ class Plant extends Model
         return $this->orders()->where('status', '!=', 'Closed')->count();
     }
 
+    /*
+     * @deprecated
+     */
     public function distanceFromPiankusol()
     {
-        if ($this->map) {
+//        if ($this->map) {
+//            $lat0 = $this->map[0]['position']['lat'];
+//            $lng0 = $this->map[0]['position']['lng'];
+//
+//            $lat1 = 18.779465;
+//            $lng1 = 99.046323;
+//
+//            return $this->distance($lat0, $lng0, $lat1, $lng1, "K");
+//        } else {
+//            return null;
+//        }
+        return $this->distanceFromBuyer();
+    }
+
+    public function distanceFromBuyer()
+    {
+        $user = $this->user;
+        $buyer = null;
+        if ($user->parent != null) {
+            $buyer = $user->parent()->first();
+        } else {
+            $buyer = $user;
+        }
+        if ($this->map && $buyer->map) {
             $lat0 = $this->map[0]['position']['lat'];
             $lng0 = $this->map[0]['position']['lng'];
 
-            $lat1 = 18.779465;
-            $lng1 = 99.046323;
+            $lat1 = $buyer->map[0]['position']['lat'];;
+            $lng1 = $buyer->map[0]['position']['lng'];;
 
-            return $this->distance($lat0, $lng0, $lat1, $lng1,"K");
-        } else {
-            return null;
+//            return $this->distance($lat0, $lng0, $lat1, $lng1, "K");
+            return $this->GetDrivingDistance($lat0, $lng0, $lat1, $lng1, "K");
+
         }
+
+        return null;
     }
 
-    private function distance($lat1, $lon1, $lat2, $lon2, $unit)
+    function GetDrivingDistance($lat1, $long1, $lat2, $long2, $unit = null)
+    {
+
+        $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" . $lat1 . "," . $long1 . "&destinations=" . $lat2 . "," . $long2 . "&mode=driving&language=pl-PL";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response_a = json_decode($response, true);
+        $dist = $response_a['rows'][0]['elements'][0]['distance']['text'];
+        $time = $response_a['rows'][0]['elements'][0]['duration']['text'];
+
+        $distance_km = $response_a['rows'][0]['elements'][0]['distance']['value'];
+
+        $distance_km = floatval($distance_km) / 1000.00;
+
+        return $distance_km;
+    }
+
+
+    private
+    function distance($lat1, $lon1, $lat2, $lon2, $unit)
     {
 
         $theta = $lon1 - $lon2;

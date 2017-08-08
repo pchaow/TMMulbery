@@ -77,7 +77,7 @@ class PlantTransactionService
         $transaction->amount = round($plant->planningBalance($transactionDateTime), 2) - round($lastTransaction->balance, 2);
 
         if ($transaction->amount == 0) return null;
-        $transaction->balance =  round($lastTransaction->balance, 2) + $transaction->amount;
+        $transaction->balance = round($lastTransaction->balance, 2) + $transaction->amount;
 
         $transaction->type = "+";
         $transaction->status()->associate($status);
@@ -115,5 +115,20 @@ class PlantTransactionService
                 "transaction_date" => "Transaction date is not valid."
             ], 422);
         }
+    }
+
+    public static function confirmHarvestFarm($plantId, $formData)
+    {
+        $transactionId = $formData['id'];
+        $transaction = PlantTransaction::find($transactionId);
+
+        if ($transaction) {
+
+            $transaction->confirm_amount = $formData['confirm_amount'];
+            $transaction->save();
+
+            return $transaction;
+        }
+        return null;
     }
 }

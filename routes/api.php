@@ -57,8 +57,12 @@ Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
 
     Route::resource('/plant', "API\\Farmer\\FarmerPlantResourceController");
     Route::resource('/plant.transaction', "API\\Admin\\PlantTransactionController");
+
     Route::post("/plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
     Route::post("/plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
+    Route::post("/plant/{plantId}/transaction/confirmHarvest", "API\\Admin\\PlantTransactionController@confirmHarvest");
+
+
     Route::post("/plant/{plantId}/open/sell", "API\\Farmer\\FarmerResourceController@createSellOrder");
 
     Route::get("/order", "API\\Farmer\\FarmerResourceController@getOrders");
@@ -82,9 +86,10 @@ Route::group(["prefix" => 'buyer', "middleware" => "auth:api"], function () {
     Route::resource('/plant.transaction', "API\\Admin\\PlantTransactionController");
 
     Route::post('/plant/rating', "API\\Buyer\\BuyerResourceController@updateRating");
+
     Route::post("/plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
     Route::post("/plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
-
+    Route::post("/plant/{plantId}/transaction/confirmHarvest", "API\\Admin\\PlantTransactionController@confirmHarvest");
 
     Route::resource('/order', 'API\\Buyer\\OrderResourceController');
     Route::resource('/confirm-order', 'API\\Buyer\\ConfirmOrderResourceController');

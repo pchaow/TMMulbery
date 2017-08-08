@@ -14,7 +14,7 @@ class AddConfirmAmountPlantTransaction extends Migration
     public function up()
     {
         Schema::table('plant_transactions', function (Blueprint $table) {
-            $table->decimal('confirm_amount', 10, 2)->after('balance');
+            $table->decimal('confirm_amount', 10, 2)->nullable()->after('balance');
         });
     }
 

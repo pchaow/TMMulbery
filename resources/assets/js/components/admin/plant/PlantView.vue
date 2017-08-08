@@ -58,7 +58,8 @@
 
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">บันทึก</button>
-                                    <button class="btn btn-default" type="button" @click="changeState(0)">ยกเลิก</button>
+                                    <button class="btn btn-default" type="button" @click="changeState(0)">ยกเลิก
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -118,6 +119,73 @@
                 </div>
             </div>
 
+            <div class="panel panel-info" v-if="currentState == states[3]">
+                <div class="panel-heading">
+                    ยืนยันรายการเก็บเกี่ยว
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <form @submit.prevent="saveConfirmHarvestForm()">
+                                <div class="form-group"
+                                     v-bind:class="{ 'has-error': harvestErrorForm['transaction_date'] }">
+                                    <label>วันที่เก็บเกี่ยว:</label>
+
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input disabled @change="updateHarvestAmount()"
+                                               v-model="currentConfirmTransaction.transaction_date"
+                                               type="date"
+                                               class="form-control pull-right">
+                                    </div>
+                                    <span v-if="harvestErrorForm['transaction_date']"
+                                          class="help-block">{{ harvestErrorForm['transaction_date'] }}</span>
+                                    <!-- /.input group -->
+                                </div>
+
+                                <div class="form-group">
+                                    <label>น้ำหนักเก็บเกี่ยว (กิโลกรัม):</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calculator"></i>
+                                        </div>
+                                        <input disabled v-model="currentConfirmTransaction.amount" type="number"
+                                               step="0.01"
+                                               class="form-control pull-right">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+
+                                <div class="form-group">
+                                    <label>บันทึกน้ำหนักเก็บเกี่ยวจริง(กิโลกรัม):</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calculator"></i>
+                                        </div>
+                                        <input v-model="currentConfirmTransaction.confirm_amount" type="number"
+                                               step="0.01"
+                                               class="form-control pull-right">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">บันทึก</button>
+                                    <button class="btn btn-default" type="button" @click="changeState(0)">ยกเลิก
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="panel panel-info">
                 <div class="panel-heading">
                     รายการการปลูก
@@ -130,22 +198,33 @@
                             <tr>
                                 <th>วันที่</th>
                                 <th>ประเภท</th>
-                                <th>จำนวน </th>
-                                <th>น้ำหนัก (กิโลกรัม)</th>
+                                <th>จำนวน</th>
+                                <th>ประมาณคงเหลือ(กก.)</th>
+                                <th>น้ำหนักเก็บเกี่ยวจริง (กก.)</th>
+
                                 <th>สถานะ</th>
                                 <th>การจัดการ</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="transaction in transactions">
-                                <td>{{transaction.transaction_date | moment("YYYY-MM-DD")}}</td>
+                                <td>{{transaction.transaction_date | moment("DD MMM YYYY")}}</td>
                                 <td>{{transaction.type}}</td>
                                 <td v-bind:class="{ danger : transaction.type=='-', 'text-right' : transaction.type=='-'}">
                                     {{transaction.amount}} {{ transaction.status.name == "N" ? 'ต้น' : 'กก.' }}
                                 </td>
                                 <td>{{transaction.balance}}</td>
+                                <td v-bind:class="{success : transaction.confirm_amount != null } "
+                                >{{transaction.confirm_amount}}
+                                </td>
                                 <td>{{transaction.status ? transaction.status.description : ''}}</td>
                                 <td>
+                                    <template
+                                            v-if="transaction.status.name == 'H' && transaction.confirm_amount == null">
+                                        <button type="button" class="btn btn-default"
+                                                @click="changeState(3,transaction)">ยืนยัน
+                                        </button>
+                                    </template>
                                 </td>
                             </tr>
                             </tbody>
@@ -194,8 +273,9 @@
                 plantPage: plantPage,
                 plantTransactionApiUrl: plantTransactionApiUrl,
                 plantApiUrl: this.$routes.api[this.roleType].plant + "/" + this.plantId,
-                states: ["none", "new", "harvest"],
+                states: ["none", "new", "harvest", "confirm_harvest"],
                 currentState: "none",
+                currentConfirmTransaction: null,
 
                 plant: {},
                 pages: {},
@@ -294,6 +374,26 @@
                         console.log(this.harvestErrorForm);
                     })
             },
+
+            saveConfirmHarvestForm: function () {
+                this.harvestErrorForm = {}
+                axios.post(this.plantTransactionApiUrl + "/confirmHarvest", this.currentConfirmTransaction)
+                    .then(response => {
+                            console.log(response);
+                            this.loadTransaction().then(r => {
+                                this.currentState = this.states[0];
+                                this.changeState(0);
+                                this.resetForm(this.harvestForm);
+                            });
+                        }
+                    )
+                    .catch(error => {
+                        console.log(error.response)
+                        this.harvestErrorForm = error.response.data;
+                        console.log(this.harvestErrorForm);
+                    })
+            },
+
             initializeHarvestForm: function () {
                 this.harvestForm.transaction_date = moment().format("YYYY-MM-DD")
                 var transaction_date = moment();
@@ -321,7 +421,10 @@
             },
 
 
-            changeState: function (stateId) {
+            changeState: function (stateId, item = null) {
+                if (stateId == 0) {
+                    this.currentConfirmTransaction = null;
+                }
                 if (stateId == 1) {
                     if (this.transactions.length > 0) {
                         return;
@@ -330,6 +433,15 @@
                 if (stateId == 2) {
                     if (this.transactions.length == 0) {
                         return;
+                    }
+                }
+
+                if (stateId == 3) {
+                    if (!item) {
+                        return;
+                    } else {
+                        this.currentConfirmTransaction = item;
+                        this.currentConfirmTransaction.transaction_date = moment(this.currentConfirmTransaction.transaction_date).format("YYYY-MM-DD")
                     }
                 }
                 this.currentState = this.states[stateId];

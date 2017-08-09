@@ -35,9 +35,10 @@
         },
         components: {},
         data() {
+            var eventUrl = this.$routes.api[this.roleType].event;
             return {
-                fcEvents: []
-
+                fcEvents: [],
+                eventUrl: eventUrl,
             }
         },
         methods: {
@@ -59,7 +60,7 @@
                     },
 
                     events: function (start, end, timezone, callback) {
-                        axios.post(self.$routes.api.buyer.event, {
+                        axios.post(self.eventUrl, {
                             start: start.unix(),
                             end: end.unix()
                         })

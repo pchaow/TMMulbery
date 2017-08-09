@@ -16,6 +16,8 @@ export default {
             index: api_farmer_index,
             plant: api_farmer_index + "/plant",
             order: api_farmer_index + "/order",
+            event: api_farmer_index + "/event",
+
         },
         buyer: {
             index: api_buyer_index,

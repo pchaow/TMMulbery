@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <buyer-calendar-dashboard></buyer-calendar-dashboard>
+                <buyer-calendar-dashboard role-type="buyer"></buyer-calendar-dashboard>
 
             </div>
         </div>

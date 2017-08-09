@@ -434,6 +434,7 @@
                     if (this.transactions.length == 0) {
                         return;
                     }
+                    this.initializeHarvestForm();
                 }
 
                 if (stateId == 3) {

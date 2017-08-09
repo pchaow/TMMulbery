@@ -71,6 +71,8 @@ Route::group(["prefix" => 'farmer', "middleware" => "auth:api"], function () {
     Route::post('/order/loadBuyOpenOrder', 'API\\Farmer\\FarmerResourceController@loadBuyOpenOrder');
     Route::post("/order/openWithConfirm", 'API\\Farmer\\FarmerResourceController@openWithConfirm');
 
+    Route::post("/event", "API\\Farmer\\FarmerResourceController@loadEvents");
+
 
 });
 

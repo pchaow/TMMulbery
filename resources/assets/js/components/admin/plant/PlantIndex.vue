@@ -57,7 +57,14 @@
                                     <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                     <td>{{plant.remainingBalance ? plant.remainingBalance.toFixed(2) : '-'}} กก.</td>
                                     <td>
-                                        {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
+                                        <template v-if="plant.lastHarvestDate">
+                                            -
+                                        </template>
+
+                                        <template v-else>
+                                            {{plant.lastHarvestDate | moment("from", "now",true) }}
+                                        </template>
+
                                     </td>
                                     <td>{{plant.district ? plant.district.name : '-'}}</td>
                                     <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>

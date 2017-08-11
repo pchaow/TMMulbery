@@ -42,11 +42,11 @@
                             buttons: [{
                                 count: 3,
                                 type: 'month',
-                                text: '1M'
+                                text: '3M'
                             }, {
                                 count: 6,
                                 type: 'month',
-                                text: '5M'
+                                text: '6M'
                             },{
                                 count: 1,
                                 type: 'year',

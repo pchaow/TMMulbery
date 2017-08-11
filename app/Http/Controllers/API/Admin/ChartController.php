@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Admin;
 
+use App\Models\Plant;
 use App\Models\PlantTransaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,6 +84,8 @@ class ChartController extends Controller
 
     public function plantHarvestStats(Request $request, $plantId)
     {
+        $plant = Plant::find($plantId);
+
         $today = Carbon::now();
         $today->day = 1;
         $today->addMonth(7);
@@ -94,29 +97,27 @@ class ChartController extends Controller
 
         $fixLast = Carbon::now();
         $fixLast->day = 1;
-        $fixLast->addMonth(1);
-        $fixLast->subMonth(18);
+        $fixLast->month = 1;
+        $fixLast->year = 2015;
 
         $categories = [];
         $estimate = [];
         $amount = [];
         $diff = [];
         $dates = [];
+        $remainingBalance = [];
+
         while ($firstMonth < $today) {
             $id = "$firstMonth->year-$firstMonth->month";
             $categories[] = $id;
-
             $dates[$id] = $firstMonth->timestamp;
             $dateInMills = $dates[$id] * 1000;
-
             $amount[$id] = [$dateInMills, 0];
             $estimate[$id] = [$dateInMills, 0];
             $diff[$id] = [$dateInMills, 0];
-
+            $remainingBalance[] = [$dateInMills, $plant->planningBalance($firstMonth)];
             $firstMonth->addMonth(1);
-
         }
-
         $query = PlantTransaction::query();
         $query->addSelect(DB::raw("concat(date_format(transaction_date,'%Y'),'-',convert(date_format(transaction_date,'%m'),UNSIGNED INTEGER)) as catId"));
 //        $query->addSelect("transaction_date");
@@ -153,6 +154,6 @@ class ChartController extends Controller
         }
 
 
-        return [$realSeries, $estimateSeries, $diffSeries];
+        return [$realSeries, $estimateSeries, $diffSeries,$remainingBalance];
     }
 }

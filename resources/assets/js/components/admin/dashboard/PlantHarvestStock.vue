@@ -75,6 +75,14 @@
                             }
                         }, {
                             type: 'spline',
+                            dashStyle: 'shortdot',
+                            name: 'Estimate Remaining Balance',
+                            data: data[3],
+                            tooltip: {
+                                valueDecimals: 2
+                            }
+                        }, {
+                            type: 'spline',
                             name: 'Different',
                             data: data[2],
                             yAxis: 1,

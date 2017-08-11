@@ -65,14 +65,21 @@ class Plant extends Model
         }
     }
 
-    public function planningBalance($date)
+    public function planningBalance(Carbon $date)
     {
         $initStatus = PlantTransactionStatus::where('name', '=', 'N')->first();
-        $lastTransaction = $this->transactions()->orderBy('transaction_date', 'desc')->first();
+        $lastTransaction = $this->transactions()
+            ->where('transaction_date', '<=', $date)
+            ->orderBy('transaction_date', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->first();
+
         $firstTransaction = $this->transactions()
             ->where('status_id', '=', $initStatus->id)
-            ->orderBy('transaction_date', 'desc')->first();
-        if ($firstTransaction != null) {
+            ->orderBy('transaction_date', 'desc')
+            ->first();
+        if ($firstTransaction != null && $lastTransaction != null) {
             $amount = $firstTransaction->amount;
             $lastDate = $lastTransaction->transaction_date;
             $lastBalance = $lastTransaction->balance;

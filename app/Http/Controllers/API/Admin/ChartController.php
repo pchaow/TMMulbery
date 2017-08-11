@@ -62,7 +62,7 @@ class ChartController extends Controller
             $currentEstiamte = floatval($d->confirm_amount);
             $amounts[$d->catId] = $currentAmount;
             $confirmAmounts[$d->catId] = $currentEstiamte;
-            $diff[$d->catId] = $currentAmount == 0 || $currentEstiamte == 0 ? 0 : $currentAmount - $currentEstiamte;
+            $diff[$d->catId] = $currentAmount == 0 || $currentEstiamte == 0 ? 0 :  $currentEstiamte - $currentAmount;
         }
         return [
             "categories" => $categories,

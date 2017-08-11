@@ -74,6 +74,13 @@
                             enableMouseTracking: true
 
                         },
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                            enableMouseTracking: true
+
+                        },
                     },
                     series: [],
                 }

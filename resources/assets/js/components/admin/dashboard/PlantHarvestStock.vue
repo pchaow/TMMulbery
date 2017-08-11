@@ -38,6 +38,26 @@
                 $.getJSON('/api/public/plant/1/harvest_stats', function (data) {
                     console.log(data)
                     $(self.$refs.chart).highcharts('StockChart', {
+                        rangeSelector: {
+                            buttons: [{
+                                count: 3,
+                                type: 'month',
+                                text: '1M'
+                            }, {
+                                count: 6,
+                                type: 'month',
+                                text: '5M'
+                            },{
+                                count: 1,
+                                type: 'year',
+                                text: '1Y'
+                            }, {
+                                type: 'all',
+                                text: 'All'
+                            }],
+                            inputEnabled: false,
+                            selected: 0
+                        },
                         yAxis: [
                             {
                                 min: 0,

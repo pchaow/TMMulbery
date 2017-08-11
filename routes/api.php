@@ -22,6 +22,12 @@ Route::resource('thailand/province', "API\\ProvinceController");
 Route::resource('thailand/province.amphure', "API\\ProvinceAmphureController");
 Route::resource('thailand/province.amphure.district', "API\\ProvinceAmphureDistrictController");
 
+Route::group(['prefix' => 'public'], function () {
+
+    Route::get("plant/{id}/harvest_stats", "API\\Admin\\ChartController@plantHarvestStats");
+
+});
+
 Route::group(["prefix" => 'admin', "middleware" => "auth:api"], function () {
 
     Route::resource('farmer', "API\\Admin\\FarmerResourceController");
@@ -33,21 +39,16 @@ Route::group(["prefix" => 'admin', "middleware" => "auth:api"], function () {
     Route::resource('buyer', "API\\Admin\\BuyerResourceController");
     Route::get("buyer/{id}/order", "API\\Admin\\BuyerResourceController@getOrders");
 
-
     Route::resource('plant_transaction_status', "API\\Admin\\PlantTransactionStatusController");
 
-
     Route::get('dashboard/sum_users_by_type', "API\\Admin\\DashboardController@sum_users_by_type");
-
 
     Route::resource('plant', "API\\Admin\\PlantResourceController");
     Route::get("plant/{plantId}/balance", "API\\Admin\\PlantResourceController@balance");
 
-
     Route::resource('plant.transaction', "API\\Admin\\PlantTransactionController");
     Route::post("plant/{plantId}/transaction/initialFarm", "API\\Admin\\PlantTransactionController@initialFarm");
     Route::post("plant/{plantId}/transaction/harvestFarm", "API\\Admin\\PlantTransactionController@harvestFarm");
-
 
 });
 

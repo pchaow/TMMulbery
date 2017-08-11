@@ -19,6 +19,10 @@
                 plant-id="{{$plant->id}}"
                 role-type="farmer">
         </plant-view>
+
+        <admin-plant-harvest-stat-graph :plant-id="{{$plant->id}}"></admin-plant-harvest-stat-graph>
+
+
     </section>
     <!-- /.content -->
 @endsection

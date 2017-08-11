@@ -35,7 +35,7 @@
         methods: {
             loadData: function () {
                 var self = this
-                $.getJSON('/api/public/plant/1/harvest_stats', function (data) {
+                $.getJSON('/api/public/plant/' + this.plantId + '/harvest_stats', function (data) {
                     console.log(data)
                     $(self.$refs.chart).highcharts('StockChart', {
                         rangeSelector: {
@@ -47,7 +47,7 @@
                                 count: 6,
                                 type: 'month',
                                 text: '6M'
-                            },{
+                            }, {
                                 count: 1,
                                 type: 'year',
                                 text: '1Y'
@@ -57,6 +57,16 @@
                             }],
                             inputEnabled: false,
                             selected: 0
+                        },
+                        xAxis: {
+                            plotLines: [{
+                                label : {
+                                    text : "Today",
+                                },
+                                color: '#FF0000', // Red
+                                width: 2,
+                                value: moment()// Position, you'll have to translate this to the values on your x axis
+                            }]
                         },
                         yAxis: [
                             {

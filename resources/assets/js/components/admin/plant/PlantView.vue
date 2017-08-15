@@ -1,5 +1,7 @@
 <template>
+
     <div class="row">
+
         <div class="col-md-12">
 
             <div class="panel panel-info">
@@ -254,6 +256,7 @@
 
 <script>
 
+
     export default {
         props: {
             roleType: String,
@@ -324,6 +327,8 @@
                         this.loadTransaction().then(r => {
                             this.currentState = this.states[0];
                             this.resetForm(this.initialForm);
+                            this.$parent.$emit('ReloadHarvestStock');
+
                         });
                     })
             },
@@ -365,6 +370,8 @@
                             this.loadTransaction().then(r => {
                                 this.currentState = this.states[0];
                                 this.resetForm(this.harvestForm);
+                                this.$parent.$emit('ReloadHarvestStock');
+
                             });
                         }
                     )
@@ -384,6 +391,7 @@
                                 this.currentState = this.states[0];
                                 this.changeState(0);
                                 this.resetForm(this.harvestForm);
+                                this.$parent.$emit('ReloadHarvestStock');
                             });
                         }
                     )

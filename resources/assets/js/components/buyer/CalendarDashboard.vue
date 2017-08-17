@@ -12,6 +12,9 @@
                     <div id="calendar"></div>
                 </div>
             </div>
+            <div><i class="fa fa-circle text-success"> เก็บเกี่ยว</i></div>
+            <div><i class="fa fa-circle text-primary"> คำสั่งซื้อยืนยันแล้ว</i></div>
+            <div><i class="fa fa-circle text-danger"> คำสั่งซื้อยังไม่ได้ยืนยัน</i></div>
         </div>
     </div>
 </template>

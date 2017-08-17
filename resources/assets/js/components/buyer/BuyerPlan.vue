@@ -100,10 +100,15 @@
                                 </td>
                             </tr>
                             </tbody>
+
                         </table>
                     </div>
                 </div>
+                <div><i class="fa fa-circle text-success"> พร้อมเก็บเกี่ยว</i></div>
+                <div><i class="fa fa-circle text-danger"> แปลงของตัวเอง</i></div>
+                <div><i class="fa fa-circle text-yellow"> เก็บเกี่ยวล่วงหน้า</i></div>
             </div>
+
 
 
             <div class="panel panel-info" v-if="state == 'buy'">

@@ -212,8 +212,19 @@ class FarmerService
         foreach ($confirmOrders as $order) {
             $e = [];
             $buyOrder = $order->buyOrder()->first();
+            $sellOrder = $order->sellOrder()->first();
             $e['type'] = "order";
-            $e['title'] = "[$order->status] " . "ID : $buyOrder->id : Confirm Buy Order ";
+
+            if($order->status == "Pending"){
+                //$e['title'] = "[รอการยืนยันคำสั่งซื้อ] "."ID : $buyOrder->id : Waiting for confirm ";
+                $e['title'] = "[ID : $buyOrder->id". "-" . "$sellOrder->id] : รอการยืนยันคำสั่งซื้อ";
+            }else if($order->status == "Success"){
+                //$e['title'] = "[ยืนยันคำสั่งซื้อแล้ว] "."ID : $buyOrder->id : Confirmed";
+                $e['title'] = "[ID : $buyOrder->id". "-" . "$sellOrder->id] : ยืนยันคำสั่งซื้อแล้ว";
+
+
+            }
+
             $e['link'] = "/buyer/order/$order->id/confirm";
             $e['start'] = $buyOrder->duedate;
             $e['end'] = $buyOrder->duedate;
@@ -226,7 +237,7 @@ class FarmerService
 
             $status = $transaction->status;
             $e['type'] = "plantTransaction";
-            $e['title'] = "[" . $transaction->plant->name . "] : $status->display_name";
+            $e['title'] = "[ชื่อแปลง: " . $transaction->plant->name . "] : $status->description";
             $e['start'] = $transaction->transaction_date;
             $e['end'] = $transaction->transaction_date;
             $events[] = $e;

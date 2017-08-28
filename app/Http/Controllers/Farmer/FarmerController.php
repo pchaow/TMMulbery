@@ -63,4 +63,11 @@ class FarmerController extends Controller
             ->with('plant', $plant);
 
     }
+
+    public function plantIndex()
+    {
+        return view('farmer.plant.index');
+
+    }
+
 }

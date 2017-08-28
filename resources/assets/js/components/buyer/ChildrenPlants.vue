@@ -53,12 +53,30 @@
                                 </td>
                             </tr>
                             </tbody>
+
+                            <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div>
+                                        จำนวนทั้งหมด {{plants ? plants.length : 0}}
+                                        รายการ
+                                    </div>
+                                    <ul class="pagination">
+                                        <li></li>
+                                    </ul>
+                                </td>
+
+                            </tr>
+                            </tfoot>
+
+
                         </table>
+                        <div><i class="fa fa-circle text-success"> พร้อมเก็บเกี่ยว</i>
+                        <i class="fa fa-circle text-danger"> เก็บเกี่ยวล่วงหน้า</i></div>
                     </div>
                 </div>
             </div>
-            <div><i class="fa fa-circle text-success"> พร้อมเก็บเกี่ยว</i></div>
-            <div><i class="fa fa-circle text-danger"> เก็บเกี่ยวล่วงหน้า</i></div>
+
 
         </div>
     </div>

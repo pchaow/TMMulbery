@@ -10,11 +10,14 @@
                 <div class="panel-body">
 
                     <div id="calendar"></div>
+                    <br>
+                    <div><i class="fa fa-circle text-success"> ปลูก/เก็บเกี่ยว</i>
+
+                    <i class="fa fa-circle text-primary"> คำสั่งซื้อยืนยันแล้ว</i>
+                    <i class="fa fa-circle" style="color: #ff00ff"> คำสั่งซื้อยังไม่ได้ยืนยัน</i></div>
                 </div>
             </div>
-            <div><i class="fa fa-circle text-success"> ปลูก/เก็บเกี่ยว</i></div>
-            <div><i class="fa fa-circle text-primary"> คำสั่งซื้อยืนยันแล้ว</i></div>
-            <div><i class="fa fa-circle" style="color: #ff00ff"> คำสั่งซื้อยังไม่ได้ยืนยัน</i></div>
+
         </div>
     </div>
 </template>

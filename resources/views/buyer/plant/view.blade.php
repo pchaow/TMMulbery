@@ -23,7 +23,7 @@
                 plant-id="{{$plant->id}}"
                 role-type="buyer">
         </plant-view>
-        <admin-plant-harvest-stat-graph :plant-id="{{$plant->id}}"></admin-plant-harvest-stat-graph>
+        <admin-plant-harvest-stock :plant-id="{{$plant->id}}"></admin-plant-harvest-stock>
 
     </section>
     <!-- /.content -->

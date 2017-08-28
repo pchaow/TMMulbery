@@ -26,6 +26,8 @@ class AddTransactionDateToPlantTransaction extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('plant_transactions', function (Blueprint $table) {
+            $table->dropColumn('transaction_date');
+        });
     }
 }

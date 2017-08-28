@@ -30,7 +30,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="btn-group btn-group-sm pull-right">
-                        <a v-bind:href="createFarmerUrl" class="btn btn-default">ลงทะเบียนเกษตรกร</a>
+                        <a v-bind:href="createFarmerUrl" class="btn btn-warning">ลงทะเบียนเกษตรกร</a>
                     </div>
                     รายการเกษตรกร
                 </div>
@@ -43,8 +43,9 @@
                                 <thead>
                                 <tr>
                                     <th>ชื่อ-ชื่อสกุล</th>
-                                    <th>บัญชีผู้ใช้</th>
+                                    <th>ชื่อบัญชีผู้ใช้</th>
                                     <th>อีเมล</th>
+                                    <th>เบอร์โทรติดต่อ</th>
                                     <th>ตำบล</th>
                                     <th>อำเภอ</th>
                                     <th>จังหวัด</th>
@@ -56,10 +57,14 @@
                                     <td>{{farmer.name}}</td>
                                     <td>{{farmer.username}}</td>
                                     <td>{{farmer.email}}</td>
+                                    <td>{{farmer.contact_number ? farmer.contact_number : '-'}}</td>
                                     <td>{{farmer.district ? farmer.district.name : '-'}}</td>
                                     <td>{{farmer.amphure ? farmer.amphure.name : '-'}}</td>
                                     <td>{{farmer.province ? farmer.province.name : '-'}}</td>
                                     <td>
+                                        <a v-bind:href="strFormat(viewProfileUrl,{id : farmer.id})"
+                                           class="btn btn-info">ดูข้อมูล</a>
+
                                         <a v-bind:href="strFormat(editUrl,{id : farmer.id})"
                                            class="btn btn-primary">แก้ไข</a>
 
@@ -101,7 +106,7 @@
             roleType: String,
         },
         data() {
-
+            var viewProfileUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/profile";
             var editUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/edit";
             var viewUrl = this.$routes.web[this.roleType].farmer.index + "/{id}/view";
             var deleteUrl = this.$routes.api[this.roleType].farmer + "/{id}";
@@ -111,6 +116,7 @@
 
             console.log(loadFarmerUrl);
             return {
+                viewProfileUrl: viewProfileUrl,
                 editUrl: editUrl,
                 viewUrl: viewUrl,
                 deleteUrl: deleteUrl,
@@ -151,7 +157,7 @@
                 })
             },
             deleteFarmer: function (farmer) {
-                if (confirm("ต้องการลบเกษตรกร?")) {
+                if (confirm("ต้องการลบเกษตรกรรายนี้?")) {
                     axios.delete(this.strFormat(this.deleteUrl, {id: farmer.id})).then(response => {
                         console.log(response)
                         this.load()

@@ -3,11 +3,11 @@
 @section('content')
     <section class="content-header">
         <h1>
-            จัดการแปลงหม่อน
+            <a href="/buyer/plant" class="fa fa-arrow-left"> จัดการแปลงหม่อน </a>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/buyer/plant/create"><i class="fa fa-plus"></i> เพิ่มแปลงหม่อน</a></li>
+            <li><a href="/buyer/plant"><i class="fa fa-dashboard"></i> จัดการแปลงหม่อน</a></li>
+            <li><a href=""><i class="fa fa-plus"></i> เพิ่มแปลงหม่อน</a></li>
         </ol>
     </section>
 

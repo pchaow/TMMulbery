@@ -3,11 +3,12 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Dashboard
+            จัดการแปลงหม่อน  <a href="/buyer/plantmap" class="btn btn-primary">แผนที่</a>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Here</li>
+            <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+
+            <li class="active">จัดการแปลงหม่อน</li>
         </ol>
     </section>
 
@@ -21,6 +22,9 @@
                 </farmer-view>
             </div>
         </div>
+
+        <buyer-children-plants role-type="buyer">
+        </buyer-children-plants>
     </section>
     <!-- /.content -->
 @endsection

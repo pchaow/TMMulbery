@@ -2,8 +2,11 @@
 
 namespace App\Http\Services;
 
+use App\Models\ConfirmOrder;
 use App\Models\Order;
 use App\Models\Plant;
+use App\Models\PlantTransaction;
+use App\Models\PlantTransactionStatus;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -171,6 +174,65 @@ class FarmerService
         } else {
             return $query->get();
         }
+
+    }
+
+    public static function loadEvents($userId, $startDate = null, $endDate = null)
+    {
+        //confirm orders
+        $query = ConfirmOrder::query();
+        $query->whereHas("sellOrder", function ($query) use ($userId, $startDate, $endDate) {
+            $query->where('user_id', $userId);
+            $query->whereBetween('duedate', [$startDate, $endDate]);
+
+        });
+        $query->where("status", '!=', ConfirmOrder::$STATUS_CLOSE);
+        $confirmOrders = $query->get();
+
+        //plant transaction
+
+        $query = PlantTransaction::query();
+
+        $updateStatus = PlantTransactionStatus::where('name', 'U')->first();
+
+        $query->whereHas('plant', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        });
+
+        $query->whereHas('status', function ($q) use ($updateStatus) {
+            $q->where('name', '!=', $updateStatus->name);
+        });
+        $query->whereBetween('transaction_date', [$startDate, $endDate]);
+
+        $plantTransactions = $query->get();
+
+
+        $events = [];
+
+        foreach ($confirmOrders as $order) {
+            $e = [];
+            $buyOrder = $order->buyOrder()->first();
+            $e['type'] = "order";
+            $e['title'] = "[$order->status] " . "ID : $buyOrder->id : Confirm Buy Order ";
+            $e['start'] = $buyOrder->duedate;
+            $e['end'] = $buyOrder->duedate;
+            $e['status'] = $order->status;
+            $events[] = $e;
+        }
+
+        foreach ($plantTransactions as $transaction) {
+            $e = [];
+
+            $status = $transaction->status;
+            $e['type'] = "plantTransaction";
+            $e['title'] = "[" . $transaction->plant->name . "] : $status->display_name";
+            $e['start'] = $transaction->transaction_date;
+            $e['end'] = $transaction->transaction_date;
+            $events[] = $e;
+        }
+
+
+        return $events;
 
     }
 

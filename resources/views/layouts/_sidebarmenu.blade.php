@@ -47,13 +47,16 @@
     @endif
 
     @if(\Laratrust::hasRole('buyer'))
-        <li class="{{ Request::is('buyer') ? 'active' : '' }}"><a href="{{url("buyer")}}"><i class="fa fa-tachometer "></i>
+
+        <li class="{{ Request::is('buyer') ? 'active' : '' }}"><a href="{{url("buyer")}}"><i class="fa fa-calendar "></i>
+                <span>ปฏิทินแผนงาน</span></a></li>
+        <li class="{{ Request::is('buyer/buylist') ? 'active' : '' }}"><a href="{{url("buyer/buylist")}}"><i class="fa fa-money "></i>
                 <span>สถานะคำสั่งซื้อ</span></a></li>
-        <li class="{{ Request::is('buyer/plan') ? 'active' : '' }}"><a href="{{url("buyer/plan")}}"><i class="fa fa-tachometer "></i>
-                <span>แผนการปลูก</span></a></li>
-        <li class="{{ Request::is('buyer/plant') || Request::is('buyer/plant/*') ? 'active' : '' }}"><a href="{{url("buyer/plant")}}"><i class="fa fa-tachometer "></i>
+        <li class="{{ Request::is('buyer/plan') ? 'active' : '' }}"><a href="{{url("buyer/plan")}}"><i class="fa fa-pencil-square-o  "></i>
+                <span>วางแผนการเก็บเกี่ยว</span></a></li>
+        <li class="{{ Request::is('buyer/plant') || Request::is('buyer/plant/*') ? 'active' : '' }}"><a href="{{url("buyer/plant")}}"><i class="fa fa-tree "></i>
                 <span>แปลง</span></a></li>
-        <li class="{{ Request::is('buyer/farmer') || Request::is('buyer/farmer/*') ? 'active' : '' }}"><a href="{{url("buyer/farmer")}}"><i class="fa fa-tachometer "></i>
+        <li class="{{ Request::is('buyer/farmer') || Request::is('buyer/farmer/*') ? 'active' : '' }}"><a href="{{url("buyer/farmer")}}"><i class="fa fa-users "></i>
                 <span>เกษตรกร</span></a></li>
     @endif
 

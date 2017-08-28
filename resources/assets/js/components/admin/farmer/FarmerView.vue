@@ -70,7 +70,7 @@
                                         ประกาศขาย
                                     </button>
 
-                                    <a v-bind:href="plantCreateUrl" class="btn btn-default">
+                                    <a v-bind:href="plantCreateUrl" class="btn btn-warning">
                                         เพิ่มแปลงหม่อน
                                     </a>
 
@@ -103,7 +103,7 @@
                                             <td>{{plant.name}}</td>
                                             <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                             <td>{{plant.remainingBalance ?
-                                                numeral(plant.remainingBalance).format("0,0.00") : '-'}}
+                                                numeral(plant.remainingBalance).format("0,0.00") : '-'}} กก.
                                             </td>
                                             <td>
                                                 <template v-if="plant.lastHarvestDate">
@@ -140,7 +140,7 @@
                                         <tr>
                                             <td colspan="5">
                                                 <div>
-                                                    จำนวนทั้งหมด {{farmerData.plants ? farmerData.plants.length : 0}}
+                                                    จำนวนทั้งหมด {{plants.data ? plants.data.length : 0}}
                                                     รายการ
                                                 </div>
                                                 <ul class="pagination">
@@ -165,7 +165,7 @@
                                             <th>วันที่</th>
                                             <th>แปลง</th>
                                             <th>สถานะ</th>
-                                            <th>จำนวน (กก.)</th>
+                                            <th>ปริมาณ (กก.)</th>
                                             <th>ผู้ติดต่อซื้อ</th>
                                             <th>จัดการ</th>
                                         </tr>
@@ -180,11 +180,12 @@
                                                 order.sell_confirm_orders[0].status : order.status}}
                                             </td>
                                             <td>
-                                                {{numeral(order.amount).format("0,0.00")}}
+
                                                 <template
                                                         v-if="order.sell_confirm_orders.length > 0 && order.sell_confirm_orders[0].status == 'Success'">
-                                                    ({{order.sell_confirm_orders[0].remark.unit}})
+                                                    {{order.sell_confirm_orders[0].remark.unit}}
                                                 </template>
+                                                ({{numeral(order.amount_kg).format("0,0.00")}})
                                             </td>
                                             <td>
                                                 <template>
@@ -275,11 +276,16 @@
                 var lastdate = plant.lastHarvestDate
 
                 var c = now.diff(lastdate, "days");
-                c = Math.abs(c);
+                console.log(c);
+                if (c < 0) {
+                    c = Math.abs(c);
+                    var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
 
-                var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
-
-                return 'rgba(150,250,100,' + alpha + ')'
+                    return 'rgba(255,255,0,' + alpha + ')'
+                } else {
+                    var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                    return 'rgba(150,250,100,' + alpha + ')'
+                }
             },
 
             openSellOrderForm: function () {

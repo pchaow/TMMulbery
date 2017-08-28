@@ -40,7 +40,12 @@ class PlantTransactionController extends Controller
 
     public function harvestFarm(Request $request, $plantId)
     {
-        return PlantTransactionService::harvestFarm($plantId,$request->all());
+        return PlantTransactionService::harvestFarm($plantId, $request->all());
+    }
+
+    public function confirmHarvest(Request $request, $plantId)
+    {
+        return PlantTransactionService::confirmHarvestFarm($plantId, $request->all());
     }
 
 }

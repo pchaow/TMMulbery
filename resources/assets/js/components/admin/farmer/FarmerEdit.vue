@@ -4,7 +4,7 @@
 
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    Edit User
+                    แก้ไขข้อมูลเกษตรกร
                 </div>
 
                 <div class="panel-body">
@@ -77,7 +77,7 @@
                                 </div>
 
                                 <div class="form-group" v-bind:class="{ 'has-error': formErrors['username'] }">
-                                    <label class="control-label">บัญชีผู้ใช้ : </label>
+                                    <label class="control-label">ชื่อบัญชีผู้ใช้ : </label>
                                     <input type="text" class="form-control" placeholder="Username"
                                            v-model="formInputs.username"/>
                                     <span v-if="formErrors['username']"
@@ -103,8 +103,8 @@
 
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <a v-bind:href="successUrl" class="btn btn-default">ยกเลิก</a>
                             </div>
                         </form>
                     </div>

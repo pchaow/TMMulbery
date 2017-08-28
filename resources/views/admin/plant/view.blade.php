@@ -18,8 +18,8 @@
             plant-transaction-api-url="/api/admin/plant/{{$plant->id}}/transaction"
             plant-api-url="/api/admin/plant/{{$plant->id}}"
             plant-page="/admin/plant">
-
         </plant-view>
+
     </section>
     <!-- /.content -->
 @endsection

@@ -16,13 +16,21 @@ export default {
             index: api_farmer_index,
             plant: api_farmer_index + "/plant",
             order: api_farmer_index + "/order",
+            event: api_farmer_index + "/event",
+
         },
         buyer: {
             index: api_buyer_index,
             order: api_buyer_index + "/order",
+            openBuySellOrder: api_buyer_index + "/order/openWithConfirm",
             confirmOrder: api_buyer_index + 'confirm-order',
             plant: api_buyer_index + "/plant",
+            plant_rating: api_buyer_index + "/plant/rating",
             farmer: api_buyer_index + "/farmer",
+            event: api_buyer_index + "/event",
+            farmerPlant: api_buyer_index + "/farmer/plant",
+            plan: api_buyer_index + "/plan",
+            plantMap: api_buyer_index + "/plantmap",
 
         },
     },
@@ -42,7 +50,7 @@ export default {
             index: buyer_index,
             order: buyer_index + "/order",
             plant: buyer_index + "/plant",
-
+            plan: buyer_index + "/plan",
             farmer: {
                 index: buyer_index + "/farmer",
                 create: buyer_index + "/farmer/create",

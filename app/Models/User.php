@@ -13,13 +13,18 @@ class User extends Authenticatable
     use Notifiable;
     use HasApiTokens;
 
+    protected $casts = [
+        'map' => 'array',
+    ];
+
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'identity', 'contact_number', 'address', 'postal_code', 'province_id', 'amphure_id', 'district_id'
+        'name', 'username', 'email', 'map', 'password', 'identity', 'contact_number', 'address', 'postal_code', 'province_id', 'amphure_id', 'district_id'
     ];
 
     /**

@@ -2,7 +2,7 @@
     <div>
         <div class="form-group" v-bind:class="{ 'has-error': formErrors['province_id'] }">
             <label class="control-label">จังหวัด : </label>
-            <select class="form-control" v-model="provinceId"
+            <select class="form-control" v-model="provinceId" v-bind:disabled="disabled"
                     v-on:change="updateProvince($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="province in provinces" v-bind:value="province.id">{{province.name}}</option>
@@ -13,7 +13,7 @@
 
         <div class="form-group" v-bind:class="{ 'has-error': formErrors['amphure_id'] }">
             <label class="control-label">อำเภอ : </label>
-            <select class="form-control" v-model="amphureId"
+            <select class="form-control" v-model="amphureId" v-bind:disabled="disabled"
                     v-on:change="updateAmphure($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="amphure in amphures" v-bind:value="amphure.id">{{amphure.name}}</option>
@@ -24,7 +24,7 @@
 
         <div class="form-group" v-bind:class="{ 'has-error': formErrors['district_id'] }">
             <label class="control-label">ตำบล : </label>
-            <select class="form-control" v-model="districtId"
+            <select class="form-control" v-model="districtId" v-bind:disabled="disabled"
                     v-on:change="updateDistrict($event.target.value,$event.target)">
                 <option value="0">กรุณาเลือก</option>
                 <option v-for="district in districts" v-bind:value="district.id">{{district.name}}</option>
@@ -55,6 +55,12 @@
                 default: function () {
                     return {};
                 }
+            },
+            disabled: {
+                type: [Boolean],
+                default: function () {
+                    return false;
+                }
             }
         },
         data() {
@@ -69,7 +75,13 @@
                 districtId: 0,
                 districts: [],
 
-                isLocked: false,
+                lockStep: 0,
+            }
+        },
+        computed: {
+            isLocked: function () {
+                if (this.lockStep == 0) return false;
+                return true;
             }
         },
         methods: {
@@ -102,7 +114,7 @@
             updateProvince: function (value, elem) {
                 console.log("update province", this.isLocked)
                 if (!this.isLocked) {
-                    this.isLocked = true;
+                    this.lockStep += 1;
                     this.$emit("province_update", value)
                     this.provinceId = value;
 
@@ -114,20 +126,20 @@
                     this.districtId = 0;
                     this.districts = [];
 
-                    this.isLocked = false;
+                    this.lockStep -= 1;
                 }
 
             },
             updateAmphure: function (value, elem) {
                 console.log("update amphure", this.isLocked)
                 if (!this.isLocked) {
-                    this.isLocked = true;
+                    this.lockStep += 1;
                     this.$emit("amphure_update", value)
                     this.amphureId = value
                     this.$emit("district_update", 0)
                     this.loadDistrict(this.provinceId, this.amphureId)
                     this.districtId = 0;
-                    this.isLocked = false;
+                    this.lockStep -= 1;
                 }
             },
             updateDistrict: function (value, elem) {
@@ -138,27 +150,42 @@
                     this.districtId = value;
                 }
             },
+            initialData: function () {
+                this.lockStep += 1;
+                this.loadProvince().then(() => {
+                    this.provinceId = this.province ? this.province : 0;
+                    if (this.provinceId == 0) this.locked = false;
+                    this.lockStep += 1;
+                    this.loadAmphure(this.province)
+                        .then(() => {
+                            this.amphureId = this.amphure ? this.amphure : 0;
+                            if (this.amphureId == 0) this.locked = false;
+                            if (this.province && this.amphures) {
+                                this.lockStep += 1;
+                                this.loadDistrict(this.province, this.amphure)
+                                    .then(() => {
+                                        console.log(this.district);
+                                        this.districtId = this.district ? this.district : 0;
+                                        console.log(this.districtId);
 
+                                    })
+                                    .finally( () => {
+                                        this.lockStep -= 1;
+                                    })
+                            }
+                        })
+                        .finally(() => {
+                            this.lockStep -= 1;
+                        })
+
+                }).finally(() => {
+                    this.lockStep -= 1;
+                    console.log("finally", this.isLocked);
+                })
+            }
         },
         created: function () {
-            this.isLocked = true;
-            this.loadProvince().then(() => {
-                this.provinceId = this.province ? this.province : 0;
-
-                this.loadAmphure(this.province)
-                    .then(() => {
-                        this.amphureId = this.amphure ? this.amphure : 0;
-
-                        this.loadDistrict(this.province, this.amphure)
-                            .then(() => {
-                                console.log(this.district);
-                                this.districtId = this.district ? this.district : 0;
-                                console.log(this.districtId);
-                                this.isLocked = false;
-
-                            })
-                    })
-            })
+            this.initialData();
         },
         mounted: function () {
 

@@ -14,8 +14,17 @@ class ProfileResourceController extends Controller
 
     public function edit($id)
     {
-        $user = User::find($id);
+        $query = User::query()->where("id", $id);
+        $query->with(['amphure', 'district', 'province']);
         //$user->roles;
+
+        $user = $query->first();
+        $user->roles;
+
+        $user->province_name = $user->province ? $user->province->name : '';
+        $user->amphure_name = $user->amphure ? $user->amphure->name : '';
+        $user->district_name = $user->district ? $user->district->name : '';
+
         return $user;
     }
 

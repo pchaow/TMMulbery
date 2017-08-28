@@ -66,6 +66,14 @@ class PlantService
         }
     }
 
+    public static function updateRating($plantId, $rating)
+    {
+        $plant = Plant::find($plantId);
+        $plant->rating = $rating;
+        $plant->save();
+        return $plant;
+    }
+
     public static function getPlantListByFarmerId($farmerId, $keyword = null, $paginate = true)
     {
 
@@ -136,9 +144,9 @@ class PlantService
         if ($farmer && $plant) {
             $plant->fill($form);
 
-            if($form["province_id"] == 0) $plant->province_id = null;
-            if($form["amphure_id"] == 0) $plant->amphure_id = null;
-            if($form["district_id"] == 0) $plant->district_id = null;
+            if ($form["province_id"] == 0) $plant->province_id = null;
+            if ($form["amphure_id"] == 0) $plant->amphure_id = null;
+            if ($form["district_id"] == 0) $plant->district_id = null;
 
             $plant->save();
             return $plant;

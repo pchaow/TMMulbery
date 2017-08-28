@@ -41,15 +41,20 @@ Vue.component('plant-view', require('./components/admin/plant/PlantView.vue'));
 Vue.component('farmer-index', require('./components/admin/farmer/FarmerIndex.vue'));
 Vue.component('farmer-create', require('./components/admin/farmer/FarmerCreate.vue'));
 Vue.component('farmer-edit', require('./components/admin/farmer/FarmerEdit.vue'));
+Vue.component('farmer-profile', require('./components/admin/farmer/FarmerProfile.vue'));
 Vue.component('farmer-view', require('./components/admin/farmer/FarmerView.vue'));
 Vue.component('farmer-plant-create', require('./components/admin/farmer/plant/PlantCreate.vue'));
 Vue.component('farmer-plant-edit', require('./components/admin/farmer/plant/PlantEdit.vue'));
+Vue.component('farmer-plant-profile', require('./components/admin/farmer/plant/PlantProfile.vue'));
 
 Vue.component('buyer-index', require('./components/admin/buyer/BuyerIndex.vue'));
 Vue.component('buyer-create', require('./components/admin/buyer/BuyerCreate.vue'));
 Vue.component('buyer-view', require('./components/admin/buyer/BuyerView.vue'));
 Vue.component('buyer-edit', require('./components/admin/buyer/BuyerEdit.vue'));
 Vue.component('buyer-plan', require('./components/buyer/BuyerPlan.vue'));
+Vue.component('buyer-children-plants', require('./components/buyer/ChildrenPlants.vue'));
+
+Vue.component('buyer-plant-map', require('./components/buyer/PlantMap.vue'));
 
 Vue.component('sell-order-list', require('./components/buyer/SellOrderList.vue'));
 Vue.component('buy-order-list', require('./components/farmer/BuyOrderList.vue'));
@@ -58,9 +63,13 @@ Vue.component('order-confirm', require('./components/buyer/OrderConfirm.vue'));
 
 //Dashboard Graph Item
 Vue.component('admin-users-graph', require('./components/admin/dashboard/UsersGraph.vue'));
+Vue.component('admin-plant-harvest-stat-graph', require('./components/admin/dashboard/PlantHarvestStat.vue'));
+Vue.component('admin-plant-harvest-stock', require('./components/admin/dashboard/PlantHarvestStock.vue'));
+
 
 Vue.component('user-profile', require('./components/user/UserProfile.vue'));
 
+Vue.component('buyer-calendar-dashboard', require('./components/buyer/CalendarDashboard.vue'));
 
 Vue.use(VueGoogleMaps, {
     load: {

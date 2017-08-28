@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Farmer Management
+            จัดการเกษตรกร
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/farmers"><i class="fa fa-user"></i> Farmer Management</a></li>

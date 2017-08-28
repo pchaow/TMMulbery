@@ -3,14 +3,14 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    รายการขายจากเกษตรกร
+                    ตรวจสอบคำสั่งซื้อขาย
                 </div>
 
                 <div class="panel-body" v-if="buyConfirmOrder">
                     <div class="col-md-6">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                คำสั่งซื้อ
+                                รหัสคำสั่งซื้อที่ {{buyOrder.id}} - วันที่นัดซื้อขาย {{buyOrder.duedate}}
                             </div>
 
                             <div class="panel-body">
@@ -25,7 +25,10 @@
                                         <label>แปลง</label> {{buyOrder.plant ? buyOrder.plant.name : '-'}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{numeral(buyOrder.amount).format("0,0.00")}} กก.
+                                        <label>พื้นที่</label> {{numeral(buyOrder.amount_rai).format("0,0.00")}} ไร่
+                                    </p>
+                                    <p>
+                                        <label>ปริมาณ</label> {{numeral(buyOrder.amount_kg).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 
@@ -36,7 +39,7 @@
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                คำสั่งขาย
+                                รหัสคำสั่งขายที่ {{sellOrder.id}} - วันที่นัดซื้อขาย {{sellOrder.duedate}}
                             </div>
 
                             <div class="panel-body">
@@ -51,7 +54,10 @@
                                         <label>แปลง</label> {{sellOrder.plant ? sellOrder.plant.name : "-"}}
                                     </p>
                                     <p>
-                                        <label>จำนวน</label> {{numeral(sellOrder.amount).format("0,0.00")}} กก.
+                                        <label>พื้นที่</label> {{numeral(sellOrder.amount_rai).format("0,0.00")}} ไร่
+                                    </p>
+                                    <p>
+                                        <label>ปริมาณ</label> {{numeral(sellOrder.amount_kg).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 
@@ -71,7 +77,7 @@
                                     <form class="form-horizontal" v-on:submit.prevent="save">
                                         <div class="form-group"
                                              v-bind:class="{ 'has-error': formErrors['remark.unitprice'] }">
-                                            <label class="control-label">ราคาต่อหน่วย : </label>
+                                            <label class="control-label">ราคาต่อหน่วย(บาท/กก.) : </label>
                                             <input type="number" class="form-control" placeholder="ราคาต่อหน่วย"
                                                    v-model="formInputs.remark.unitprice"/>
                                             <span v-if="formErrors['remark.unitprice']"
@@ -80,7 +86,7 @@
 
                                         <div class="form-group"
                                              v-bind:class="{ 'has-error': formErrors['remark.unit'] }">
-                                            <label class="control-label">จำนวน (กก.) : </label>
+                                            <label class="control-label">ปริมาณ (กก.) : </label>
                                             <input type="number" class="form-control" placeholder="จำนวน (กก.)"
                                                    v-model="formInputs.remark.unit"/>
                                             <span v-if="formErrors['remark.unit']"
@@ -94,8 +100,8 @@
 
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                            <a v-bind:href="successUrl" class="btn btn-default">Cancel</a>
+                                            <button type="submit" class="btn btn-primary">ยืนยัน</button>
+                                            <a v-bind:href="successUrl" class="btn btn-default">ยกเลิก</a>
                                         </div>
                                     </form>
                                 </div>

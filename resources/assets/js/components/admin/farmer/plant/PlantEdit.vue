@@ -207,6 +207,13 @@
             Province
         },
         data() {
+
+            var default_position = {lat: 18.779465, lng: 99.046323}
+
+            if (this.plant.map[0]) {
+                default_position = {lat: this.plant.map[0].position.lat, lng: this.plant.map[0].position.lng}
+            }
+
             return {
                 successUrl: null,
                 isLoaded: false,
@@ -221,7 +228,7 @@
                 },
                 textSearch: "",
                 formErrors: {},
-                map_default_position: {lat: 19.1399606, lng: 99.907986},
+                map_default_position: default_position,
                 marker_toggle: false,
                 mapObject: {},
             }
@@ -292,7 +299,11 @@
             updatePositionFromAddress: function () {
                 let map = this.$refs.map.$mapObject
 
-                if (!(this.formInputs.province_name && this.formInputs.amphure_name && this.formInputs.district_name )) {
+                if (this.formInputs.map.length > 0) {
+                    map.setCenter(this.formInputs.map[0].position)
+                }
+
+                else if (!(this.formInputs.province_name && this.formInputs.amphure_name && this.formInputs.district_name )) {
                     alert('กรุณาเลือก จังหวัด อำเภอ ตำบล')
                 } else {
                     let addressStr = "จังหวัด" + this.formInputs.province_name

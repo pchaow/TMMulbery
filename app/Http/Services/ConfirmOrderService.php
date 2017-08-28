@@ -21,11 +21,12 @@ use Mockery\Exception;
  */
 class ConfirmOrderService
 {
-    public static  function getConfirmOrderById($id){
+    public static function getConfirmOrderById($id)
+    {
         $q = ConfirmOrder::query();
-        $q->with(['buyOrder.plant','buyOrder.user']);
-        $q->with(['sellOrder.plant','sellOrder.user']);
-        $q->where('id','=',$id);
+        $q->with(['buyOrder.plant', 'buyOrder.user']);
+        $q->with(['sellOrder.plant', 'sellOrder.user']);
+        $q->where('id', '=', $id);
         return $q->first();
     }
 
@@ -48,12 +49,12 @@ class ConfirmOrderService
                 $sellOrder->status = Order::$STATUS_CLOSE;
                 $sellOrder->save();
 
-                if($sellOrder->plant_id){
+                if ($sellOrder->plant_id) {
                     //do harvesting.
                     $form = [
                         "amount" => $formData['remark']["unit"],
                         "status" => "H",
-                        "transaction_date" => Carbon::now(),
+                        "transaction_date" => $buyOrder->duedate,
                         "type" => "-",
                     ];
                     PlantTransactionService::harvestFarm($sellOrder->plant_id, $form);

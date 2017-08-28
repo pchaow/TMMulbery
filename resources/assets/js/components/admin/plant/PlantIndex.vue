@@ -42,7 +42,7 @@
                                     <th>ชื่อแปลง</th>
                                     <th>เกษตรกร</th>
                                     <th>พื้นที่</th>
-                                    <th>คงเหลือเก็บเกี่ยว (กก.)</th>
+                                    <th>คงเหลือเก็บเกี่ยว</th>
                                     <th>เก็บเกี่ยวล่าสุด</th>
                                     <th>ตำบล</th>
                                     <th>อำเภอ</th>
@@ -55,9 +55,16 @@
                                     <td>{{plant.name}}</td>
                                     <td>{{plant.user ? plant.user.name : '-' }}</td>
                                     <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
-                                    <td>{{plant.remainingBalance ? plant.remainingBalance.toFixed(2) : '-'}}</td>
+                                    <td>{{plant.remainingBalance ? plant.remainingBalance.toFixed(2) : '-'}} กก.</td>
                                     <td>
-                                        {{plant.lastHarvestDate ? plant.lastHarvestDate : '-' | moment("from", "now")}}
+                                        <template v-if="plant.lastHarvestDate">
+                                            -
+                                        </template>
+
+                                        <template v-else>
+                                            {{plant.lastHarvestDate | moment("from", "now",true) }}
+                                        </template>
+
                                     </td>
                                     <td>{{plant.district ? plant.district.name : '-'}}</td>
                                     <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
@@ -89,6 +96,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>

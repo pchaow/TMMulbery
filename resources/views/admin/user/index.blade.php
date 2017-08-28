@@ -6,7 +6,7 @@
             จัดการผู้ใช้งาน
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/users"><i class="fa fa-user"></i> จัดการผู้ใช้งาน</a></li>
+            <li><a href=""><i class="fa fa-user"></i> จัดการผู้ใช้งาน</a></li>
             <li>รายการผู้ใช้งาน</li>
         </ol>
     </section>

@@ -105,34 +105,43 @@ class OrderService
         return $order;
     }
 
-    public static function openBuyOrderWithConfirm($userId, $formData)
+    public static function openBuySellOrderWithConfirm($userId, $formData)
     {
-        $pairOrder = Order::find($formData['order_id']);
-        $plant = Plant::find($formData['plant_id']);
+        $plant = Plant::find($formData['plant']['id']);
+        $farmer = User::find($formData['plant']['user_id']);
 
-        $order = new Order();
-
-        $order->user()->associate(User::find($userId));
+        $buyOrder = new Order();
+        $buyOrder->user()->associate(User::find($userId));
         if ($plant) {
-            $order->plant()->associate($plant);
-        } else {
-            $order->duedate = $pairOrder->duedate;
+            $buyOrder->plant()->associate($plant);
         }
+        $buyOrder->amount_rai = $formData['amount_rai'];
+        $buyOrder->amount_kg = $formData['amount_kg'];
+        $buyOrder->duedate = $formData['date'];
+        $buyOrder->type = Order::$ORDER_TYPE_BUY;
+        $buyOrder->status = Order::$STATUS_PENDING;
 
-        $order->amount = $pairOrder->amount;
-        $order->type = Order::$ORDER_TYPE_BUY;
-        $order->status = Order::$STATUS_PENDING;
 
-        $pairOrder->status = Order::$STATUS_PENDING;
+        $sellOrder = new Order();
+        $sellOrder->user()->associate($farmer);
+        if ($plant) {
+            $sellOrder->plant()->associate($plant);
+        }
+        $sellOrder->amount_rai = $formData['amount_rai'];
+        $sellOrder->amount_kg = $formData['amount_kg'];
+        $sellOrder->duedate = $formData['date'];
+        $sellOrder->type = Order::$ORDER_TYPE_SELL;
+        $sellOrder->status = Order::$STATUS_PENDING;
+
 
         $confirmOrder = null;
 
         DB::beginTransaction();
 
         try {
-            $order->save();
-            $pairOrder->save();
-            $confirmOrder = self::openConfirmOrder($order, $pairOrder);
+            $buyOrder->save();
+            $sellOrder->save();
+            $confirmOrder = self::openConfirmOrder($buyOrder, $sellOrder);
         } catch (Exception $exception) {
             DB::rollback();
             throw $exception;
@@ -140,7 +149,7 @@ class OrderService
 
         DB::commit();
 
-        return [$order, $confirmOrder];
+        return [$buyOrder, $sellOrder, $confirmOrder];
     }
 
     public
@@ -163,7 +172,7 @@ class OrderService
                     if ($confirmOrder) $confirmOrder->status = ConfirmOrder::$STATUS_CLOSE;
                     $pairOrder = $confirmOrder->sellOrder()->first();
                     if ($pairOrder) {
-                        $pairOrder->status = Order::$STATUS_OPEN;
+                        $pairOrder->status = Order::$STATUS_CLOSE;
                         $pairOrder->save();
                     }
                     $confirmOrder->save();

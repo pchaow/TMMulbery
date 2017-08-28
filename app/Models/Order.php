@@ -18,7 +18,7 @@ class Order extends Model
     protected $table = "orders";
 
     protected $fillable = [
-        'user_id', 'plant_id', 'duedate', 'status', 'amount', 'type'
+        'user_id', 'plant_id', 'duedate', 'status', 'amount_kg', 'amount_rai', 'type'
     ];
 
 
@@ -56,12 +56,12 @@ class Order extends Model
 
     public function buyPairedOrder()
     {
-        return $this->belongsToMany(Order::class, "confirm_orders", 'sell_order_id', 'buy_order_id')->withPivot(['id','remark']);;
+        return $this->belongsToMany(Order::class, "confirm_orders", 'sell_order_id', 'buy_order_id')->withPivot(['id', 'remark']);;
     }
 
     public function sellPairedOrder()
     {
-        return $this->belongsToMany(Order::class, "confirm_orders", 'buy_order_id', 'sell_order_id')->withPivot(['id','remark']);
+        return $this->belongsToMany(Order::class, "confirm_orders", 'buy_order_id', 'sell_order_id')->withPivot(['id', 'remark']);
     }
 
 

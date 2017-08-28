@@ -6,7 +6,7 @@
             รายละเอียดผู้รับซื้อ
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/buyers"><i class="fa fa-user-circle-o"></i>จัดการผู้รับซื้อ</a></li>
+            <li><a href=""><i class="fa fa-user-circle-o"></i>จัดการผู้รับซื้อ</a></li>
             <li><i class="fa fa-search"></i>ดูข้อมูลผู้รับซื้อ</li>
             <li>รหัสผู้รับซื้อ : {{$buyer->id}}</li>
         </ol>

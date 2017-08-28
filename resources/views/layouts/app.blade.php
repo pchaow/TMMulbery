@@ -1,7 +1,7 @@
 <?php
-    $avatarUrl = "/dist/img/basicAvatar.jpg"
+$avatarUrl = "/dist/img/basicAvatar.jpg"
 ?>
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -16,7 +16,9 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
 
-    <!-- Scripts -->
+@yield('css')
+
+<!-- Scripts -->
     <script>
         window.Laravel = {
             "csrfToken": document.getElementById('csrf_token').attributes['content'].value,
@@ -35,9 +37,9 @@
         <!-- Logo -->
         <a href="/" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>M</b></span>
+            <span class="logo-mini"><b>P</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Mulberry</b>Project</span>
+            <span class="logo-lg"><b>Piansukol </b>Mumberry Harvesting</span>
         </a>
 
         <!-- Header Navbar -->
@@ -105,9 +107,9 @@
                         </ul>
                     </li>
                     <!-- Control Sidebar Toggle Button -->
-                   <!-- <li>
-                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                    </li> -->
+                    <!-- <li>
+                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                     </li> -->
                 </ul>
             </div>
         </nav>
@@ -131,9 +133,8 @@
             </div>
 
 
-
             <!-- Sidebar Menu -->
-       @include('layouts._sidebarmenu')
+        @include('layouts._sidebarmenu')
         <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -149,95 +150,35 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Talent Mobility 2016
+
+        <img src="/images/logo1.png" style="height: 30px;"/>
+        <img src="/images/logo2.png" style="height: 30px;"/>
+        <img src="/images/logo3.png" style="height: 30px;"/>
+        <img src="/images/logo4.png" style="height: 30px;"/>
+
+        <div class="pull-right">
+            <strong>Copyright &copy; 2016 <a href="http://www.piankusolsilk.com/">Piankusol Co.,Ltd.</a>, <a href="http://www.up.ac.th/">University of Phayao</a>, et al. </strong> All rights reserved.
         </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+
+
     </footer>
 
     <!-- Control Sidebar -->
     <!--<aside class="control-sidebar control-sidebar-dark"> -->
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <!-- <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>-->
-         </ul>
-         <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane active" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:;">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+    <!-- Create the tabs -->
 
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+    <!-- Tab panes -->
 
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
 
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:;">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="pull-right-container">
-                  <span class="label label-danger pull-right">70%</span>
-                </span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
-    </aside>
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-<script src="/js/app.js"></script>
+<script src="/js/app.js?{{rand(1000, 9999)}}"></script>
 
 <!-- Scripts -->
 

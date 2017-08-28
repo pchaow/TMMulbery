@@ -9,6 +9,7 @@ use App\Http\Services\UserService;
 use App\Models\Order;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -59,5 +60,14 @@ class FarmerResourceController extends Controller
     public function openWithConfirm(Request $request)
     {
         return OrderService::openSellOrderWithConfirm(Auth::user()->id,$request->all());
+    }
+
+    public function loadEvents(Request $request)
+    {
+        $start = Carbon::createFromTimestamp($request->get('start'));
+        $end = Carbon::createFromTimestamp($request->get('end'));
+
+//        return [$start, $end];
+        return FarmerService::loadEvents(Auth::user()->id, $start, $end);
     }
 }

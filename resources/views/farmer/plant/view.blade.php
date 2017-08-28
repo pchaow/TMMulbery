@@ -3,11 +3,11 @@
 @section('content')
     <section class="content-header">
         <h1>
-            แปลงหม่อน {{$plant->name}} - {{$farmer->name}}
+            <a href="/farmer" class="fa fa-arrow-left"> แปลงหม่อน {{$plant->name}} - {{$farmer->name}}</a>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/plants"><i class="fa fa-user"></i> จัดการแปลงหม่อน</a></li>
-            <li><a href="/admin/plants/{{$plant->id}}/view"><i class="fa fa-table"></i> {{$plant->name}}
+            <li><a href="/farmer"><i class="fa fa-tree"></i> จัดการแปลงหม่อน</a></li>
+            <li><a href=""><i class="fa fa-table"></i> {{$plant->name}}
                     - {{$farmer->name}} </a></li>
             <li>รายการการปลูก</li>
         </ol>
@@ -15,10 +15,14 @@
 
     <!-- Main content -->
     <section class="content">
+
+
+        <admin-plant-harvest-stock :plant-id="{{$plant->id}}"></admin-plant-harvest-stock>
         <plant-view
                 plant-id="{{$plant->id}}"
                 role-type="farmer">
         </plant-view>
+
     </section>
     <!-- /.content -->
 @endsection

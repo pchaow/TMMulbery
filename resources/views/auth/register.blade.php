@@ -3,11 +3,11 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="/"><b>Mulbery</b>Project</a>
+            <a href="/"><b>Piansukol</b>Harvesting Management System</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">Register a new membership</p>
+            <p class="login-box-msg">ลงทะเบียนสมาชิกระบบ</p>
 
             <form role="form" method="POST" action="{{ url('/register') }}">
                 {{ csrf_field() }}

@@ -143,6 +143,10 @@
                                                     จำนวนทั้งหมด {{plants.data ? plants.data.length : 0}}
                                                     รายการ
                                                 </div>
+
+                                                    <div><i class="fa fa-circle text-success"> พร้อมเก็บเกี่ยว</i></div>
+                                                    <div><i class="fa fa-circle text-danger"> เก็บเกี่ยวล่วงหน้า</i></div>
+                                               
                                                 <ul class="pagination">
                                                     <li></li>
                                                 </ul>
@@ -151,10 +155,14 @@
                                         </tfoot>
                                     </table>
                                 </div>
+
                             </div>
+
                         </div>
+
                         <!-- Post -->
                     </div>
+
                     <div class="tab-pane" id="timeline">
                         <div class="row">
                             <div class="col-md-12">

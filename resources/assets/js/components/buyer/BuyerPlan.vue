@@ -58,7 +58,9 @@
                                 <td>{{plant.user.contact_number}}</td>
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                 <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
-                                <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }" >{{plant.planningHarvestDate}}</td>
+                                <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">
+                                    {{plant.planningHarvestDate}}
+                                </td>
                                 <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
@@ -81,7 +83,9 @@
                                 <td>{{plant.user.contact_number}}</td>
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
                                 <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
-                                <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">{{plant.planningHarvestDate}}</td>
+                                <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">
+                                    {{plant.planningHarvestDate}}
+                                </td>
                                 <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
@@ -94,7 +98,7 @@
                                 </td>
                                 <td>
 
-                                    <button type="button" class="btn btn-default" @click="buyPlant(plant)" >
+                                    <button type="button" class="btn btn-default" @click="buyPlant(plant)">
                                         ซื้อ
                                     </button>
                                 </td>
@@ -108,7 +112,6 @@
                 <div><i class="fa fa-circle text-danger"> แปลงของตัวเอง</i></div>
                 <div><i class="fa fa-circle text-yellow"> เก็บเกี่ยวล่วงหน้า</i></div>
             </div>
-
 
 
             <div class="panel panel-info" v-if="state == 'buy'">
@@ -179,9 +182,22 @@
         methods: {
             calculateRGBA: function (plant) {
                 var c = plant.planningHarvestDate
-                c = Math.abs(c);
-                var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
-                return 'rgba(150,250,100,' + alpha + ')'
+                var alpha = 0;
+                console.log(c);
+                if (c < 0) {
+                    c = Math.abs(c)
+                    c = c > 90 ? 90 : c;
+                    alpha = c/90/2
+
+                    console.log(alpha);
+                    return 'rgba(255,0,0,' + alpha + ')'
+
+                } else {
+                    c = Math.abs(c);
+                    alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                    return 'rgba(150,250,100,' + alpha + ')'
+                }
+
             },
             createBuyOrder: function () {
                 if (confirm("ยืนยันคำสั่งซื้อ")) {
@@ -205,7 +221,7 @@
                 this.buyFormError = {}
             },
             orderPlant: function (plants) {
-                return _.orderBy(plants, ["planningHarvestDate","distanceFromPiankusol"], ["desc","asc"])
+                return _.orderBy(plants, ["planningHarvestDate", "distanceFromPiankusol"], ["desc", "asc"])
             },
             planSubmit: function () {
 

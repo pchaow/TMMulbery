@@ -91,11 +91,20 @@
                 var lastdate = plant.lastHarvestDate
 
                 var c = now.diff(lastdate, "days");
-                c = Math.abs(c);
+                var alpha;
+                if (c < 0) {
+                    c = Math.abs(c)
+                    c = c > 90 ? 90 : c;
+                    alpha = c/90/2
 
-                var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                    console.log(alpha);
+                    return 'rgba(255,0,0,' + alpha + ')'
 
-                return 'rgba(150,250,100,' + alpha + ')'
+                } else {
+                    c = Math.abs(c);
+                    alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                    return 'rgba(150,250,100,' + alpha + ')'
+                }
             },
 
             setRating: function ($event, plant) {

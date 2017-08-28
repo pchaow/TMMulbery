@@ -73,7 +73,7 @@
                                 for (var i = 0; i < self.fcEvents.length; i++) {
                                     if (self.fcEvents[i].type == "order") {
                                         if (self.fcEvents[i].status == "Pending") {
-                                            self.fcEvents[i].backgroundColor = "#d61b1b"
+                                            self.fcEvents[i].backgroundColor = "#ff00ff"
 
                                         } else if (self.fcEvents[i].status == "Success") {
 
@@ -86,7 +86,18 @@
 
                                 callback(self.fcEvents);
                             })
+                    },
+                    eventClick: function(calEvent, jsEvent, view) {
+
+                        if(calEvent.link){
+                            if(confirm("ไปหน้ายืนยันคำสั่งซื้อหรือไม่")){
+                                window.location.href = calEvent.link;
+                            }
+
+                        }
+
                     }
+
                 })
 
             },

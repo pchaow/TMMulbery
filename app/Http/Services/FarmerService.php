@@ -214,6 +214,7 @@ class FarmerService
             $buyOrder = $order->buyOrder()->first();
             $e['type'] = "order";
             $e['title'] = "[$order->status] " . "ID : $buyOrder->id : Confirm Buy Order ";
+            $e['link'] = "/buyer/order/$order->id/confirm";
             $e['start'] = $buyOrder->duedate;
             $e['end'] = $buyOrder->duedate;
             $e['status'] = $order->status;

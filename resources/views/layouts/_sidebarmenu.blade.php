@@ -61,5 +61,9 @@
     @endif
 
     @if(\Laratrust::hasRole('farmer'))
+        <li class="{{ Request::is('farmer') ? 'active' : '' }}"><a href="{{url("farmer")}}"><i class="fa fa-calendar "></i>
+                <span>ปฏิทินแผนงาน</span></a></li>
+        <li class="{{ Request::is('farmer/plant') || Request::is('farmer/plant/*') ? 'active' : '' }}"><a href="{{url("farmer/plant")}}"><i class="fa fa-tree "></i>
+                <span>แปลง</span></a></li>
     @endif
 </ul>

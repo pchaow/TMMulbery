@@ -10,7 +10,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Here</li>
+            
         </ol>
     </section>
 
@@ -21,12 +21,7 @@
                 <buyer-calendar-dashboard role-type="farmer"></buyer-calendar-dashboard>
             </div>
 
-            <div class="col-lg-12">
-                <farmer-view
-                        role-type="farmer"
-                        :show-side-panel="false">
-                </farmer-view>
-            </div>
+
         </div>
     </section>
     <!-- /.content -->

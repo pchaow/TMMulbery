@@ -144,12 +144,12 @@
                                                     รายการ
                                                 </div>
 
-                                                    <div><i class="fa fa-circle text-success"> พร้อมเก็บเกี่ยว</i></div>
-                                                    <div><i class="fa fa-circle text-danger"> เก็บเกี่ยวล่วงหน้า</i></div>
-                                               
+
                                                 <ul class="pagination">
                                                     <li></li>
                                                 </ul>
+                                                <div><i class="fa fa-circle text-success"> พร้อมเก็บเกี่ยว</i>
+                                                <i class="fa fa-circle text-danger"> เก็บเกี่ยวล่วงหน้า</i></div>
                                             </td>
                                         </tr>
                                         </tfoot>

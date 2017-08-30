@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="/"><b>Piansukol </b>Mumberry Harvesting Management</a>
+            <a href="/"><b>Piankusol </b>Mumberry Harvesting Management</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

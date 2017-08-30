@@ -86,12 +86,12 @@
                                         <tr>
 
                                             <th>ชื่อแปลง</th>
-                                            <th>พื้นที่</th>
-                                            <th>คงเหลือเก็บเกี่ยว</th>
-                                            <th>เก็บเกี่ยวล่าสุด</th>
-                                            <th>ตำบล</th>
-                                            <th>อำเภอ</th>
-                                            <th>จังหวัด</th>
+                                            <th class="hidden-xs hidden-sm">พื้นที่</th>
+                                            <th class="hidden-xs hidden-sm">คงเหลือเก็บเกี่ยว</th>
+                                            <th class="hidden-xs hidden-sm">เก็บเกี่ยวล่าสุด</th>
+                                            <th class="hidden-xs hidden-sm">ตำบล</th>
+                                            <th class="hidden-xs hidden-sm">อำเภอ</th>
+                                            <th class="hidden-xs hidden-sm">จังหวัด</th>
                                             <th>จัดการ</th>
                                         </tr>
                                         </thead>
@@ -101,11 +101,11 @@
                                             style="background-color: rgba(150,250,100,1);">
 
                                             <td>{{plant.name}}</td>
-                                            <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
-                                            <td>{{plant.remainingBalance ?
+                                            <td class="hidden-xs hidden-sm">{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
+                                            <td class="hidden-xs hidden-sm">{{plant.remainingBalance ?
                                                 numeral(plant.remainingBalance).format("0,0.00") : '-'}} กก.
                                             </td>
-                                            <td>
+                                            <td class="hidden-xs hidden-sm">
                                                 <template v-if="plant.lastHarvestDate">
                                                     {{plant.lastHarvestDate | moment("from","now")}}
                                                 </template>
@@ -114,9 +114,9 @@
                                                 </template>
                                             </td>
 
-                                            <td>{{plant.district ? plant.district.name : '-'}}</td>
-                                            <td>{{plant.amphure ? plant.amphure.name : '-'}}</td>
-                                            <td>{{plant.province ? plant.province.name : '-'}}</td>
+                                            <td class="hidden-xs hidden-sm">{{plant.district ? plant.district.name : '-'}}</td>
+                                            <td class="hidden-xs hidden-sm">{{plant.amphure ? plant.amphure.name : '-'}}</td>
+                                            <td class="hidden-xs hidden-sm">{{plant.province ? plant.province.name : '-'}}</td>
                                             <td>
                                                 <button v-if="false"
                                                         @click="OpenSellOrder(plant)"

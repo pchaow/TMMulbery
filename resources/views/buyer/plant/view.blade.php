@@ -19,11 +19,11 @@
 
     <!-- Main content -->
     <section class="content">
-        <admin-plant-harvest-stock :plant-id="{{$plant->id}}"></admin-plant-harvest-stock>
         <plant-view
                 plant-id="{{$plant->id}}"
                 role-type="buyer">
         </plant-view>
+        <admin-plant-harvest-stock :plant-id="{{$plant->id}}"></admin-plant-harvest-stock>
 
     </section>
     <!-- /.content -->

@@ -38,6 +38,9 @@
 
                 </gmap-map>
             </div>
+            <div><img src="/icons/office.png"><i class="text-primary"> ที่ตั้งสถานประกอบการ</i></div>
+            <div><img src="/icons/farm2.png"><i class="text-yellow"> แปลงของตัวเอง</i></div>
+            <div><img src="/icons/farm.png"><i class="text-success"> แปลงของเกษตรกรในเครือข่าย</i></div>
 
         </div>
     </div>

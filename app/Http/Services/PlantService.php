@@ -93,6 +93,7 @@ class PlantService
             $data->remainingBalance = $data->remainingBalance();
             $data->lastHarvestDate = $data->lastHarvestDate();
             $data->hasTransaction = $data->transactions()->first() != null ? true : false;
+            $data->distanceFromPiankusol = $data->distanceFromPiankusol();
         }
 
         return $result;

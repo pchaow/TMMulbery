@@ -10,8 +10,14 @@
                 <div class="panel-body">
 
                     <div id="calendar"></div>
+                    <br>
+                    <div><i class="fa fa-circle text-success"> ปลูก/เก็บเกี่ยว</i>
+
+                    <i class="fa fa-circle text-primary"> คำสั่งซื้อยืนยันแล้ว</i>
+                    <i class="fa fa-circle" style="color: #ff00ff"> คำสั่งซื้อยังไม่ได้ยืนยัน</i></div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>
@@ -70,7 +76,7 @@
                                 for (var i = 0; i < self.fcEvents.length; i++) {
                                     if (self.fcEvents[i].type == "order") {
                                         if (self.fcEvents[i].status == "Pending") {
-                                            self.fcEvents[i].backgroundColor = "#d61b1b"
+                                            self.fcEvents[i].backgroundColor = "#ff00ff"
 
                                         } else if (self.fcEvents[i].status == "Success") {
 
@@ -83,7 +89,18 @@
 
                                 callback(self.fcEvents);
                             })
+                    },
+                    eventClick: function(calEvent, jsEvent, view) {
+
+                        if(calEvent.link){
+                            if(confirm("ไปหน้ายืนยันคำสั่งซื้อหรือไม่")){
+                                window.location.href = calEvent.link;
+                            }
+
+                        }
+
                     }
+
                 })
 
             },

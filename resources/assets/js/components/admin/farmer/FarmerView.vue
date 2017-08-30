@@ -143,18 +143,26 @@
                                                     จำนวนทั้งหมด {{plants.data ? plants.data.length : 0}}
                                                     รายการ
                                                 </div>
+
+
                                                 <ul class="pagination">
                                                     <li></li>
                                                 </ul>
+                                                <div><i class="fa fa-circle text-success"> พร้อมเก็บเกี่ยว</i>
+                                                <i class="fa fa-circle text-danger"> เก็บเกี่ยวล่วงหน้า</i></div>
                                             </td>
                                         </tr>
                                         </tfoot>
                                     </table>
                                 </div>
+
                             </div>
+
                         </div>
+
                         <!-- Post -->
                     </div>
+
                     <div class="tab-pane" id="timeline">
                         <div class="row">
                             <div class="col-md-12">
@@ -167,7 +175,6 @@
                                             <th>สถานะ</th>
                                             <th>ปริมาณ (กก.)</th>
                                             <th>ผู้ติดต่อซื้อ</th>
-                                            <th>จัดการ</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -195,13 +202,6 @@
                                                     </template>
                                                 </template>
                                             </td>
-                                            <td>
-                                                <button v-if="order.status != 'Closed'" type="button"
-                                                        class="btn btn-danger" @click="closeOrder(order)">
-                                                    ยกเลิก
-                                                </button>
-                                            </td>
-
                                         </tr>
                                         </tbody>
                                         <tfoot>
@@ -276,14 +276,18 @@
                 var lastdate = plant.lastHarvestDate
 
                 var c = now.diff(lastdate, "days");
-                console.log(c);
+                var alpha = 0;
                 if (c < 0) {
-                    c = Math.abs(c);
-                    var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                    c = Math.abs(c)
+                    c = c > 90 ? 90 : c;
+                    alpha = c/90/2
 
-                    return 'rgba(255,255,0,' + alpha + ')'
+                    console.log(alpha);
+                    return 'rgba(255,0,0,' + alpha + ')'
+
                 } else {
-                    var alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
+                    c = Math.abs(c);
+                    alpha = c > 90 ? 1 : 1 - (90 - c) / 90;
                     return 'rgba(150,250,100,' + alpha + ')'
                 }
             },

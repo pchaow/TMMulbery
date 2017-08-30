@@ -162,7 +162,7 @@
                                         <tr>
                                             <td colspan="5">
                                                 <div>
-                                                    จำนวนทั้งหมด รายการ
+                                                    จำนวนทั้งหมด {{buyOrders.total}} รายการ
                                                 </div>
                                                 <ul class="pagination">
                                                     <li></li>
@@ -215,7 +215,7 @@
                                         <tr>
                                             <td colspan="5">
                                                 <div>
-                                                    จำนวนทั้งหมด รายการ
+                                                    จำนวนทั้งหมด {{buyHistoryOrders.total}} รายการ
                                                 </div>
                                                 <ul class="pagination">
                                                     <li></li>

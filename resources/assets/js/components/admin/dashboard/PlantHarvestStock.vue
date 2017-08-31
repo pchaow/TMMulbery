@@ -56,12 +56,12 @@
                                 text: 'All'
                             }],
                             inputEnabled: false,
-                            selected: 0
+                            selected: 2
                         },
                         xAxis: {
                             plotLines: [{
-                                label : {
-                                    text : "Today",
+                                label: {
+                                    text: "Today",
                                 },
                                 color: '#FF0000', // Red
                                 width: 2,
@@ -126,6 +126,11 @@
         },
         created() {
             this.chart = $(this.$refs.chart);
+            var self = this
+            this.$parent.$on('ReloadHarvestStock', function (id) {
+                self.loadData();
+            })
+
         },
         mounted() {
             console.log('Component ready.')

@@ -73,7 +73,7 @@ Vue.component('buyer-calendar-dashboard', require('./components/buyer/CalendarDa
 Vue.use(VueGoogleMaps, {
     load: {
         key: 'AIzaSyAQhqp6RRe4zDyB2I1IeAiVsyQsVRJbHCA',
-        v: '3.27',
+        v: '3.29',
         // libraries: 'places', //// If you need to use place input
     }
 });

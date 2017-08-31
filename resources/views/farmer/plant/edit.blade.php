@@ -3,10 +3,10 @@
 @section('content')
     <section class="content-header">
         <h1>
-            <a href="/farmer" class="fa fa-arrow-left"> จัดการแปลงหม่อน </a>
+            <a href="/farmer/plant" class="fa fa-arrow-left"> จัดการแปลงหม่อน </a>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/farmer"><i class="fa fa-tree"></i>จัดการแปลงหม่อน</a></li>
+            <li><a href="/farmer/plant"><i class="fa fa-tree"></i>จัดการแปลงหม่อน</a></li>
             <li>รหัสเกษตรกร : {{$user->id}}</li>
             <li><i class="fa fa-pencil"></i> แก้ไขแปลงหม่อน ID : {{$plant->id}}</li>
         </ol>

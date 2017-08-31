@@ -98,7 +98,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>น้ำหนักเก็บเกี่ยว (กิโลกรัม):</label>
+                                    <label>น้ำหนักเก็บเกี่ยวคาดการณ์จากระบบ (กิโลกรัม):</label>
 
                                     <div class="input-group">
                                         <div class="input-group-addon">

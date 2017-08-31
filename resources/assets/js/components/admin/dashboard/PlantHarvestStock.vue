@@ -91,14 +91,14 @@
 
                         series: [{
                             type: 'column',
-                            name: 'Real Harvest Amount',
+                            name: 'ปริมาณเก็บเกี่ยวจริง',
                             data: data[0],
                             tooltip: {
                                 valueDecimals: 2
                             }
                         }, {
                             type: 'column',
-                            name: 'Estimate Harvest Amount',
+                            name: 'ค่าประมาณจากระบบ',
                             data: data[1],
                             tooltip: {
                                 valueDecimals: 2
@@ -106,14 +106,14 @@
                         }, {
                             type: 'spline',
                             dashStyle: 'shortdot',
-                            name: 'Estimate Remaining Balance',
+                            name: 'ค่าประมาณใบหม่อนที่เหลือในแปลง',
                             data: data[3],
                             tooltip: {
                                 valueDecimals: 2
                             }
                         }, {
                             type: 'spline',
-                            name: 'Different',
+                            name: 'ผลต่างระหว่างค่าประมาณและค่าจริง',
                             data: data[2],
                             yAxis: 1,
                             tooltip: {

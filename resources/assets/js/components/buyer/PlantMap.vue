@@ -8,7 +8,7 @@
                         ref="map"
                         style="width: 100%; height: 100%; position: absolute; left:0; top:0"
                         :center="map_default_position"
-                        :zoom="13"
+                        :zoom="8"
                 >
                     <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
                                       :content="infoContent" @closeclick="infoWinOpen=false"></gmap-info-window>

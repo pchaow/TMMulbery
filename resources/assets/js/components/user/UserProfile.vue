@@ -49,11 +49,11 @@
 
 
                                 <province v-bind:province="formInputs.province_id"
-                                          v-on:province_update="provinceUpdate(arguments[0],arguments[1])"
+                                          v-on:province_update="formInputs.province_id = arguments[0]"
                                           v-bind:amphure="formInputs.amphure_id"
-                                          v-on:amphure_update="amphureUpdate(arguments[0],arguments[1])"
+                                          v-on:amphure_update="formInputs.amphure_id = arguments[0]"
                                           v-bind:district="formInputs.district_id"
-                                          v-on:district_update="districtUpdate(arguments[0],arguments[1])"
+                                          v-on:district_update="formInputs.district_id = arguments[0]"
                                           v-bind:formErrors="formErrors"
                                 ></province>
 
@@ -68,7 +68,7 @@
                             <fieldset v-if="isBuyer(formInputs)">
 
                                 <div class="form-group">
-                                    <h4>พิกัดสำนักงานใหญ่</h4>
+                                    <h4>พิกัดสำนักงาน</h4>
                                 </div>
 
                                 <label>ระบุตำแหน่งจากพิกัด</label>

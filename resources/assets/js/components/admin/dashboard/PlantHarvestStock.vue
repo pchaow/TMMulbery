@@ -89,17 +89,18 @@
                                 },
                             }],
 
-                        series: [{
+                        series: [
+                            {
+                                type: 'column',
+                                name: 'ค่าประมาณจากระบบ',
+                                data: data[1],
+                                tooltip: {
+                                    valueDecimals: 2
+                                }
+                            },{
                             type: 'column',
                             name: 'ปริมาณเก็บเกี่ยวจริง',
                             data: data[0],
-                            tooltip: {
-                                valueDecimals: 2
-                            }
-                        }, {
-                            type: 'column',
-                            name: 'ค่าประมาณจากระบบ',
-                            data: data[1],
                             tooltip: {
                                 valueDecimals: 2
                             }

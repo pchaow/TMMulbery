@@ -57,7 +57,7 @@
                                 <td>{{plant.user.name}}</td>
                                 <td>{{plant.user.contact_number}}</td>
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
-                                <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
+                                <td>{{numeral(plant.planningBalance).format("0,0.00")}} กก.</td>
                                 <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">
                                     {{plant.planningHarvestDate}}
                                 </td>
@@ -89,7 +89,7 @@
                                 <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
-                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กิโลเมตร
+                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กม.
                                     </template>
                                     <template v-else>
                                         -
@@ -130,14 +130,14 @@
                         </div>
 
                         <div class="form-group" v-bind:class="{ 'has-error': buyFormError['amount_rai'] }">
-                            <label>ปริมาณ (ไร่)</label>
+                            <label>จำนวนพื้นที่ที่ต้องการ (ไร่)</label>
                             <input type="number" v-model="buyForm.amount_rai" class="form-control">
                             <span v-if="buyFormError['amount_rai']"
                                   class="help-block">{{ buyFormError['amount_rai'] }}</span>
                         </div>
 
                         <div class="form-group" v-bind:class="{ 'has-error': buyFormError['amount_kg'] }">
-                            <label>ปริมาณ คาดการณ์ (กก.)</label>
+                            <label>ปริมาณใบหม่อน คาดการณ์ (กก.)</label>
                             <input type="number" v-model="buyForm.amount_kg" class="form-control">
                             <span v-if="buyFormError['amount_kg']"
                                   class="help-block">{{ buyFormError['amount_kg'] }}</span>

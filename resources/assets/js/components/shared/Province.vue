@@ -112,10 +112,11 @@
                     });
             },
             updateProvince: function (value, elem) {
-                console.log("update province", this.isLocked)
+//                window.test = elem;
+//                console.log("update province", this.isLocked)
                 if (!this.isLocked) {
                     this.lockStep += 1;
-                    this.$emit("province_update", value)
+                    this.$emit("province_update", value,elem.selectedOptions[0].innerText)
                     this.provinceId = value;
 
                     this.$emit("amphure_update", 0)
@@ -131,10 +132,10 @@
 
             },
             updateAmphure: function (value, elem) {
-                console.log("update amphure", this.isLocked)
+//                console.log("update amphure", this.isLocked)
                 if (!this.isLocked) {
                     this.lockStep += 1;
-                    this.$emit("amphure_update", value)
+                    this.$emit("amphure_update", value,elem.selectedOptions[0].innerText)
                     this.amphureId = value
                     this.$emit("district_update", 0)
                     this.loadDistrict(this.provinceId, this.amphureId)
@@ -145,8 +146,8 @@
             updateDistrict: function (value, elem) {
 
                 if (!this.isLocked) {
-                    console.log('district not lock', value)
-                    this.$emit("district_update", value)
+//                    console.log('district not lock', value)
+                    this.$emit("district_update", value,elem.selectedOptions[0].innerText)
                     this.districtId = value;
                 }
             },
@@ -164,9 +165,9 @@
                                 this.lockStep += 1;
                                 this.loadDistrict(this.province, this.amphure)
                                     .then(() => {
-                                        console.log(this.district);
+//                                        console.log(this.district);
                                         this.districtId = this.district ? this.district : 0;
-                                        console.log(this.districtId);
+//                                        console.log(this.districtId);
 
                                     })
                                     .finally( () => {
@@ -180,7 +181,7 @@
 
                 }).finally(() => {
                     this.lockStep -= 1;
-                    console.log("finally", this.isLocked);
+//                    console.log("finally", this.isLocked);
                 })
             }
         },

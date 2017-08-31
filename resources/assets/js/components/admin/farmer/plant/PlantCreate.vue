@@ -281,14 +281,19 @@
                     });
                 }
             },
+            convertToInt : function(){
+                this.formInputs.province_id = parseInt(this.formInputs.province_id)
+                this.formInputs.amphure_id = parseInt(this.formInputs.amphure_id)
+                this.formInputs.district_id = parseInt(this.formInputs.district_id)
+            },
             updatePositionFromAddress: function () {
                 let map = this.$refs.map.$mapObject
-
+                this.convertToInt()
+                console.log(this.formInputs)
                 if (this.formInputs.map.length > 0) {
                     map.setCenter(this.formInputs.map[0].position)
                 }
-
-                else if (!(this.formInputs.province_name && this.formInputs.amphure_name && this.formInputs.district_name )) {
+                else if (!(this.formInputs.province_id && this.formInputs.amphure_id && this.formInputs.district_id )) {
                     alert('กรุณาเลือก จังหวัด อำเภอ ตำบล')
                 } else {
                     let addressStr = "จังหวัด" + this.formInputs.province_name

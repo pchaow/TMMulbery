@@ -102,11 +102,11 @@
                         <strong><i class="fa fa-map-signs margin-r-5"></i> ข้อมูลพิกัดแปลงหม่อน</strong>
 
                         <province v-bind:province="formInputs.province_id"
-                                  v-on:province_update="formInputs.province_id = arguments[0]"
+                                  v-on:province_update="provinceUpdate(arguments[0],arguments[1])"
                                   v-bind:amphure="formInputs.amphure_id"
-                                  v-on:amphure_update="formInputs.amphure_id = arguments[0]"
+                                  v-on:amphure_update="amphureUpdate(arguments[0],arguments[1])"
                                   v-bind:district="formInputs.district_id"
-                                  v-on:district_update="formInputs.district_id = arguments[0]"
+                                  v-on:district_update="districtUpdate(arguments[0],arguments[1])"
                                   v-bind:formErrors="formErrors"
                         ></province>
 
@@ -298,6 +298,8 @@
             },
             updatePositionFromAddress: function () {
                 let map = this.$refs.map.$mapObject
+
+                console.log(this.formInputs);
 
                 if (this.formInputs.map.length > 0) {
                     map.setCenter(this.formInputs.map[0].position)

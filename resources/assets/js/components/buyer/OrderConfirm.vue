@@ -28,7 +28,7 @@
                                         <label>พื้นที่</label> {{numeral(buyOrder.amount_rai).format("0,0.00")}} ไร่
                                     </p>
                                     <p>
-                                        <label>ปริมาณ</label> {{numeral(buyOrder.amount_kg).format("0,0.00")}} กก.
+                                        <label>ปริมาณใบหม่อน</label> {{numeral(buyOrder.amount_kg).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 
@@ -57,7 +57,7 @@
                                         <label>พื้นที่</label> {{numeral(sellOrder.amount_rai).format("0,0.00")}} ไร่
                                     </p>
                                     <p>
-                                        <label>ปริมาณ</label> {{numeral(sellOrder.amount_kg).format("0,0.00")}} กก.
+                                        <label>ปริมาณใบหม่อน</label> {{numeral(sellOrder.amount_kg).format("0,0.00")}} กก.
                                     </p>
                                 </div>
 
@@ -86,7 +86,7 @@
 
                                         <div class="form-group"
                                              v-bind:class="{ 'has-error': formErrors['remark.unit'] }">
-                                            <label class="control-label">ปริมาณ (กก.) : </label>
+                                            <label class="control-label">ปริมาณใบหม่อน (กก.) : </label>
                                             <input type="number" class="form-control" placeholder="จำนวน (กก.)"
                                                    v-model="formInputs.remark.unit"/>
                                             <span v-if="formErrors['remark.unit']"

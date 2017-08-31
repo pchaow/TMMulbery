@@ -87,6 +87,7 @@
 
                                             <th>ชื่อแปลง</th>
                                             <th class="hidden-xs hidden-sm">พื้นที่</th>
+                                            <th class="hidden-xs hidden-sm">ระบะทาง</th>
                                             <th class="hidden-xs hidden-sm">คงเหลือเก็บเกี่ยว</th>
                                             <th class="hidden-xs hidden-sm">เก็บเกี่ยวล่าสุด</th>
                                             <th class="hidden-xs hidden-sm">ตำบล</th>
@@ -102,6 +103,7 @@
 
                                             <td>{{plant.name}}</td>
                                             <td class="hidden-xs hidden-sm">{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
+                                            <td>{{numeral(plant.distanceFromPiankusol).format("0,0.00")}}</td>
                                             <td class="hidden-xs hidden-sm">{{plant.remainingBalance ?
                                                 numeral(plant.remainingBalance).format("0,0.00") : '-'}} กก.
                                             </td>

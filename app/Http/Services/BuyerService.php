@@ -130,7 +130,7 @@ class BuyerService
 
 
         foreach ($plants2 as $plant) {
-            $plant->remainingBalance = $plant->remainingBalance();
+            $plant->remainingBalance = $plant->remainingRBalance();
             $plant->lastHarvestDate = $plant->lastHarvestDate();
             $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
 

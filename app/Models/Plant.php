@@ -175,7 +175,8 @@ class Plant extends Model
 
     public function getCountOpenOrderAttribute()
     {
-        return $this->orders()->where('status', '!=', 'Closed')->count();
+        return $this->orders()->where('status', '!=', 'Closed')
+            ->where('type', '=', 'buy')->count();
     }
 
     /*

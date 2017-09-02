@@ -372,7 +372,7 @@
         },
         created() {
             this.loadPlant();
-            this.successUrl = this.roleType == "farmer" ? this.$routes.web.farmer.index : this.$routes.web[this.roleType].plant;
+            this.successUrl = this.roleType == "farmer" ? this.$routes.web.farmer.plant : this.$routes.web[this.roleType].plant;
 
         },
         mounted() {

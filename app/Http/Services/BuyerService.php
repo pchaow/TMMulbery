@@ -275,12 +275,19 @@ class BuyerService
 
         $plants2 = $query2->get();
 
-       // foreach ($plants2 as $plant) {
-      //      $plant->planningBalance = $plant->planningBalance($date);
-      //      $plant->planningHarvestDate = $plant->planningHarvestDate($date);
-     //       $plant->amount = $plant->amount();
-     //       $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
-     //   }
+        foreach ($plants2 as $plant) {
+          // $plant->planningBalance = $plant->planningBalance($date);
+           // $plant->planningHarvestDate = $plant->planningHarvestDate($date);
+           // $plant->amount = $plant->amount();
+            $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
+        }
+
+        foreach ($plants as $plant) {
+            // $plant->planningBalance = $plant->planningBalance($date);
+            // $plant->planningHarvestDate = $plant->planningHarvestDate($date);
+            // $plant->amount = $plant->amount();
+            $plant->distanceFromPiankusol = $plant->distanceFromPiankusol();
+        }
 
         $p1 = Collection::make($plants);
         $p2 = Collection::make($plants2);

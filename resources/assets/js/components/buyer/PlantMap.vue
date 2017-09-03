@@ -80,7 +80,7 @@
             }
         },
         methods: {
-            markPosition: function (maps, lat, lng, plantName, farmerName) {
+            markPosition: function (maps, lat, lng, plantName, farmerName, distance,plant ) {
                 if (lat && lng) {
                     console.log(lat, lng)
                     maps.push({
@@ -88,7 +88,7 @@
                             lat: parseFloat(lat),
                             lng: parseFloat(lng),
                         },
-                        infoText: plantName + " : " + farmerName
+                        infoText: plantName + " : " + farmerName + " <br/>ระยะทาง " + distance + "กม." + "<br/>พื้นที่:" + plant.area_rai +" ไร่ "+ plant.area_ngan +" งาน"
                     })
                     console.log(maps)
                 }
@@ -130,11 +130,11 @@
                         console.log(this.planningData)
                         for (var i = 0; i < this.planningData[0].length; i++) {
                             if (this.planningData[0][i].map.length != 0)
-                                this.markPosition(this.maps1, this.planningData[0][i].map[0].position.lat, this.planningData[0][i].map[0].position.lng, this.planningData[0][i].name, this.planningData[0][i].user.name)
+                                this.markPosition(this.maps1, this.planningData[0][i].map[0].position.lat, this.planningData[0][i].map[0].position.lng, this.planningData[0][i].name, this.planningData[0][i].user.name,this.planningData[0][i].distanceFromPiankusol,this.planningData[0][i])
                         }
                         for (var i = 0; i < this.planningData[1].length; i++) {
                             if (this.planningData[1][i].map.length != 0)
-                                this.markPosition(this.maps2, this.planningData[1][i].map[0].position.lat, this.planningData[1][i].map[0].position.lng, this.planningData[1][i].name, this.planningData[1][i].user.name)
+                                this.markPosition(this.maps2, this.planningData[1][i].map[0].position.lat, this.planningData[1][i].map[0].position.lng, this.planningData[1][i].name, this.planningData[1][i].user.name,this.planningData[1][i].distanceFromPiankusol,this.planningData[1][i])
                         }
 
                     })

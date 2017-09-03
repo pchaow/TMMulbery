@@ -253,6 +253,7 @@
                     })
             },
             buyPlant: function (plant) {
+                this.cancelBuy();
                 this.state = "buy"
                 this.buyForm.date = this.planningForm.date
                 this.buyForm.amount_rai = this.planningForm.rai

@@ -46,7 +46,7 @@
                                 <td>
                                     <star-rating :rating="plant.rating" :star-size="20"
                                                  @rating-selected="setRating($event,plant)"
-                                                 :show-rating="true"></star-rating>
+                                                 :show-rating="false"></star-rating>
                                 </td>
                                 <td> <a v-bind:href="strFormat(viewProfilePlantUrl,{id : plant.id})"
                                         class="btn btn-info">ดูข้อมูล</a>

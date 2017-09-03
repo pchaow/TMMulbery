@@ -14,6 +14,7 @@
 
     <!-- Main content -->
     <section class="content">
+        <admin-plant-harvest-stock :plant-id="{{$plant->id}}"></admin-plant-harvest-stock>
         <farmer-plant-profile
                 :plant="{{json_encode($plant)}}"
                 plant_id="{{$plant->id}}"

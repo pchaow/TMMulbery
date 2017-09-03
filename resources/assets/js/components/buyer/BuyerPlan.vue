@@ -7,7 +7,10 @@
                 </div>
 
                 <div class="panel-body">
+
                     <form role="form" @submit.prevent="planSubmit">
+                        <div class="row">
+                            <div class="col-lg-3">
                         <div class="form-group" v-bind:class="{ 'has-error': planningFormError['date'] }">
                             <label>วันที่ต้องการเก็บเกี่ยว</label>
                             <input type="date" v-model="planningForm.date" class="form-control">
@@ -15,7 +18,10 @@
                                   class="help-block">{{ planningFormError['date'] }}</span>
 
                         </div>
-
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
                         <div class="form-group" v-bind:class="{ 'has-error': planningFormError['rai'] }">
                             <label>จำนวนไร่ที่ต้องการ</label>
                             <input type="number" v-model="planningForm.rai" class="form-control">
@@ -23,7 +29,8 @@
                                   class="help-block">{{ planningFormError['rai'] }}</span>
 
                         </div>
-
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">ค้นหา</button>
                     </form>
                 </div>
@@ -44,10 +51,10 @@
                                 <th>ชื่อเกษตรกร</th>
                                 <th>เบอร์โทรติดต่อ</th>
                                 <th>พื้นที่</th>
-                                <th>คงเหลือเก็บเกี่ยว</th>
+                                <th>คงเหลือเก็บเกี่ยว(กก.)</th>
                                 <th>#วันจากการเก็บเกี่ยวล่าสุด</th>
                                 <th>จำนวนคำสั่งซื้อที่ยังไม่ยืนยัน</th>
-                                <th>ระยะทาง</th>
+                                <th>ระยะทาง(กม.)</th>
                                 <th>จัดการ</th>
                             </tr>
                             </thead>
@@ -57,14 +64,14 @@
                                 <td>{{plant.user.name}}</td>
                                 <td>{{plant.user.contact_number}}</td>
                                 <td>{{plant.area_rai}} ไร่ {{plant.area_ngan}} งาน</td>
-                                <td>{{numeral(plant.planningBalance).format("0,0.00")}} กก.</td>
+                                <td>{{numeral(plant.planningBalance).format("0,0.00")}}</td>
                                 <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">
                                     {{plant.planningHarvestDate}}
                                 </td>
                                 <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
-                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กม.
+                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}}
                                     </template>
                                     <template v-else>
                                         -
@@ -89,7 +96,7 @@
                                 <td>{{plant.countOpenOrder}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
-                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}} กม.
+                                        {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}}
                                     </template>
                                     <template v-else>
                                         -

@@ -213,11 +213,16 @@
                                 <td>{{transaction.transaction_date | moment("DD MMM YYYY")}}</td>
                                 <td>{{transaction.type}}</td>
                                 <td v-bind:class="{ danger : transaction.type=='-', 'text-right' : transaction.type=='-'}">
-                                    {{transaction.amount}} {{ transaction.status.name == "N" ? 'ต้น' : 'กก.' }}
+                                    {{numeral(transaction.amount).format("0,0.00")}} {{ transaction.status.name == "N" ? 'ต้น' : 'กก.' }}
+
+
                                 </td>
-                                <td>{{transaction.balance}}</td>
+                                <td>
+
+                                    {{numeral(transaction.balance).format("0,0.00")}}
+                                    </td>
                                 <td v-bind:class="{success : transaction.confirm_amount != null } "
-                                >{{transaction.confirm_amount}}
+                                >{{numeral(transaction.confirm_amount).format("0,0.00")}}
                                 </td>
                                 <td>{{transaction.status ? transaction.status.description : ''}}</td>
                                 <td>

@@ -18,7 +18,7 @@ class Plant extends Model
         'map' => 'array',
     ];
 
-    protected $appends = ["countOpenOrder"];
+    protected $appends = ["countOpenOrder","countUnconfirmHarvest"];
 
     public function user()
     {
@@ -177,6 +177,14 @@ class Plant extends Model
     {
         return $this->orders()->where('status', '!=', 'Closed')
             ->where('type', '=', 'buy')->count();
+    }
+
+    public function getCountUnconfirmHarvestAttribute()
+    {
+        return $this->transactions()
+            ->where('status_id', 2)
+            ->where('confirm_amount',null)->count();
+
     }
 
     /*

@@ -53,7 +53,7 @@
                                 <th>พื้นที่</th>
                                 <th>คงเหลือเก็บเกี่ยว(กก.)</th>
                                 <th>#วันจากการเก็บเกี่ยวล่าสุด</th>
-                                <th>จำนวนคำสั่งซื้อที่ยังไม่ยืนยัน</th>
+                                <th>จำนวนคำสั่งเก็บเกี่ยว/คำสั่งซื้อที่ยังไม่ยืนยัน</th>
                                 <th>ระยะทาง(กม.)</th>
                                 <th>จัดการ</th>
                             </tr>
@@ -68,7 +68,7 @@
                                 <td v-bind:style="{ 'background-color' : calculateRGBA(plant) }">
                                     {{plant.planningHarvestDate}}
                                 </td>
-                                <td>{{plant.countOpenOrder}}</td>
+                                <td>{{plant.countUnconfirmHarvest}}</td>
                                 <td>
                                     <template v-if="plant.distanceFromPiankusol">
                                         {{ numeral(plant.distanceFromPiankusol).format("0,0.00")}}
